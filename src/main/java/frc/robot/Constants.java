@@ -14,6 +14,8 @@ package frc.robot;
  */
 public final class Constants {
 
-    public static int frontLeftMotor = 3;
-    public static double pi = 3.141592;
+    public static int flMotor = 0;
+    public static int frMotor = 0;
+    public static int blMotor = 0;
+    public static int brMotor = 0;
 }
