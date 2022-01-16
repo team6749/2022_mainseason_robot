@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 
+
+
 public class DrivebaseSubsystem extends SubsystemBase{
 
     TalonFX frontLeft = new TalonFX(Constants.flMotor);
@@ -13,7 +15,15 @@ public class DrivebaseSubsystem extends SubsystemBase{
     TalonFX backLeft = new TalonFX(Constants.blMotor);
     TalonFX backRight = new TalonFX(Constants.brMotor);
     
-    public DrivebaseSubsystem() {}
+    
+    public DrivebaseSubsystem() {
+        
+    }
+    
+    public void DriveWithController(){
+    
+    }
+
 
     @Override
   public void periodic() {
