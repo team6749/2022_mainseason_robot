@@ -1,5 +1,9 @@
 package frc.robot.subsystems;
 
-public class shootingSubsystem {
-    
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+public class shootingSubsystem extends SubsystemBase {
+
+
+public shootingSubsystem() {}
 }
