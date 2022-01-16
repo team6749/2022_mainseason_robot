@@ -18,4 +18,8 @@ public final class Constants {
     public static int frMotor = 0;
     public static int blMotor = 0;
     public static int brMotor = 0;
+    public static int shooterMotor = 0;
+    public static int intakeMotor = 0;
+    public static int climber1 = 0;
+    public static int climber2 = 0;
 }
