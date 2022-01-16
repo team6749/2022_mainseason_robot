@@ -8,7 +8,10 @@ import frc.robot.Constants;
 
 public class DrivebaseSubsystem extends SubsystemBase{
 
-    TalonFX frontLeft = new TalonFX(Constants.frontLeftMotor);
+    TalonFX frontLeft = new TalonFX(Constants.flMotor);
+    TalonFX frontRight = new TalonFX(Constants.frMotor);
+    TalonFX backLeft = new TalonFX(Constants.blMotor);
+    TalonFX backRight = new TalonFX(Constants.brMotor);
     
     public DrivebaseSubsystem() {
         
