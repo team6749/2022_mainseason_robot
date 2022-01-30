@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-
+import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.drive.*;
@@ -22,21 +22,19 @@ public class DrivebaseSubsystem extends SubsystemBase{
     MotorControllerGroup right = new MotorControllerGroup(frontRight, backRight);
     
     DifferentialDrive myDrive = new DifferentialDrive(left, right);
-    
-    
 
     public DrivebaseSubsystem() {
       
     }
-
+    
     public void arcadeDrive(double speed, double rotation){
-      
+      speed = RobotContainer.controller.getLeftX();
+      rotation = RobotContainer.controller.getRightY();
       myDrive.arcadeDrive(speed, rotation);
     }
   
     @Override
   public void periodic() {
-    
     
     }
     // This method will be called once per scheduler run
