@@ -17,17 +17,14 @@ public IntakeSubsystem() {
 
 @Override
   public void periodic() {
-    double speedPos = RobotContainer.controller.getAButtonPressed() ? 1 : 0;
-    double speedNeg = RobotContainer.controller.getBButtonPressed() ? -1 : 0;
-   
-    if(speedPos > 0 && speedNeg == 0){
-      intake.set(speedPos);
-    } else if (speedNeg < 0 && speedPos == 0) {
-      intake.set(speedNeg);
-    } 
-    else {
-      intake.set(0);
+    double speed = 0;
+    if(RobotContainer.controller.getAButtonPressed()) {
+      speed = 1;
+    } else if (RobotContainer.controller.getBButtonPressed()) {
+      speed = -1;
     }
+   
+    intake.set(speed);
     // This method will be called once per scheduler run
   }
 
