@@ -8,7 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class IntakeSubsystem extends SubsystemBase {
   WPI_TalonFX intake = new WPI_TalonFX(Constants.intakeMotor);
-
+  WPI_TalonFX belt = new WPI_TalonFX(Constants.beltMotor);
 public IntakeSubsystem() {
  
  
@@ -18,13 +18,15 @@ public IntakeSubsystem() {
 @Override
   public void periodic() {
     double speed = 0;
-    if(RobotContainer.controller.getAButtonPressed()) {
-      speed = 1;
-    } else if (RobotContainer.controller.getBButtonPressed()) {
-      speed = -1;
+    if(RobotContainer.controller.getAButton()) {
+      speed = -0.7;
+    } else if (RobotContainer.controller.getBButton()) {
+      speed = 0.7;
     }
-   
     intake.set(speed);
+
+   double beltSpeed = RobotContainer.controller.getLeftBumper() ? 0.7 : 0;
+   belt.set(beltSpeed);
     // This method will be called once per scheduler run
   }
 

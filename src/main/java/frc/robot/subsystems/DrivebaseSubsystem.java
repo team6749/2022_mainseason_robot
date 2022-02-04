@@ -9,8 +9,6 @@ import edu.wpi.first.wpilibj.drive.*;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
 
-
-
 public class DrivebaseSubsystem extends SubsystemBase{
 
     private final WPI_TalonFX frontLeft = new WPI_TalonFX(Constants.flMotor);
@@ -24,7 +22,8 @@ public class DrivebaseSubsystem extends SubsystemBase{
     DifferentialDrive myDrive = new DifferentialDrive(left, right);
 
     public DrivebaseSubsystem() {
-      
+      left.setInverted(true);
+      myDrive.setMaxOutput(0.45);
     }
     
     public void arcadeDrive(double speed, double rotation){
@@ -33,10 +32,12 @@ public class DrivebaseSubsystem extends SubsystemBase{
   
     @Override
   public void periodic() {
+
+    //System.out.println("I got here " + RobotContainer.controller.getLeftY() );
     
     // d%ouble speed = RobotContainer.controller.getLeftX();
     // double rotation = RobotContainer.controller.getRightY();
-    arcadeDrive(RobotContainer.controller.getLeftY(), RobotContainer.controller.getRightX());
+    arcadeDrive(RobotContainer.controller.getLeftY(), -(RobotContainer.controller.getRightX()));
     
   }
     // This method will be called once per scheduler run
@@ -46,6 +47,5 @@ public class DrivebaseSubsystem extends SubsystemBase{
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
   }
-
 
 }
