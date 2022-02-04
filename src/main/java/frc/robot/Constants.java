@@ -20,7 +20,7 @@ public final class Constants {
     public static int brMotor = 13;
     public static int shooterMotor = 01;
     public static int intakeMotor = 03;
-    public static int beltMotor = 00;
+    public static int beltMotor = 05;
     public static int climber1;
     public static int climber2;
 }
