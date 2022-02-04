@@ -37,7 +37,7 @@ public class DrivebaseSubsystem extends SubsystemBase{
     
     // d%ouble speed = RobotContainer.controller.getLeftX();
     // double rotation = RobotContainer.controller.getRightY();
-    arcadeDrive(RobotContainer.controller.getLeftY(), -(RobotContainer.controller.getRightX()));
+    arcadeDrive(RobotContainer.controller.getLeftY() * 0.45, -(RobotContainer.controller.getRightX()  * 0.45));
     
   }
     // This method will be called once per scheduler run
