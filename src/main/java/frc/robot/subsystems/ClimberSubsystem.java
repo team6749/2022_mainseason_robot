@@ -3,7 +3,8 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClimberSubsystem extends SubsystemBase  {
-    
+    private final WPI_TalonFX ClimbMotor1 = new WPI_TalonFX(Constants.climber1);
+    private final WPI_TalonFX ClimbMotor2 = new WPI_TalonFX(Constants.climber2);
 
 public ClimberSubsystem() {}
 

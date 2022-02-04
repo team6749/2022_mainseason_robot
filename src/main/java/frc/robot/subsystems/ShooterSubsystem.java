@@ -17,10 +17,8 @@ public class ShooterSubsystem extends SubsystemBase {
   @Override
     public void periodic() {
       // This method will be called once per scheduler run
-      // boolean shooterOn = false;
       double speed = -(RobotContainer.controller.getRightBumper() ? 0.69 : 0.2);
       double beltSpeed = RobotContainer.controller.getRightBumper() ? 0.7 : 0;
-      // System.out.println(RobotContainer.controller.getRightBumper());
       belt.set(beltSpeed);
       shooterMotor.set(speed);      
     }
