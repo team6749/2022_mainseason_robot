@@ -19,7 +19,7 @@ public class ShooterSubsystem extends SubsystemBase {
       // This method will be called once per scheduler run
       // boolean shooterOn = false;
       double speed = RobotContainer.controller.getRightBumper() ? 1 : 0;
-      System.out.println(RobotContainer.controller.getRightBumper()); 
+      // System.out.println(RobotContainer.controller.getRightBumper()); 
       shooterMotor.set(speed);      
     }
 
