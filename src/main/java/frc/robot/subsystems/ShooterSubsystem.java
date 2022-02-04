@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ShooterSubsystem extends SubsystemBase {
 
   private final WPI_TalonFX shooterMotor = new WPI_TalonFX(Constants.shooterMotor);
-
+  private final WPI_TalonFX belt = new WPI_TalonFX(Constants.beltMotor);
   public ShooterSubsystem() {}
 
 
@@ -19,7 +19,9 @@ public class ShooterSubsystem extends SubsystemBase {
       // This method will be called once per scheduler run
       // boolean shooterOn = false;
       double speed = -(RobotContainer.controller.getRightBumper() ? 0.69 : 0.2);
-      // System.out.println(RobotContainer.controller.getRightBumper()); 
+      double beltSpeed = RobotContainer.controller.getRightBumper() ? 0.7 : 0;
+      // System.out.println(RobotContainer.controller.getRightBumper());
+      belt.set(beltSpeed);
       shooterMotor.set(speed);      
     }
 
