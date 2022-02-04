@@ -7,7 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 
 public class IntakeSubsystem extends SubsystemBase {
-  WPI_TalonFX intake = new WPI_TalonFX(Constants.intakeMotor);
+private final WPI_TalonFX intake = new WPI_TalonFX(Constants.intakeMotor);
 public IntakeSubsystem() {
  
  
