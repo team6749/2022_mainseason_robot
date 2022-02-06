@@ -1,10 +1,12 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClimberSubsystem extends SubsystemBase  {
-    private final WPI_TalonFX ClimbMotor1 = new WPI_TalonFX(Constants.climber1);
-    private final WPI_TalonFX ClimbMotor2 = new WPI_TalonFX(Constants.climber2);
+    private final WPI_TalonSRX ClimbMotor1 = new WPI_TalonSRX(Constants.climber1);
+    private final WPI_TalonSRX ClimbMotor2 = new WPI_TalonSRX(Constants.climber2);
 
 public ClimberSubsystem() {}
 

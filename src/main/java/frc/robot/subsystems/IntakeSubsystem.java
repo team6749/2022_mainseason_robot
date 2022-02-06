@@ -3,11 +3,14 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.Constants;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 
 public class IntakeSubsystem extends SubsystemBase {
-private final WPI_TalonFX intake = new WPI_TalonFX(Constants.intakeMotor);
+  
+public enum IncomingBalls { NONE, RED, BLUE};
+public enum IntakeState {NONE, ONE, TWO};
+private final WPI_TalonSRX intake = new WPI_TalonSRX(Constants.intakeMotor);
 public IntakeSubsystem() {
  
  

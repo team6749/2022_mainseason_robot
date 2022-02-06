@@ -1,22 +1,21 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
+
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.IntakeSubsystem.IntakeState;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 
-public class IntakeStateCommand extends CommandBase {
-  private final IntakeSubsystem m_subsystem;
-  private final IntakeSubsystem m_state;
-
-
-  /** Creates a new IntakeStateCommand. */
-  public IntakeStateCommand(IntakeSubsystem subsystem,IntakeSubsystem state) {
-    addRequirements(subsystem);
-    m_subsystem = subsystem;
-    m_state = state;
+public class AutoIntakeBalls extends CommandBase {
+  private final IntakeSubsystem m_system;
+  private final Constants m_colorSensor;
+  /** Creates a new AutoIntakeBalls. */
+  public AutoIntakeBalls(IntakeSubsystem system, Constants color) {
+    addRequirements(system);
+    m_colorSensor = color;
+    m_system = system;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -27,6 +26,7 @@ public class IntakeStateCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if(IntakeSubsystem.)
   }
 
   // Called once the command ends or is interrupted.

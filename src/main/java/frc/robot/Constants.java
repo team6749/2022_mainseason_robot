@@ -23,4 +23,7 @@ public final class Constants {
     public static int beltMotor = 05;
     public static int climber1 = 0;
     public static int climber2 = 0;
+    public static int sensor1;
+    public static int sensor2;
+    public static int colorSensor;
 }
