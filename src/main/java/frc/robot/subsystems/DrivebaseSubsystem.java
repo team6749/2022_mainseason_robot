@@ -31,13 +31,8 @@ public class DrivebaseSubsystem extends SubsystemBase{
     }
   
     @Override
-  public void periodic() {
-
-    //System.out.println("I got here " + RobotContainer.controller.getLeftY() );
-    
-    // d%ouble speed = RobotContainer.controller.getLeftX();
-    // double rotation = RobotContainer.controller.getRightY();
-    arcadeDrive(RobotContainer.controller.getLeftY() * 0.45, -(RobotContainer.controller.getRightX()  * 0.45));
+    public void periodic() {
+      arcadeDrive(RobotContainer.controller.getLeftY() * 0.45, -(RobotContainer.controller.getRightX()  * 0.45));
     
   }
     // This method will be called once per scheduler run

@@ -25,8 +25,6 @@ public IntakeSubsystem() {
     }
     intake.set(speed);
 
-   double beltSpeed = RobotContainer.controller.getLeftBumper() ? 0.7 : 0;
-   belt.set(beltSpeed);
     // This method will be called once per scheduler run
   }
 
