@@ -4,15 +4,23 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 
 public class IntakeSubsystem extends SubsystemBase {
-private final WPI_TalonFX intake = new WPI_TalonFX(Constants.intakeMotor);
+private final WPI_TalonSRX intake = new WPI_TalonSRX(Constants.intakeMotor);
 public IntakeSubsystem() {
  
  
  
 }
+public void runIntakeForward(){
+  intake.set(-0.9);
+}
+public void runIntakeReverse(){
+  intake.set(0.9);
+}
+
 
 @Override
   public void periodic() {
