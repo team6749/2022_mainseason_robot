@@ -11,7 +11,6 @@ private final WPI_TalonFX intake = new WPI_TalonFX(Constants.intakeMotor);
 public IntakeSubsystem() {
  
  
- 
 }
 
 @Override
@@ -25,6 +24,17 @@ public IntakeSubsystem() {
     intake.set(speed);
 
     // This method will be called once per scheduler run
+  }
+
+  //methods used in commands
+  public void stop(){
+    intake.set(0);
+  }
+  public void start(){
+    intake.set(0.7);
+  }
+  public void reverse(){
+    intake.set(-0.7);
   }
 
   @Override

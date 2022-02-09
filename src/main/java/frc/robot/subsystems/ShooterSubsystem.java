@@ -23,6 +23,13 @@ public class ShooterSubsystem extends SubsystemBase {
       shooterMotor.set(speed);      
     }
 
+    public void runBelt(){
+      belt.set(0.4);
+    }
+    public void dontRun(){
+      belt.set(0);
+    }
+
     @Override
     public void simulationPeriodic() {
       // This method will be called once per scheduler run during simulation
