@@ -23,16 +23,17 @@ public class DrivebaseSubsystem extends SubsystemBase{
 
     public DrivebaseSubsystem() {
       left.setInverted(true);
-      myDrive.setMaxOutput(0.45);
+      myDrive.setMaxOutput(0.6);
+      setDefaultCommand(new DriveWithController());
     }
     
     public void arcadeDrive(double speed, double rotation){
-      myDrive.arcadeDrive(speed, rotation);
+      myDrive.arcadeDrive(Math.pow(speed, 2), Math.pow(rotation, 2));
     }
   
     @Override
     public void periodic() {
-      arcadeDrive(RobotContainer.controller.getLeftY() * 0.45, -(RobotContainer.controller.getRightX()  * 0.45));
+      // arcadeDrive(RobotContainer.controller.getLeftY() * 0.45, -(RobotContainer.controller.getRightX()  * 0.45));
     
   }
     // This method will be called once per scheduler run
