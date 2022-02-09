@@ -1,13 +1,21 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorSensorV3;
 
 
 public class IntakeSubsystem extends SubsystemBase {
 private final WPI_TalonFX intake = new WPI_TalonFX(Constants.intakeMotor);
+private final ColorSensorV3 colorSensor = new ColorSensorV3(Constants.colorSensorNumber);
+
+private final ColorMatch colorMatcher = new ColorMatch();
+
+
 public IntakeSubsystem() {
  
  
