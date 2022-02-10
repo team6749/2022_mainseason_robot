@@ -20,6 +20,13 @@ public IntakeSubsystem() {
  
  
 }
+public void runIntakeForward(){
+  intake.set(-0.9);
+}
+public void runIntakeReverse(){
+  intake.set(0.9);
+}
+
 
 @Override
   public void periodic() {
