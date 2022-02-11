@@ -14,11 +14,11 @@ public class DriveWithController extends CommandBase {
 
   
   /** Creates a new DriveWithController. */
-  public DriveWithController(DrivebaseSubsystem subsystem, XboxController controller) {
+  public DriveWithController(XboxController controller, DrivebaseSubsystem subsystem) {
     m_controller = controller;
     m_drive = subsystem;
     addRequirements(m_drive);
-    addRequirements(m_controller);
+    // addRequirements(m_controller);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -29,8 +29,8 @@ public class DriveWithController extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double speed = m_controller.getLeftX(); 
-    double rotation = m_controller.getRightY();
+    double speed = m_controller.getLeftY(); 
+    double rotation = m_controller.getRightX();
     m_drive.arcadeDrive(speed, rotation);
   }
 
