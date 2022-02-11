@@ -4,7 +4,14 @@
 
 package frc.robot;
 
+import javax.swing.text.AttributeSet.ColorAttribute;
+
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorMatchResult;
+
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.util.Color;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -25,5 +32,7 @@ public final class Constants {
     public static int beltMotor = 05;
     public static int climber1 = 0;
     public static int climber2 = 0;
-    public static Port colorSensorNumber;
+    // public static Port colorSensorNumber;
+    public static I2C.Port colorSensorPort = I2C.Port.kOnboard;
+    
 }

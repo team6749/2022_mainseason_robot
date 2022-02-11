@@ -7,15 +7,18 @@ package frc.robot.commands;
 import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.commands.IntakeStateCommand;
 
 public class AutoIntakeBalls extends CommandBase {
   private final IntakeSubsystem m_system;
   private final Constants m_colorSensor;
+  private final IntakeStateCommand m_intakeCommand;
   /** Creates a new AutoIntakeBalls. */
-  public AutoIntakeBalls(IntakeSubsystem system, Constants color) {
+  public AutoIntakeBalls(IntakeSubsystem system, Constants color, IntakeStateCommand command) {
     addRequirements(system);
     m_colorSensor = color;
     m_system = system;
+    m_intakeCommand = command;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
