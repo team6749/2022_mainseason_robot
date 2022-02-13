@@ -9,6 +9,7 @@ import javax.swing.text.AttributeSet.ColorAttribute;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.util.Color;
@@ -33,6 +34,6 @@ public final class Constants {
     public static int climber1 = 0;
     public static int climber2 = 0;
     // public static Port colorSensorNumber;
-    public static I2C.Port colorSensorPort = I2C.Port.kOnboard;
-    
+    public static I2C.Port colorSensorPort = I2C.Port.kOnboard;   
+    public static int beltLimitSwitch = 0; 
 }

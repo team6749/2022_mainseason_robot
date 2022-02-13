@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.IntakeStateCommand;
 import frc.robot.commands.ShootAllBalls;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivebaseSubsystem;
@@ -37,6 +38,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    _IntakeSubsystem.setDefaultCommand(new IntakeStateCommand(_IntakeSubsystem, _ShooterSubsystem));
   }
 
   /**
