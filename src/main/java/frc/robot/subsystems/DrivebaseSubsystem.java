@@ -3,8 +3,10 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import frc.robot.RobotContainer;
+import frc.robot.commands.DriveWithController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.*;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
@@ -23,18 +25,23 @@ public class DrivebaseSubsystem extends SubsystemBase{
 
     public DrivebaseSubsystem() {
       left.setInverted(true);
-      myDrive.setMaxOutput(0.45);
+      myDrive.setMaxOutput(0.25);
     }
     
     public void arcadeDrive(double speed, double rotation){
-      myDrive.arcadeDrive(speed, rotation);
+      double nspeed = Math.pow(speed, 2);
+      double nrotation = Math.pow(rotation, 2);
+      if(speed < 0){
+        nspeed = -(nspeed);
+      }
+      if(rotation < 0){
+        nrotation = -(nrotation);
+      }
+      myDrive.arcadeDrive(nspeed, nrotation);
     }
   
     @Override
-    public void periodic() {
-      arcadeDrive(RobotContainer.controller.getLeftY() * 0.45, -(RobotContainer.controller.getRightX()  * 0.45));
-    
-  }
+    public void periodic() {}
     // This method will be called once per scheduler run
 
   @Override
