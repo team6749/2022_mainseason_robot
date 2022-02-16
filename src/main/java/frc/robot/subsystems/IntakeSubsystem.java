@@ -11,13 +11,16 @@ import frc.robot.Constants;
 
 import javax.swing.plaf.synth.SynthScrollBarUI;
 
+import edu.wpi.first.wpilibj.Timer;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
-
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -27,6 +30,8 @@ public class IntakeSubsystem extends SubsystemBase {
 
   private final ColorSensorV3 colorSensor = new ColorSensorV3(Constants.colorSensorPort);
   private final ColorMatch m_colorMatcher = new ColorMatch();
+  Timer timer = new Timer();
+  IncomingBalls lastBallColor;
 
   private final Color redColor = new Color(0.48, 0.35, 0.13);
   private final Color blueColor = new Color(0.15, 0.40, 0.43);
@@ -38,13 +43,17 @@ public class IntakeSubsystem extends SubsystemBase {
 
   NetworkTable table = inst.getTable("datatable");
 
+  public static DriverStation station;
 
   public IntakeSubsystem() {
-    //color stuff
+
+    timer.start();
+
+    // color stuff
     m_colorMatcher.addColorMatch(redColor);
     m_colorMatcher.addColorMatch(blueColor);
     intake.setNeutralMode(NeutralMode.Brake);
-  } 
+  }
 
   public void runIntakeForward() {
     intake.set(-0.7);
@@ -53,7 +62,6 @@ public class IntakeSubsystem extends SubsystemBase {
   public void runIntakeReverse() {
     intake.set(0.7);
   }
-
 
   @Override
   public void periodic() {
@@ -64,7 +72,11 @@ public class IntakeSubsystem extends SubsystemBase {
       speed = 0.7;
     }
     intake.set(speed);
-    System.out.println(ballColorToEnum());
+    // System.out.println(ballColorToEnum());
+
+    System.out.println(DriverStation.getAlliance());
+
+    ballColorToEnum();
   }
 
   // color sensor to enum function
@@ -76,32 +88,50 @@ public class IntakeSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("green color", detectedColor.green);
 
     m_colorMatcher.matchColor(detectedColor);
+
+    if(lastBallColor == IncomingBalls.RED) {
+      SmartDashboard.putString("ballColor", "red");
+    } else if (lastBallColor == IncomingBalls.BLUE) {
+      SmartDashboard.putString("ballColor", "blue");
+    } else {
+      SmartDashboard.putString("ballColor", "none");
+    }
+    
     ColorMatchResult foundColor = m_colorMatcher.matchColor(detectedColor);
     if (foundColor != null) {
+
       if (foundColor.color == redColor) {
+        timer.reset();
+        lastBallColor = IncomingBalls.RED;
         return IncomingBalls.RED;
       } else if (foundColor.color == blueColor) {
+        timer.reset();
+        lastBallColor = IncomingBalls.BLUE;
         return IncomingBalls.BLUE;
       }
     }
-    return IncomingBalls.NONE;
+    if (timer.hasElapsed(3)) {
+      lastBallColor = IncomingBalls.NONE;
+      return IncomingBalls.NONE;
+    }
+    return lastBallColor;
   }
-  
+
   // SmartDashboard.putNumber("confidende", foundColor.confidence);
   // oujiu
   // This method will be called once per scheduler run
 
   // methods used in commands
   // public void stop() {
-  //   intake.set(0);
+  // intake.set(0);
   // }
 
   // public void start() {
-  //   intake.set(0.7);
+  // intake.set(0.7);
   // }
 
   // public void reverse() {
-  //   intake.set(-0.7);
+  // intake.set(-0.7);
   // }
 
   @Override

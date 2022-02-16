@@ -35,5 +35,5 @@ public final class Constants {
     public static int climber2 = 0;
     // public static Port colorSensorNumber;
     public static I2C.Port colorSensorPort = I2C.Port.kOnboard;   
-    public static int beltLimitSwitch = 0; 
+    public static int beltLimitSwitch = 0;
 }
