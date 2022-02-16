@@ -15,6 +15,7 @@ public ClimberSubsystem() {
 public void periodic() {
   // This method will be called once per scheduler run
   //climber1.setVoltage(9);
+  //needs to be set at break mode
   climber.feed();
   
 }
