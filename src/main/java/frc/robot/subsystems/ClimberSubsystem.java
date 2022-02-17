@@ -5,7 +5,7 @@ import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class ClimberSubsystem extends SubsystemBase  {
-    WPI_TalonSRX climber = new WPI_TalonSRX(Constants.climber); 
+    public WPI_TalonSRX climber = new WPI_TalonSRX(Constants.climber); 
 
 public ClimberSubsystem() {
   
