@@ -16,6 +16,7 @@ public class ClimberControl extends CommandBase {
   private final double m_time;
   private final ClimberDirection m_direction;
 
+
   /** Creates a new ClimberControl. */
   public ClimberControl(ClimberSubsystem subsystem, double time, ClimberDirection direction) {
     // Use addRequirements() here to declare subsystem dependencies.
