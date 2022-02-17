@@ -9,9 +9,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 public class ClimberSubsystem extends SubsystemBase  {
-    WPI_TalonSRX climber = new WPI_TalonSRX(Constants.climber); 
     DigitalInput climberTop = new DigitalInput(Constants.climberLimitSwitch01);
     DigitalInput climberBottom = new DigitalInput(Constants.climberLimitSwitch02);
+    public WPI_TalonSRX climber = new WPI_TalonSRX(Constants.climber); 
 
 public ClimberSubsystem() {
   
