@@ -6,7 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.Timer;
-import frc.robot.ClimberDirection;
+import frc.robot.enums.ClimberDirection;
 import frc.robot.subsystems.ClimberSubsystem;
 
 
