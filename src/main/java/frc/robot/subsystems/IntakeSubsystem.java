@@ -8,7 +8,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class IntakeSubsystem extends SubsystemBase {
   WPI_TalonSRX intake = new WPI_TalonSRX(Constants.intakeMotor);
-  WPI_TalonSRX belt = new WPI_TalonSRX(Constants.beltMotor);
+
+ // WPI_TalonSRX belt = new WPI_TalonSRX(Constants.beltMotor);
+ 
 public IntakeSubsystem() {
  
  

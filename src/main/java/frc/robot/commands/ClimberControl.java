@@ -14,16 +14,17 @@ public class ClimberControl extends CommandBase {
   private final ClimberSubsystem m_system;
   private final Timer timer;
   private final double m_time;
-  //private final ClimberDirection m_direction;
+  private final ClimberDirection m_direction;
 
 
   /** Creates a new ClimberControl. */
-  public ClimberControl(ClimberSubsystem subsystem, double time) {
+  public ClimberControl(ClimberSubsystem subsystem, double time, ClimberDirection direction){
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
     m_system = subsystem;
     timer = new Timer();
     m_time = time;
+    m_direction = direction;
   }
 
   // Called when the command is initially scheduled.
@@ -37,12 +38,11 @@ public class ClimberControl extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // if(m_direction == ClimberDirection.DOWN) {
-    //   m_system.goDown();
-    // } else if (m_direction == ClimberDirection.UP) {
-    //   m_system.goUp();
-    // }
-    m_system.goUp();
+    if(m_direction == ClimberDirection.DOWN) {
+      m_system.goDown();
+    } else if (m_direction == ClimberDirection.UP) {
+      m_system.goUp();
+    }
   }
 
   // Called once the command ends or is interrupted.

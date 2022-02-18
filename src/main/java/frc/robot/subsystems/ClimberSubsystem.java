@@ -9,8 +9,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 public class ClimberSubsystem extends SubsystemBase  {
-    DigitalInput climberTop = new DigitalInput(Constants.climberLimitSwitch01);
-    DigitalInput climberBottom = new DigitalInput(Constants.climberLimitSwitch02);
+    DigitalInput climberTop = new DigitalInput(Constants.climberLimitSwitchTop02);
+    DigitalInput climberBottom = new DigitalInput(Constants.climberLimitSwitchBottom01);
     public WPI_TalonSRX climber = new WPI_TalonSRX(Constants.climber); 
 
 public ClimberSubsystem() {
@@ -22,19 +22,21 @@ public void periodic() {
   // This method will be called once per scheduler run
   //climber1.setVoltage(9);
   //needs to be set at break mode
-  climber.feed();
+  climber.setVoltage(0);
+  //System.out.println(climberBottom.get());
+  //System.out.println(climberTop.get());
   
   
 }
 
 public void goDown(){
   if(climberBottom.get() == false){
-  climber.setVoltage(-9);
+  climber.setVoltage(-7);
   }
 }
 public void goUp(){
   if(climberTop.get() == false){
-  climber.setVoltage(9);
+  climber.setVoltage(7);
   }
 }
 
