@@ -14,7 +14,7 @@ public class ClimberSubsystem extends SubsystemBase  {
     public WPI_TalonSRX climber = new WPI_TalonSRX(Constants.climber); 
 
 public ClimberSubsystem() {
-  
+  climber.setNeutralMode(NeutralMode.Brake);
 }
 
 @Override
@@ -23,7 +23,7 @@ public void periodic() {
   //climber1.setVoltage(9);
   //needs to be set at break mode
   climber.feed();
-  climber.setNeutralMode(NeutralMode.Brake);
+  
   
 }
 

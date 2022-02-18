@@ -51,8 +51,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    new JoystickButton(controller, XboxController.Button.kBack.value).whenPressed(new ClimberControl(climberSubsystem, 0.5, ClimberDirection.UP));
-    new JoystickButton(controller, XboxController.Button.kStart.value).whenPressed(new ClimberControl(climberSubsystem, 0.5, ClimberDirection.DOWN));
+    new JoystickButton(controller, XboxController.Button.kBack.value).whenPressed(new ClimberControl(climberSubsystem, 0.5));
+    new JoystickButton(controller, XboxController.Button.kStart.value).whenPressed(new ClimberControl(climberSubsystem, 0.5));
 
   }
 
