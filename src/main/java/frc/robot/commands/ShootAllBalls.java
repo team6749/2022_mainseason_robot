@@ -28,7 +28,6 @@ public class ShootAllBalls extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    myTimer.reset();
     myTimer.start();
   }
 
@@ -43,7 +42,7 @@ public class ShootAllBalls extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    
+    myTimer.reset();
   }
 
   // Returns true when the command should end.
