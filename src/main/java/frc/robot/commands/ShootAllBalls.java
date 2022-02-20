@@ -36,7 +36,7 @@ public class ShootAllBalls extends CommandBase {
   @Override
   public void execute() {
     m_shooterSubsystem.runBeltForward();
-    m_shooterSubsystem.setShooterSpeed(-0.7);
+    m_shooterSubsystem.setShooterSpeed(75.0);
     m_intakeSubsystem.runIntakeForward();
   }
 
