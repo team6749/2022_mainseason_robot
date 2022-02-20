@@ -7,12 +7,19 @@ import frc.robot.commands.ShootAllBalls;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
 
 public class ShooterSubsystem extends SubsystemBase {
 
   private final WPI_TalonFX shooterMotor = new WPI_TalonFX(Constants.shooterMotor);
   private final WPI_TalonFX belt = new WPI_TalonFX(Constants.beltMotor);
+  DigitalInput beltSwitch = new DigitalInput(Constants.beltLimitSwitch);
+  
+  public boolean ballInBelt(){
+  return beltSwitch.get();
+  }
+
   public ShooterSubsystem() {}
 
 
@@ -22,6 +29,7 @@ public class ShooterSubsystem extends SubsystemBase {
   //   myTimer.hasElapsed(2.5);
   // }
 
+  
   public void setShooterSpeed(double speed){
     if(speed > 0.7){
       //backward
@@ -48,7 +56,14 @@ public class ShooterSubsystem extends SubsystemBase {
       // This method will be called once per scheduler run
       shooterMotor.set(-0.2);
       belt.set(0.0);
+      System.out.println(ballInBelt());
+    }
 
+    public void runBelt(){
+      belt.set(0.4);
+    }
+    public void dontRun(){
+      belt.set(0);
     }
 
     @Override
