@@ -73,6 +73,8 @@ public class DrivebaseSubsystem extends SubsystemBase{
     @Override
     public void periodic() {
 
+      System.out.println(getPose());
+
       odometry.update(Rotation2d.fromDegrees(gyro.getAngle()), leftEncoder.getDistance(), rightEncoder.getDistance());
 
     }
