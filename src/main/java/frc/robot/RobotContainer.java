@@ -7,6 +7,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.counter.UpDownCounter;
+import frc.robot.commands.ClimberControl;
+import frc.robot.enums.ClimberDirection;
 import frc.robot.commands.DriveWithController;
 import frc.robot.commands.ShootAllBalls;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -48,6 +51,9 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+
+    new JoystickButton(controller, XboxController.Button.kBack.value).whenPressed(new ClimberControl(_ClimberSubsystem, 0.5, ClimberDirection.UP));
+    new JoystickButton(controller, XboxController.Button.kStart.value).whenPressed(new ClimberControl(_ClimberSubsystem, 0.5, ClimberDirection.DOWN));
 
 
     // new JoystickButton(controller, XboxController.Button.kBack.value).(new ClimberControl(climberSubsystem, 0.5, ClimberDirection.UP));
