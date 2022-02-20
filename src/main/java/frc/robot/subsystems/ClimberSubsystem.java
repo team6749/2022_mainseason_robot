@@ -1,19 +1,46 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import frc.robot.Constants;
 
-public class ClimberSubsystem extends SubsystemBase  {
-    private final WPI_TalonFX ClimbMotor1 = new WPI_TalonFX(Constants.climber1);
-    private final WPI_TalonFX ClimbMotor2 = new WPI_TalonFX(Constants.climber2);
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-public ClimberSubsystem() {}
+import edu.wpi.first.wpilibj.DigitalInput;
+
+public class ClimberSubsystem extends SubsystemBase  {
+    DigitalInput climberTop = new DigitalInput(Constants.climberLimitSwitchTop02);
+    DigitalInput climberBottom = new DigitalInput(Constants.climberLimitSwitchBottom01);
+    public WPI_TalonSRX climber = new WPI_TalonSRX(Constants.climber); 
+
+public ClimberSubsystem() {
+  climber.setNeutralMode(NeutralMode.Brake);
+}
 
 @Override
 public void periodic() {
   // This method will be called once per scheduler run
+  //climber1.setVoltage(9);
+  //needs to be set at break mode
+  climber.setVoltage(0);
+  //System.out.println(climberBottom.get());
+  //System.out.println(climberTop.get());
+  
+  
+}
+
+public void goDown(){
+  if(climberBottom.get() == false){
+  climber.setVoltage(-7);
+  }
+}
+public void goUp(){
+  if(climberTop.get() == false){
+  climber.setVoltage(7);
+  }
 }
 
 @Override

@@ -4,6 +4,16 @@
 
 package frc.robot;
 
+import javax.swing.text.AttributeSet.ColorAttribute;
+
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorMatchResult;
+
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.util.Color;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -21,6 +31,11 @@ public final class Constants {
     public static int shooterMotor = 01;
     public static int intakeMotor = 03;
     public static int beltMotor = 05;
-    public static int climber1 = 0;
-    public static int climber2 = 0;
+    // public static Port colorSensorNumber;
+    public static I2C.Port colorSensorPort = I2C.Port.kOnboard;   
+    public static int beltLimitSwitch = 0;
+    public static int climber = 02;
+    // public static int climber2;
+    public static int climberLimitSwitchBottom01 = 01;
+    public static int climberLimitSwitchTop02 = 02;
 }
