@@ -1,14 +1,22 @@
 package frc.robot.subsystems;
 
 
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import frc.robot.RobotContainer;
 import frc.robot.commands.DriveWithController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.ADIS16470_IMU;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.*;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+
 
 
 public class DrivebaseSubsystem extends SubsystemBase{
@@ -21,9 +29,31 @@ public class DrivebaseSubsystem extends SubsystemBase{
     MotorControllerGroup left = new MotorControllerGroup(frontLeft, backLeft);
     MotorControllerGroup right = new MotorControllerGroup(frontRight, backRight);
     
+    public static final ADIS16470_IMU gyro = new ADIS16470_IMU();
+
+    Encoder leftEncoder = new Encoder(Constants.encoderLeft[0], Constants.encoderLeft[1]);
+    Encoder rightEncoder = new Encoder(Constants.encoderRight[0], Constants.encoderRight[1]);
+
+    
+    public DifferentialDriveKinematics driveKinematics;
+    DifferentialDriveOdometry odometry;
     DifferentialDrive myDrive = new DifferentialDrive(left, right);
 
     public DrivebaseSubsystem() {
+      
+
+      leftEncoder.setDistancePerPulse(0.1524 * Math.PI / 360);
+      rightEncoder.setDistancePerPulse(0.1524 * Math.PI / 360);
+      rightEncoder.setReverseDirection(true);
+
+      gyro.calibrate();
+
+      driveKinematics = new DifferentialDriveKinematics(0.5842);
+      odometry = new DifferentialDriveOdometry(new Rotation2d());
+
+
+
+
       left.setInverted(true);
       myDrive.setMaxOutput(0.25);
     }
@@ -41,12 +71,26 @@ public class DrivebaseSubsystem extends SubsystemBase{
     }
   
     @Override
-    public void periodic() {}
+    public void periodic() {
+
+      odometry.update(Rotation2d.fromDegrees(gyro.getAngle()), leftEncoder.getDistance(), rightEncoder.getDistance());
+
+    }
     // This method will be called once per scheduler run
+
+    public Pose2d getPose() {
+      if (odometry != null && odometry.getPoseMeters() != null) {
+        return odometry.getPoseMeters();
+      } else {
+        return new Pose2d(0.0, 0.0, new Rotation2d(0));
+      }
+    }
+
+    
+  
 
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
   }
-
 }
