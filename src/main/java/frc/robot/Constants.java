@@ -21,8 +21,8 @@ public final class Constants {
     public static int shooterMotor = 01;
     public static int intakeMotor = 03;
     public static int beltMotor = 05;
-    public static int climber;
+    public static int climber = 02;
     // public static int climber2;
-    public static int climberLimitSwitch01 = 1;
-    public static int climberLimitSwitch02 = 2;
+    public static int climberLimitSwitchBottom01 = 01;
+    public static int climberLimitSwitchTop02 = 02;
 }
