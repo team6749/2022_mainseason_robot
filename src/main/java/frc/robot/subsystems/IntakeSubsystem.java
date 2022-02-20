@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
-import frc.robot.commands.IntakeStateCommand;
+import frc.robot.commands.AutoIntakeBalls;
 import frc.robot.enums.IncomingBalls;
 import frc.robot.Constants;
 
@@ -74,9 +74,23 @@ public class IntakeSubsystem extends SubsystemBase {
     intake.set(speed);
     // System.out.println(ballColorToEnum());
 
-    System.out.println(DriverStation.getAlliance());
+    if (DriverStation.getAlliance() == Alliance.Red) {
+
+    } else {
+
+    }
 
     ballColorToEnum();
+  }
+
+  public boolean ballColorToTeam(IncomingBalls ballColor) {
+    if (DriverStation.getAlliance() == Alliance.Red && ballColor == IncomingBalls.RED) {
+      return true;
+    }
+    if (DriverStation.getAlliance() == Alliance.Blue && ballColor == IncomingBalls.BLUE) {
+      return true;
+    }
+    return false;
   }
 
   // color sensor to enum function
@@ -89,14 +103,14 @@ public class IntakeSubsystem extends SubsystemBase {
 
     m_colorMatcher.matchColor(detectedColor);
 
-    if(lastBallColor == IncomingBalls.RED) {
+    if (lastBallColor == IncomingBalls.RED) {
       SmartDashboard.putString("ballColor", "red");
     } else if (lastBallColor == IncomingBalls.BLUE) {
       SmartDashboard.putString("ballColor", "blue");
     } else {
       SmartDashboard.putString("ballColor", "none");
     }
-    
+
     ColorMatchResult foundColor = m_colorMatcher.matchColor(detectedColor);
     if (foundColor != null) {
 
