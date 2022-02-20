@@ -5,13 +5,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ClimberControl;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.enums.ClimberDirection;
+import frc.robot.commands.DriveWithController;
+import frc.robot.commands.ShootAllBalls;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivebaseSubsystem;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -29,18 +30,17 @@ public class RobotContainer {
 
    
     // The robot's subsystems and commands are defined here
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
+  private final ClimberSubsystem _ClimberSubsystem = new ClimberSubsystem();
   private final DrivebaseSubsystem _DrivebaseSubsystem = new DrivebaseSubsystem();
   private final IntakeSubsystem _IntakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem _ShooterSubsystem = new ShooterSubsystem();
-  //commands - usually not put here 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  //commands - usually not put here
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    _DrivebaseSubsystem.setDefaultCommand(new DriveWithController(controller, _DrivebaseSubsystem));
   }
 
   /**
@@ -51,9 +51,12 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    new JoystickButton(controller, XboxController.Button.kBack.value).whenPressed(new ClimberControl(climberSubsystem, 0.5, ClimberDirection.UP));
-    new JoystickButton(controller, XboxController.Button.kStart.value).whenPressed(new ClimberControl(climberSubsystem, 0.5, ClimberDirection.DOWN));
+    new JoystickButton(controller, XboxController.Button.kBack.value).whenPressed(new ClimberControl(_ClimberSubsystem, 0.5, ClimberDirection.UP));
+    new JoystickButton(controller, XboxController.Button.kStart.value).whenPressed(new ClimberControl(_ClimberSubsystem, 0.5, ClimberDirection.DOWN));
 
+
+    // new JoystickButton(controller, XboxController.Button.kBack.value).(new ClimberControl(climberSubsystem, 0.5, ClimberDirection.UP));
+    new JoystickButton(controller, XboxController.Button.kRightBumper.value).whenPressed(new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem));
   }
 
   /**
@@ -63,6 +66,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return null;
   }
 }
