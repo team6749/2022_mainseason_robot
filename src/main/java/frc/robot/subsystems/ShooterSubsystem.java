@@ -19,11 +19,6 @@ public class ShooterSubsystem extends SubsystemBase {
   DigitalInput beltSwitch = new DigitalInput(Constants.beltLimitSwitch);
   
   private final WPI_TalonFX belt = new WPI_TalonFX(Constants.beltMotor);
-  private final double kP = 100;
-  private final double kGoal = -0.7;
-  
-  // private final kI;
-  // private final kD;
 
   public ShooterSubsystem() {
     shooterMotor.setInverted(true);
