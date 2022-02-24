@@ -38,6 +38,6 @@ public final class Constants {
     // public static int climber2;
     public static int climberLimitSwitchBottom01 = 01;
     public static int climberLimitSwitchTop02 = 02;
-    public static int[] encoderLeft = {3, 4};
-    public static int[] encoderRight = {5,6}; 
+    public static int[] encoderLeft = {4, 3};
+    public static int[] encoderRight = {6,5}; 
 }

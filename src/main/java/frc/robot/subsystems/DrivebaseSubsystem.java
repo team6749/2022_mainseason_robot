@@ -16,11 +16,14 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.*;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
 public class DrivebaseSubsystem extends SubsystemBase{
 
+    SmartDashboard dashboard;
     private final WPI_TalonFX frontLeft = new WPI_TalonFX(Constants.flMotor);
     private final WPI_TalonFX frontRight = new WPI_TalonFX(Constants.frMotor);
     private final WPI_TalonFX backLeft = new WPI_TalonFX(Constants.blMotor);
@@ -75,6 +78,11 @@ public class DrivebaseSubsystem extends SubsystemBase{
 
       System.out.println(getPose());
 
+      double lDistance = leftEncoder.getDistance();
+      double rDistance = rightEncoder.getDistance();
+      SmartDashboard.putNumber("Encoder Left value", lDistance);  
+      SmartDashboard .putNumber("Encoder Right value", rDistance);
+         
       odometry.update(Rotation2d.fromDegrees(gyro.getAngle()), leftEncoder.getDistance(), rightEncoder.getDistance());
 
     }
