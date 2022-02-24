@@ -14,14 +14,14 @@ import frc.robot.subsystems.IntakeSubsystem;
 
 public class ShootAllBalls extends CommandBase {
   /** Creates a new ShootAllBalls. */
-  private final ShooterSubsystem m_shooterSubsystem;
-  private final IntakeSubsystem m_intakeSubsystem;
+  private final ShooterSubsystem _shooterSubsystem;
+  private final IntakeSubsystem _intakeSubsystem;
   Timer myTimer = new Timer();
   public ShootAllBalls(ShooterSubsystem shooter, IntakeSubsystem intake) {
     // Use addRequirements() here to declare subsystem dependencies.
-     m_shooterSubsystem = shooter;
+     _shooterSubsystem = shooter;
      addRequirements(shooter);
-     m_intakeSubsystem = intake;
+     _intakeSubsystem = intake;
      addRequirements(intake);
   }
 
@@ -34,9 +34,9 @@ public class ShootAllBalls extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooterSubsystem.runBeltForward();
-    m_shooterSubsystem.setShooterSpeed(75.0);
-    m_intakeSubsystem.runIntakeForward();
+    _shooterSubsystem.runBeltForward();
+    _shooterSubsystem.setShooterSpeed(75.0);
+    _intakeSubsystem.runIntakeForward();
   }
 
   // Called once the command ends or is interrupted.

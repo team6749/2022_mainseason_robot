@@ -11,20 +11,20 @@ import frc.robot.subsystems.ClimberSubsystem;
 
 
 public class ClimberControl extends CommandBase {
-  private final ClimberSubsystem m_system;
+  private final ClimberSubsystem _system;
   private final Timer timer;
-  private final double m_time;
-  private final ClimberDirection m_direction;
+  private final double _time;
+  private final ClimberDirection _direction;
 
 
   /** Creates a new ClimberControl. */
   public ClimberControl(ClimberSubsystem subsystem, double time, ClimberDirection direction){
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
-    m_system = subsystem;
+    _system = subsystem;
     timer = new Timer();
-    m_time = time;
-    m_direction = direction;
+    _time = time;
+    _direction = direction;
   }
 
   // Called when the command is initially scheduled.
@@ -38,10 +38,10 @@ public class ClimberControl extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_direction == ClimberDirection.DOWN) {
-      m_system.goDown();
-    } else if (m_direction == ClimberDirection.UP) {
-      m_system.goUp();
+    if(_direction == ClimberDirection.DOWN) {
+      _system.goDown();
+    } else if (_direction == ClimberDirection.UP) {
+      _system.goUp();
     }
   }
 
@@ -55,6 +55,6 @@ public class ClimberControl extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return timer.hasElapsed(m_time);
+    return timer.hasElapsed(_time);
   }
 }

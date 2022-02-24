@@ -29,7 +29,7 @@ public class IntakeSubsystem extends SubsystemBase {
   private final WPI_TalonSRX intake = new WPI_TalonSRX(Constants.intakeMotor);
 
   private final ColorSensorV3 colorSensor = new ColorSensorV3(Constants.colorSensorPort);
-  private final ColorMatch m_colorMatcher = new ColorMatch();
+  private final ColorMatch _colorMatcher = new ColorMatch();
   Timer timer = new Timer();
   IncomingBalls lastBallColor;
 
@@ -50,8 +50,8 @@ public class IntakeSubsystem extends SubsystemBase {
     timer.start();
 
     // color stuff
-    m_colorMatcher.addColorMatch(redColor);
-    m_colorMatcher.addColorMatch(blueColor);
+    _colorMatcher.addColorMatch(redColor);
+    _colorMatcher.addColorMatch(blueColor);
     intake.setNeutralMode(NeutralMode.Brake);
   }
 
@@ -101,7 +101,7 @@ public class IntakeSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("blue color", detectedColor.blue);
     SmartDashboard.putNumber("green color", detectedColor.green);
 
-    m_colorMatcher.matchColor(detectedColor);
+    _colorMatcher.matchColor(detectedColor);
 
     if (lastBallColor == IncomingBalls.RED) {
       SmartDashboard.putString("ballColor", "red");
@@ -111,7 +111,7 @@ public class IntakeSubsystem extends SubsystemBase {
       SmartDashboard.putString("ballColor", "none");
     }
 
-    ColorMatchResult foundColor = m_colorMatcher.matchColor(detectedColor);
+    ColorMatchResult foundColor = _colorMatcher.matchColor(detectedColor);
     if (foundColor != null) {
 
       if (foundColor.color == redColor) {
@@ -130,23 +130,6 @@ public class IntakeSubsystem extends SubsystemBase {
     }
     return lastBallColor;
   }
-
-  // SmartDashboard.putNumber("confidende", foundColor.confidence);
-  // oujiu
-  // This method will be called once per scheduler run
-
-  // methods used in commands
-  // public void stop() {
-  // intake.set(0);
-  // }
-
-  // public void start() {
-  // intake.set(0.7);
-  // }
-
-  // public void reverse() {
-  // intake.set(-0.7);
-  // }
 
   @Override
   public void simulationPeriodic() {
