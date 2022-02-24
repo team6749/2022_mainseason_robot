@@ -4,34 +4,40 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.ShootAllBalls;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
 
 public class ShooterSubsystem extends SubsystemBase {
 
   private final WPI_TalonFX shooterMotor = new WPI_TalonFX(Constants.shooterMotor);
+  DigitalInput beltSwitch = new DigitalInput(Constants.beltLimitSwitch);
+  
   private final WPI_TalonFX belt = new WPI_TalonFX(Constants.beltMotor);
-  public ShooterSubsystem() {}
 
+  public ShooterSubsystem() {
+    shooterMotor.setInverted(true);
+    shooterMotor.configFactoryDefault();
+    shooterMotor.config_kF(0, 0.05d, 0);
+    shooterMotor.config_kP(0, 0.175d, 0);
+    // shooterMotor.config_kI(0, 0.7d, 0);
+    shooterMotor.configNeutralDeadband(0.001);
+    shooterMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
+    shooterMotor.setNeutralMode(NeutralMode.Coast);
+    // upperShooter.set(ControlMode.Velocity, 204.8d * rps);
+  }
 
-  // public void shootAllBalls(){
-  //   Timer myTimer = new Timer();
-  //   myTimer.reset();
-  //   myTimer.hasElapsed(2.5);
-  // }
-
-  public void setShooterSpeed(double speed){
-    if(speed > 0.7){
-      //backward
-      shooterMotor.set(0.7);
-    } else if(speed < -0.7){
-      //forward
-      shooterMotor.set(-0.7);
-    } else {
-      shooterMotor.set(speed);
-    }
+  public boolean ballInBelt(){
+    return beltSwitch.get();
+  }
+  public void setShooterSpeed(double rpm){
+    // shooterMotor.set(-(speed));
+    shooterMotor.set(ControlMode.Velocity, 204.8d * rpm);
   }
 
    public void runBeltForward(){
@@ -46,9 +52,17 @@ public class ShooterSubsystem extends SubsystemBase {
     public void periodic() {
 
       // This method will be called once per scheduler run
-      shooterMotor.set(-0.2);
+      // shooterMotor.set(-0.2);
+      shooterMotor.set(ControlMode.Velocity, 204.8d * 65);
       belt.set(0.0);
+      System.out.println(ballInBelt());
+    }
 
+    public void runBelt(){
+      belt.set(0.4);
+    }
+    public void dontRun(){
+      belt.set(0);
     }
 
     @Override

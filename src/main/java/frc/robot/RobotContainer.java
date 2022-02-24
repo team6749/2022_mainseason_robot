@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.counter.UpDownCounter;
 import frc.robot.commands.ClimberControl;
 import frc.robot.enums.ClimberDirection;
 import frc.robot.commands.DriveWithController;
+import frc.robot.commands.AutoIntakeBalls;
 import frc.robot.commands.ShootAllBalls;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivebaseSubsystem;
@@ -41,6 +42,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    _IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_IntakeSubsystem, _ShooterSubsystem));
     _DrivebaseSubsystem.setDefaultCommand(new DriveWithController(controller, _DrivebaseSubsystem));
   }
 
