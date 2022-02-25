@@ -55,7 +55,7 @@ public class ShooterSubsystem extends SubsystemBase {
       // shooterMotor.set(-0.2);
       shooterMotor.set(ControlMode.Velocity, 204.8d * 65);
       belt.set(0.0);
-      System.out.println(ballInBelt());
+      // System.out.println(ballInBelt());
     }
 
     public void runBelt(){

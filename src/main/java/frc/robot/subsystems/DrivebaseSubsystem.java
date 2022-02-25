@@ -47,7 +47,8 @@ public class DrivebaseSubsystem extends SubsystemBase{
 
       leftEncoder.setDistancePerPulse(0.1524 * Math.PI / 360);
       rightEncoder.setDistancePerPulse(0.1524 * Math.PI / 360);
-      rightEncoder.setReverseDirection(true);
+      rightEncoder.setReverseDirection(false);
+      leftEncoder.setReverseDirection(false);
 
       gyro.calibrate();
 
@@ -58,6 +59,7 @@ public class DrivebaseSubsystem extends SubsystemBase{
 
 
       left.setInverted(true);
+
       myDrive.setMaxOutput(0.25);
     }
     
@@ -76,7 +78,7 @@ public class DrivebaseSubsystem extends SubsystemBase{
     @Override
     public void periodic() {
 
-      System.out.println(getPose());
+      // System.out.println(getPose());
 
       double lDistance = leftEncoder.getDistance();
       double rDistance = rightEncoder.getDistance();
@@ -96,7 +98,17 @@ public class DrivebaseSubsystem extends SubsystemBase{
       }
     }
 
-    
+  public void driveRobotRaw(double left, double right){
+    myDrive.tankDrive(-left, right);
+  }
+
+  public double getLeftEncoder(){
+   return leftEncoder.getDistance();
+  }
+
+  public double getRightEncoder(){
+    return rightEncoder.getDistance();
+  }
   
 
   @Override

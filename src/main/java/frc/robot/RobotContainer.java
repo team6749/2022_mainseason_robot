@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.counter.UpDownCounter;
 import frc.robot.commands.ClimberControl;
+import frc.robot.commands.DriveForwardAutonomously;
 import frc.robot.enums.ClimberDirection;
 import frc.robot.commands.DriveWithController;
 import frc.robot.commands.AutoIntakeBalls;
@@ -60,6 +61,7 @@ public class RobotContainer {
 
     // new JoystickButton(controller, XboxController.Button.kBack.value).(new ClimberControl(climberSubsystem, 0.5, ClimberDirection.UP));
     new JoystickButton(controller, XboxController.Button.kRightBumper.value).whenPressed(new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem));
+
   }
 
   /**
@@ -69,6 +71,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return new DriveForwardAutonomously(_DrivebaseSubsystem, 0.50, 0.50);
   }
 }
