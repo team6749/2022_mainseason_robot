@@ -34,15 +34,15 @@ public void periodic() {
 
 public void goDown(){
   if(climberBottom.get() == false){
-  climber.setVoltage(-7);
+    climber.setVoltage(-9);
   }
 }
 public void goUp(){
   if(climberTop.get() == false){
-  climber.setVoltage(7);
+    climber.setVoltage(9);
   }
 }
-
+  
 @Override
 public void simulationPeriodic() {
   // This method will be called once per scheduler run during simulation

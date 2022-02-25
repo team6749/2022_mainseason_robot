@@ -33,7 +33,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public boolean ballInBelt(){
-    return beltSwitch.get();
+    return !beltSwitch.get();
   }
   public void setShooterSpeed(double rpm){
     // shooterMotor.set(-(speed));
@@ -41,11 +41,14 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
    public void runBeltForward(){
-    belt.set(0.7);
+    belt.set(0.9);
    } 
+   public void runBelt(){
+     belt.set(0.4);
+   }
 
   public void runBeltReverse(){
-    belt.set(-0.7);
+    belt.set(-0.9);
   }
 
   @Override
@@ -55,11 +58,9 @@ public class ShooterSubsystem extends SubsystemBase {
       // shooterMotor.set(-0.2);
       shooterMotor.set(ControlMode.Velocity, 204.8d * 65);
       belt.set(0.0);
+      //System.out.println(beltSwitch.get());
     }
 
-    public void runBelt(){
-      belt.set(0.4);
-    }
     public void dontRun(){
       belt.set(0);
     }

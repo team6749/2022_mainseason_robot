@@ -56,42 +56,37 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void runIntakeForward() {
-    intake.set(-0.7);
+    intake.set(-0.6);
   }
 
   public void runIntakeReverse() {
-    intake.set(0.7);
+    intake.set(0.6);
   }
 
   @Override
   public void periodic() {
-    double speed = 0;
-    if (RobotContainer.controller.getAButton()) {
-      speed = -0.7;
-    } else if (RobotContainer.controller.getBButton()) {
-      speed = 0.7;
-    }
-    intake.set(speed);
     // System.out.println(ballColorToEnum());
 
-    if (DriverStation.getAlliance() == Alliance.Red) {
+    // if (DriverStation.getAlliance() == Alliance.Red) {
 
-    } else {
+    // } else {
 
-    }
+    // }
+    intake.set(0);
 
     ballColorToEnum();
+    
   }
 
-  public boolean ballColorToTeam(IncomingBalls ballColor) {
-    if (DriverStation.getAlliance() == Alliance.Red && ballColor == IncomingBalls.RED) {
-      return true;
-    }
-    if (DriverStation.getAlliance() == Alliance.Blue && ballColor == IncomingBalls.BLUE) {
-      return true;
-    }
-    return false;
-  }
+  // public boolean ballColorToTeam(IncomingBalls ballColor) {
+  //   if (DriverStation.getAlliance() == Alliance.Red && ballColor == IncomingBalls.RED) {
+  //     return true;
+  //   }
+  //   if (DriverStation.getAlliance() == Alliance.Blue && ballColor == IncomingBalls.BLUE) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   // color sensor to enum function
   public IncomingBalls ballColorToEnum() {

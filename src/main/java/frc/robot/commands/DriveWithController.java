@@ -35,6 +35,7 @@ public class DriveWithController extends CommandBase {
   public void execute() {
     double speed = _controller.getLeftY(); 
     double rotation = _controller.getRightX();
+    
     _drive.arcadeDrive(speed, rotation);
   }
 
@@ -42,7 +43,7 @@ public class DriveWithController extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     //if some condition is met, the drive can be interrupted
-    _drive.setBreakMode(NeutralMode.Coast);
+    // _drive.setBreakMode(NeutralMode.Coast);
   }
 
   // Returns true when the command should end.
