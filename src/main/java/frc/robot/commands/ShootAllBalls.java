@@ -37,14 +37,15 @@ public class ShootAllBalls extends CommandBase {
   public void execute() {
     _shooterSubsystem.setShooterSpeed(70.0);
     if(myTimer.hasElapsed(0.5)){
-    _shooterSubsystem.runBeltForward();
-    _intakeSubsystem.runIntakeForward();
-  }
+      _shooterSubsystem.runBeltForward();
+      _intakeSubsystem.runIntakeForward();
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    
   }
 
   // Returns true when the command should end.
