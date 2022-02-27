@@ -28,21 +28,23 @@ public class ShootAllBalls extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    myTimer.reset();
     myTimer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    _shooterSubsystem.setShooterSpeed(70.0);
+    if(myTimer.hasElapsed(0.5)){
     _shooterSubsystem.runBeltForward();
-    _shooterSubsystem.setShooterSpeed(80.0);
     _intakeSubsystem.runIntakeForward();
+  }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    myTimer.reset();
   }
 
   // Returns true when the command should end.

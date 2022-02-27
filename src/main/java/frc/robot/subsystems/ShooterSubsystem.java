@@ -26,7 +26,7 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterMotor.config_kF(0, 0.05d, 0);
     shooterMotor.config_kP(0, 0.175d, 0);
     // shooterMotor.config_kI(0, 0.7d, 0);
-    shooterMotor.configNeutralDeadband(0.001);
+    //shooterMotor.configNeutralDeadband(0.001);
     shooterMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
     shooterMotor.setNeutralMode(NeutralMode.Coast);
     // upperShooter.set(ControlMode.Velocity, 204.8d * rps);

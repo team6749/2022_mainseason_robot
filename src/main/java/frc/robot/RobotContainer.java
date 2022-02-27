@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -40,6 +41,8 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    CameraServer.startAutomaticCapture();
+
     // Configure the button bindings
     configureButtonBindings();
     _IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_IntakeSubsystem, _ShooterSubsystem));
@@ -54,8 +57,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    new JoystickButton(controller, XboxController.Button.kBack.value).whenPressed(new ClimberControl(_ClimberSubsystem, 1.0, ClimberDirection.UP));
-    new JoystickButton(controller, XboxController.Button.kStart.value).whenPressed(new ClimberControl(_ClimberSubsystem, 1.0, ClimberDirection.DOWN));
+    new JoystickButton(controller, XboxController.Button.kBack.value).whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.UP));
+    new JoystickButton(controller, XboxController.Button.kStart.value).whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.DOWN));
 
 
     // new JoystickButton(controller, XboxController.Button.kBack.value).(new ClimberControl(climberSubsystem, 0.5, ClimberDirection.UP));

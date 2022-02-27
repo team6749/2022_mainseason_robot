@@ -119,7 +119,7 @@ public class IntakeSubsystem extends SubsystemBase {
         return IncomingBalls.BLUE;
       }
     }
-    if (timer.hasElapsed(3)) {
+    if (timer.hasElapsed(2)) {
       lastBallColor = IncomingBalls.NONE;
       return IncomingBalls.NONE;
     }
