@@ -38,4 +38,10 @@ public final class Constants {
     // public static int climber2;
     public static int climberLimitSwitchBottom01 = 01;
     public static int climberLimitSwitchTop02 = 02;
+
+
+    public static int CanCoderfl;
+    public static int CanCoderfr;
+    public static int CanCoderbl;
+    public static int CanCoderbr;
 }
