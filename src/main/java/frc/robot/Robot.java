@@ -54,6 +54,8 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     // m_system.climber.setNeutralMode(NeutralMode.Coast);
+    _robotContainer._ClimberSubsystem.climber.setNeutralMode(NeutralMode.Brake);
+    _robotContainer._DrivebaseSubsystem.setBreakMode(NeutralMode.Coast);
   }
 
   @Override

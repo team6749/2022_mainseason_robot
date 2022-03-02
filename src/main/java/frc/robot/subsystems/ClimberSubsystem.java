@@ -30,7 +30,6 @@ public void periodic() {
   //System.out.println(climberTop.get());
   
   
-}
 
 public void goDown(){
   if(climberBottom.get() == false){
@@ -48,3 +47,4 @@ public void simulationPeriodic() {
   // This method will be called once per scheduler run during simulation
 }
 }
+
