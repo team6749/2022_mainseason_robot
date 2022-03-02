@@ -29,7 +29,7 @@ public void periodic() {
   //System.out.println(climberBottom.get());
   //System.out.println(climberTop.get());
   
-  
+}
 
 public void goDown(){
   if(climberBottom.get() == false){
