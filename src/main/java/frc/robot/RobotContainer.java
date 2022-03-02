@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.counter.UpDownCounter;
 import frc.robot.commands.ClimberControl;
 import frc.robot.enums.ClimberDirection;
+import frc.robot.enums.SmallArmState;
 import frc.robot.commands.DriveWithController;
+import frc.robot.commands.SetSmallArmState;
 import frc.robot.commands.AutoIntakeBalls;
 import frc.robot.commands.ShootAllBalls;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -60,7 +62,9 @@ public class RobotContainer {
     new JoystickButton(controller, XboxController.Button.kBack.value).whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.UP));
     new JoystickButton(controller, XboxController.Button.kStart.value).whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.DOWN));
 
-
+    new JoystickButton(controller, XboxController.Button.kA.value).whenPressed(new SetSmallArmState(_ClimberSubsystem, SmallArmState.OFF));
+    new JoystickButton(controller, XboxController.Button.kB.value).whenPressed(new SetSmallArmState(_ClimberSubsystem, SmallArmState.FORWARD));
+    new JoystickButton(controller, XboxController.Button.kX.value).whenPressed(new SetSmallArmState(_ClimberSubsystem, SmallArmState.BACKWARD));
     // new JoystickButton(controller, XboxController.Button.kBack.value).(new ClimberControl(climberSubsystem, 0.5, ClimberDirection.UP));
     new JoystickButton(controller, XboxController.Button.kRightBumper.value).whenPressed(new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem));
   }

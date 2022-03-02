@@ -43,6 +43,9 @@ public class ClimberControl extends CommandBase {
     } else if (_direction == ClimberDirection.UP) {
       _system.goUp();
     }
+
+
+    
   }
 
   // Called once the command ends or is interrupted.

@@ -3,18 +3,21 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import frc.robot.Constants;
-
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class ClimberSubsystem extends SubsystemBase  {
     DigitalInput climberTop = new DigitalInput(Constants.climberLimitSwitchTop02);
     DigitalInput climberBottom = new DigitalInput(Constants.climberLimitSwitchBottom01);
     public WPI_TalonSRX climber = new WPI_TalonSRX(Constants.climber); 
+
+    Compressor pcmCompressor1 = new Compressor(Constants.compressor1, PneumaticsModuleType.CTREPCM);
+    DoubleSolenoid shortArms = new DoubleSolenoid(null, Constants.doubleSolenoid[0], Constants.doubleSolenoid[1]);
+
 
 public ClimberSubsystem() {
   climber.setNeutralMode(NeutralMode.Brake);
@@ -30,6 +33,16 @@ public void periodic() {
   //System.out.println(climberTop.get());
   
   
+}
+public void armOff(){
+  shortArms.set(Value.kOff);
+}
+
+public void armMoveBackward(){
+  shortArms.set(Value.kReverse);
+}
+public void armMoveForward(){
+  shortArms.set(Value.kForward);
 }
 
 public void goDown(){
