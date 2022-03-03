@@ -42,14 +42,16 @@ public class ShooterSubsystem extends SubsystemBase {
 
    public void runBeltForward(){
     belt.set(0.9);
-   } 
-   public void runBelt(){
-     belt.set(0.4);
    }
 
   public void runBeltReverse(){
     belt.set(-0.9);
   }
+
+  public void beltOff(){
+    belt.set(0);
+  }
+
 
   @Override
     public void periodic() {
@@ -59,10 +61,6 @@ public class ShooterSubsystem extends SubsystemBase {
       shooterMotor.set(ControlMode.Velocity, 204.8d * 65);
       belt.set(0.0);
       //System.out.println(beltSwitch.get());
-    }
-
-    public void dontRun(){
-      belt.set(0);
     }
 
     @Override

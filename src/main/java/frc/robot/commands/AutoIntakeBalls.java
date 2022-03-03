@@ -38,12 +38,12 @@ public class AutoIntakeBalls extends CommandBase {
     if ((_shootSubsystem.ballInBelt() == true && _ball != IncomingBalls.NONE) == false) {
       _intakeSubsystem.runIntakeForward();
     } else {
-      _shootSubsystem.dontRun();
+      _shootSubsystem.beltOff();
     }
     if (_shootSubsystem.ballInBelt() == false) {
-      _shootSubsystem.runBelt();
+      _shootSubsystem.runBeltForward();
     } else {
-      _shootSubsystem.dontRun();
+      _shootSubsystem.beltOff();
     }
 
     // if (_ball == IncomingBalls.RED) {

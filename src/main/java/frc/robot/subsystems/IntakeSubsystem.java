@@ -48,19 +48,19 @@ public class IntakeSubsystem extends SubsystemBase {
   public IntakeSubsystem() {
 
     timer.start();
-
+    intake.setInverted(true);
     // color stuff
     _colorMatcher.addColorMatch(redColor);
     _colorMatcher.addColorMatch(blueColor);
-    intake.setNeutralMode(NeutralMode.Brake);
+    intake.setNeutralMode(NeutralMode.Coast);
   }
 
   public void runIntakeForward() {
-    intake.set(-0.6);
+    intake.set(0.5);
   }
 
   public void runIntakeReverse() {
-    intake.set(0.6);
+    intake.set(-0.5);
   }
 
   @Override

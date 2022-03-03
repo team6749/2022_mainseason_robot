@@ -42,7 +42,6 @@ public void goUp(){
     climber.set(0.8);
   }
 }
-  
 @Override
 public void simulationPeriodic() {
   // This method will be called once per scheduler run during simulation

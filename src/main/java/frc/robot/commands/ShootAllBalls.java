@@ -51,6 +51,6 @@ public class ShootAllBalls extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return myTimer.hasElapsed(0.75);
+    return myTimer.hasElapsed(1.0);
   }
 }
