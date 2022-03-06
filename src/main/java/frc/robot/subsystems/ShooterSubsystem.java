@@ -58,7 +58,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
       // This method will be called once per scheduler run
       // shooterMotor.set(-0.2);
-      shooterMotor.set(ControlMode.Velocity, 204.8d * 65);
+      shooterMotor.set(ControlMode.Velocity, 204.8d * 70);
       belt.set(0.0);
       //System.out.println(beltSwitch.get());
     }

@@ -28,7 +28,7 @@ public class DrivebaseSubsystem extends SubsystemBase{
       left.setInverted(true);
       myDrive.setMaxOutput(0.25);
       myDrive.setDeadband(0.05);
-      setBreakMode(NeutralMode.Coast);
+      setBreakMode(NeutralMode.Brake);
     }
 
     public void setBreakMode(NeutralMode mode){

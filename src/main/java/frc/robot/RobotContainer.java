@@ -59,9 +59,6 @@ public class RobotContainer {
 
     new JoystickButton(controller, XboxController.Button.kBack.value).whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.UP));
     new JoystickButton(controller, XboxController.Button.kStart.value).whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.DOWN));
-
-
-    // new JoystickButton(controller, XboxController.Button.kBack.value).(new ClimberControl(climberSubsystem, 0.5, ClimberDirection.UP));
     new JoystickButton(controller, XboxController.Button.kRightBumper.value).whenPressed(new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem));
   }
 

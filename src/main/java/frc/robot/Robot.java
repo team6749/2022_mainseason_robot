@@ -54,6 +54,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     _robotContainer._DrivebaseSubsystem.setBreakMode(NeutralMode.Coast);
+    //DO NOT ADD CLIMBER HERE - FUTURE SELF NOTE
   }
 
   @Override
