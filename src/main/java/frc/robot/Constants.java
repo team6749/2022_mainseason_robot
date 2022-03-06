@@ -40,5 +40,5 @@ public final class Constants {
     public static int climberLimitSwitchTop02 = 02;
 
     public static int compressor1;
-    public static int[] doubleSolenoid = {0, 1};
+    public static int[] doubleSolenoid = {5, 4};
 }

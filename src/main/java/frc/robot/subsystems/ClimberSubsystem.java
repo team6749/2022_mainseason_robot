@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import frc.robot.enums.SmallArmState;
 
 public class ClimberSubsystem extends SubsystemBase  {
     DigitalInput climberTop = new DigitalInput(Constants.climberLimitSwitchTop02);
@@ -16,10 +17,11 @@ public class ClimberSubsystem extends SubsystemBase  {
     public WPI_TalonSRX climber = new WPI_TalonSRX(Constants.climber); 
 
     Compressor pcmCompressor1 = new Compressor(Constants.compressor1, PneumaticsModuleType.CTREPCM);
-    DoubleSolenoid shortArms = new DoubleSolenoid(null, Constants.doubleSolenoid[0], Constants.doubleSolenoid[1]);
+    DoubleSolenoid shortArms = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.doubleSolenoid[0], Constants.doubleSolenoid[1]);
 
 
 public ClimberSubsystem() {
+  climber.setInverted(true);
   climber.setNeutralMode(NeutralMode.Brake);
 }
 
@@ -29,15 +31,15 @@ public void periodic() {
   //climber1.setVoltage(9);
   //needs to be set at break mode
   climber.set(0);
-  //System.out.println(climberBottom.get());
-  //System.out.println(climberTop.get());
-  
+
   
 }
+
+
+
 public void armOff(){
   shortArms.set(Value.kOff);
 }
-
 public void armMoveBackward(){
   shortArms.set(Value.kReverse);
 }
