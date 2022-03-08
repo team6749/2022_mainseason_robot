@@ -21,6 +21,8 @@ public class ShooterSubsystem extends SubsystemBase {
   private final WPI_TalonFX belt = new WPI_TalonFX(Constants.beltMotor);
 
   public ShooterSubsystem() {
+    belt.setNeutralMode(NeutralMode.Brake);
+    belt.setInverted(false);
     shooterMotor.setInverted(true);
     shooterMotor.configFactoryDefault();
     shooterMotor.config_kF(0, 0.05d, 0);
@@ -41,11 +43,11 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
    public void runBeltForward(){
-    belt.set(0.9);
+    belt.set(0.6);
    }
 
   public void runBeltReverse(){
-    belt.set(-0.9);
+    belt.set(-0.6);
   }
 
   public void beltOff(){
@@ -58,7 +60,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
       // This method will be called once per scheduler run
       // shooterMotor.set(-0.2);
-      shooterMotor.set(ControlMode.Velocity, 204.8d * 70);
+      shooterMotor.set(ControlMode.Velocity, 204.8d * 60);
       belt.set(0.0);
       //System.out.println(beltSwitch.get());
     }

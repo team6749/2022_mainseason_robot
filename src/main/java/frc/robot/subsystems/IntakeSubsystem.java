@@ -48,21 +48,23 @@ public class IntakeSubsystem extends SubsystemBase {
   public IntakeSubsystem() {
 
     timer.start();
-    intake.setInverted(true);
+    intake.setInverted(false);
     // color stuff
     _colorMatcher.addColorMatch(redColor);
     _colorMatcher.addColorMatch(blueColor);
-    intake.setNeutralMode(NeutralMode.Coast);
+    intake.setNeutralMode(NeutralMode.Brake);
   }
 
   public void runIntakeForward() {
-    intake.set(0.5);
+    intake.set(0.9);
   }
 
   public void runIntakeReverse() {
-    intake.set(-0.5);
+    intake.set(-0.9);
   }
-
+  public void intakeOff() {
+    intake.set(0);
+  }
   @Override
   public void periodic() {
     // System.out.println(ballColorToEnum());
