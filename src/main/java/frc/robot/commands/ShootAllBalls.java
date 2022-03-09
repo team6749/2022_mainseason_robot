@@ -36,10 +36,21 @@ public class ShootAllBalls extends CommandBase {
   @Override
   public void execute() {
     _shooterSubsystem.setShooterSpeed(70.0);
-    if(myTimer.hasElapsed(0.5)){
+    if(myTimer.hasElapsed(0.75)){
       _shooterSubsystem.runBeltForward();
       _intakeSubsystem.runIntakeForward();
+      if(_shooterSubsystem.ballInBelt()){
+        _shooterSubsystem.beltOff();
+        _intakeSubsystem.intakeOff();
+      }
+      if(_shooterSubsystem.ballInBelt() && myTimer.hasElapsed(1.5)){
+        _shooterSubsystem.runBeltForward();
+        _intakeSubsystem.runIntakeForward();
+      }
     }
+    // if(myTimer.hasElapsed(0.75)){
+    //   myTimer.delay(0.2);
+    // }
   }
 
   // Called once the command ends or is interrupted.
@@ -51,6 +62,6 @@ public class ShootAllBalls extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return myTimer.hasElapsed(0.75);
+    return myTimer.hasElapsed(2);
   }
 }

@@ -53,9 +53,8 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    // m_system.climber.setNeutralMode(NeutralMode.Coast);
-    _robotContainer._ClimberSubsystem.climber.setNeutralMode(NeutralMode.Brake);
     _robotContainer._DrivebaseSubsystem.setBreakMode(NeutralMode.Coast);
+    //DO NOT ADD CLIMBER HERE - FUTURE SELF NOTE
   }
 
   @Override
