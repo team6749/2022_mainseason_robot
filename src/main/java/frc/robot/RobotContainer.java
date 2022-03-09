@@ -38,6 +38,7 @@ public class RobotContainer {
   final JoystickButton l2 = new JoystickButton(leftJoystick, 2);
   final JoystickButton r2 = new JoystickButton(rightJoystick, 2);
   final JoystickButton r3 = new JoystickButton(rightJoystick, 3);
+  final JoystickButton l3 = new JoystickButton(leftJoystick, 3);
   
    
     // The robot's subsystems and commands are defined here
@@ -72,8 +73,7 @@ public class RobotContainer {
     // new JoystickButton(rightJoystick, r2).whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.DOWN));
 
     r3.whenPressed(new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem));
-    // new JoystickButton(controller, XboxController.Button.kBack.value).(new ClimberControl(climberSubsystem, 0.5, ClimberDirection.UP));
-    new JoystickButton(controller, XboxController.Button.kRightBumper.value).whenPressed(new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem));
+    // new JoystickButton(controller, XboxController.Button.kRightBumper.value).whenPressed(new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem));
   }
 
   /**

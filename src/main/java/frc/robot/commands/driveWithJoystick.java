@@ -9,6 +9,7 @@ import frc.robot.subsystems.DrivebaseSubsystem;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.Joystick;
 
 
@@ -35,10 +36,17 @@ public class driveWithJoystick extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //acceleration curve
+    SlewRateLimiter limit = new SlewRateLimiter(0.5);
+    
+    //arcade drive variables + drive
     double speed = _lJoystick.getY();
     double rotation = _rJoystick.getX();
 
-    _subsystem.arcadeDrive(speed, rotation);
+    _subsystem.arcadeDrive(-(limit.calculate(speed)), rotation);
+
+  
+    
   }
 
   // Called once the command ends or is interrupted.
