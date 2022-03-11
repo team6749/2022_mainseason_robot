@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivebaseSubsystem;
@@ -14,7 +15,8 @@ public class DriveWithController extends CommandBase {
   private final DrivebaseSubsystem _drive;
   private final XboxController _controller;
 
-  
+  private SlewRateLimiter limitSpeed;
+  private SlewRateLimiter limitRotation;
   /** Creates a new DriveWithController. */
   public DriveWithController(XboxController controller, DrivebaseSubsystem subsystem) {
     _controller = controller;
@@ -27,6 +29,9 @@ public class DriveWithController extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    limitRotation = new SlewRateLimiter(0.5);
+    limitSpeed = new SlewRateLimiter(0.5);
+
     _drive.setBreakMode(NeutralMode.Brake);
   }
 
@@ -36,7 +41,9 @@ public class DriveWithController extends CommandBase {
     double speed = _controller.getLeftY(); 
     double rotation = _controller.getRightX();
     
-    _drive.arcadeDrive(speed, rotation);
+
+
+    _drive.arcadeDrive(limitSpeed.calculate(speed), limitRotation.calculate(rotation));
   }
 
   // Called once the command ends or is interrupted.
