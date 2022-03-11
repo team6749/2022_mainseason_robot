@@ -26,8 +26,8 @@ public class DrivebaseSubsystem extends SubsystemBase{
 
     public DrivebaseSubsystem() {
       left.setInverted(true);
-      myDrive.setMaxOutput(0.25);
-      myDrive.setDeadband(0.05);
+      myDrive.setMaxOutput(0.5);
+      //  myDrive.setDeadband(0.05);
       setBreakMode(NeutralMode.Brake);
     }
 
@@ -39,15 +39,16 @@ public class DrivebaseSubsystem extends SubsystemBase{
     }
     public void arcadeDrive(double speed, double rotation){
       // System.out.println(rotation);
-      double nspeed = Math.pow(speed, 2);
-      double nrotation = Math.pow(rotation, 2);
-      if(speed < 0){
-        nspeed = -(nspeed);
-      }
-      if(rotation < 0){
-        nrotation = -(nrotation);
-      }
-      myDrive.arcadeDrive(-nspeed, -nrotation);
+      // double nspeed = Math.pow(speed, 2);
+      // double nrotation = Math.pow(rotation, 2);
+      // if(speed < 0){
+      //   nspeed = -(nspeed);
+      // }
+      // if(rotation < 0){
+      //   nrotation = -(nrotation);
+      // }
+      // myDrive.arcadeDrive(-nspeed, -nrotation);
+      myDrive.arcadeDrive(-speed, -rotation);
     }
   
     @Override

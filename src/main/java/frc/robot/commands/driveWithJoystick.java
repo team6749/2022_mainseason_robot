@@ -19,8 +19,9 @@ public class driveWithJoystick extends CommandBase {
   private final Joystick _lJoystick;
   private final DrivebaseSubsystem _subsystem;
 
-  private SlewRateLimiter limitSpeed;
-  private SlewRateLimiter limitRotation;
+  
+  private SlewRateLimiter limitSpeed = new SlewRateLimiter(5);
+  private SlewRateLimiter limitRotation = new SlewRateLimiter(5);
   /** Creates a new driveWithJoystick. */
   public driveWithJoystick(Joystick rjoystick, Joystick lJoystick, DrivebaseSubsystem subsystem) {
     _subsystem = subsystem;
@@ -33,8 +34,6 @@ public class driveWithJoystick extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    limitSpeed = new SlewRateLimiter(0.5);
-    limitRotation = new SlewRateLimiter(0.5);
     _subsystem.setBreakMode(NeutralMode.Brake);
   }
 
@@ -43,12 +42,12 @@ public class driveWithJoystick extends CommandBase {
   public void execute() {
 
     //arcade drive variables + drive
-    double speed = _lJoystick.getY();
+    double speed = -_lJoystick.getY();
     double rotation = _rJoystick.getX();
 
     
     //acceleration curve
-    _subsystem.arcadeDrive(-(limitSpeed.calculate(speed)), limitRotation.calculate(rotation));
+    _subsystem.arcadeDrive(limitSpeed.calculate(speed), limitRotation.calculate(rotation));
 
   
     
