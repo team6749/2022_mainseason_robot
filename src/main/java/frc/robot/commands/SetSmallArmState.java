@@ -34,9 +34,9 @@ public class SetSmallArmState extends CommandBase {
     if(_armState == SmallArmState.FORWARD){
       _subsystem.armMoveForward();
     }
-    if(_armState == SmallArmState.OFF){
-      _subsystem.armOff();
-    }
+    // if(_armState == SmallArmState.OFF){
+    //   _subsystem.armOff();
+    //}
 
   }
 
