@@ -25,26 +25,25 @@ public void periodic() {
   // This method will be called once per scheduler run
   //climber1.setVoltage(9);
   //needs to be set at break mode
-  climber.setVoltage(0);
+  climber.set(0);
   //System.out.println(climberBottom.get());
   //System.out.println(climberTop.get());
-  
   
 }
 
 public void goDown(){
   if(climberBottom.get() == false){
-  climber.setVoltage(-7);
+    climber.set(-0.8);
   }
 }
 public void goUp(){
   if(climberTop.get() == false){
-  climber.setVoltage(7);
+    climber.set(0.8);
   }
 }
-
 @Override
 public void simulationPeriodic() {
   // This method will be called once per scheduler run during simulation
 }
 }
+

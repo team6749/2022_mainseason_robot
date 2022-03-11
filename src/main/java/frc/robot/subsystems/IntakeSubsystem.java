@@ -29,7 +29,7 @@ public class IntakeSubsystem extends SubsystemBase {
   private final WPI_TalonSRX intake = new WPI_TalonSRX(Constants.intakeMotor);
 
   private final ColorSensorV3 colorSensor = new ColorSensorV3(Constants.colorSensorPort);
-  private final ColorMatch m_colorMatcher = new ColorMatch();
+  private final ColorMatch _colorMatcher = new ColorMatch();
   Timer timer = new Timer();
   IncomingBalls lastBallColor;
 
@@ -48,50 +48,47 @@ public class IntakeSubsystem extends SubsystemBase {
   public IntakeSubsystem() {
 
     timer.start();
-
+    intake.setInverted(false);
     // color stuff
-    m_colorMatcher.addColorMatch(redColor);
-    m_colorMatcher.addColorMatch(blueColor);
+    _colorMatcher.addColorMatch(redColor);
+    _colorMatcher.addColorMatch(blueColor);
     intake.setNeutralMode(NeutralMode.Brake);
   }
 
   public void runIntakeForward() {
-    intake.set(-0.7);
+    intake.set(0.9);
   }
 
   public void runIntakeReverse() {
-    intake.set(0.7);
+    intake.set(-0.9);
   }
-
+  public void intakeOff() {
+    intake.set(0);
+  }
   @Override
   public void periodic() {
-    double speed = 0;
-    if (RobotContainer.controller.getAButton()) {
-      speed = -0.7;
-    } else if (RobotContainer.controller.getBButton()) {
-      speed = 0.7;
-    }
-    intake.set(speed);
     // System.out.println(ballColorToEnum());
 
-    if (DriverStation.getAlliance() == Alliance.Red) {
+    // if (DriverStation.getAlliance() == Alliance.Red) {
 
-    } else {
+    // } else {
 
-    }
+    // }
+    intake.set(0);
 
     ballColorToEnum();
+    
   }
 
-  public boolean ballColorToTeam(IncomingBalls ballColor) {
-    if (DriverStation.getAlliance() == Alliance.Red && ballColor == IncomingBalls.RED) {
-      return true;
-    }
-    if (DriverStation.getAlliance() == Alliance.Blue && ballColor == IncomingBalls.BLUE) {
-      return true;
-    }
-    return false;
-  }
+  // public boolean ballColorToTeam(IncomingBalls ballColor) {
+  //   if (DriverStation.getAlliance() == Alliance.Red && ballColor == IncomingBalls.RED) {
+  //     return true;
+  //   }
+  //   if (DriverStation.getAlliance() == Alliance.Blue && ballColor == IncomingBalls.BLUE) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   // color sensor to enum function
   public IncomingBalls ballColorToEnum() {
@@ -101,7 +98,7 @@ public class IntakeSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("blue color", detectedColor.blue);
     SmartDashboard.putNumber("green color", detectedColor.green);
 
-    m_colorMatcher.matchColor(detectedColor);
+    _colorMatcher.matchColor(detectedColor);
 
     if (lastBallColor == IncomingBalls.RED) {
       SmartDashboard.putString("ballColor", "red");
@@ -111,7 +108,7 @@ public class IntakeSubsystem extends SubsystemBase {
       SmartDashboard.putString("ballColor", "none");
     }
 
-    ColorMatchResult foundColor = m_colorMatcher.matchColor(detectedColor);
+    ColorMatchResult foundColor = _colorMatcher.matchColor(detectedColor);
     if (foundColor != null) {
 
       if (foundColor.color == redColor) {
@@ -124,29 +121,12 @@ public class IntakeSubsystem extends SubsystemBase {
         return IncomingBalls.BLUE;
       }
     }
-    if (timer.hasElapsed(3)) {
+    if (timer.hasElapsed(2)) {
       lastBallColor = IncomingBalls.NONE;
       return IncomingBalls.NONE;
     }
     return lastBallColor;
   }
-
-  // SmartDashboard.putNumber("confidende", foundColor.confidence);
-  // oujiu
-  // This method will be called once per scheduler run
-
-  // methods used in commands
-  // public void stop() {
-  // intake.set(0);
-  // }
-
-  // public void start() {
-  // intake.set(0.7);
-  // }
-
-  // public void reverse() {
-  // intake.set(-0.7);
-  // }
 
   @Override
   public void simulationPeriodic() {

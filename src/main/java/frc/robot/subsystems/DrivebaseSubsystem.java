@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import frc.robot.RobotContainer;
 import frc.robot.commands.DriveWithController;
@@ -63,9 +64,18 @@ public class DrivebaseSubsystem extends SubsystemBase{
       left.setInverted(true);
 
       myDrive.setMaxOutput(0.25);
+      myDrive.setDeadband(0.05);
+      setBreakMode(NeutralMode.Brake);
     }
-    
+
+    public void setBreakMode(NeutralMode mode){
+      frontRight.setNeutralMode(mode);
+      frontRight.setNeutralMode(mode);
+      frontLeft.setNeutralMode(mode);
+      backRight.setNeutralMode(mode);
+    }
     public void arcadeDrive(double speed, double rotation){
+      // System.out.println(rotation);
       double nspeed = Math.pow(speed, 2);
       double nrotation = Math.pow(rotation, 2);
       if(speed < 0){
@@ -74,7 +84,7 @@ public class DrivebaseSubsystem extends SubsystemBase{
       if(rotation < 0){
         nrotation = -(nrotation);
       }
-      myDrive.arcadeDrive(nspeed, nrotation);
+      myDrive.arcadeDrive(-nspeed, -nrotation);
     }
   
     @Override

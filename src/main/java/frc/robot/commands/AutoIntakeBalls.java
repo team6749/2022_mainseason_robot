@@ -9,15 +9,15 @@ import frc.robot.enums.IncomingBalls;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class AutoIntakeBalls extends CommandBase {
-  private final IntakeSubsystem m_intakeSubsystem;
-  private IncomingBalls m_ball;
-  private final ShooterSubsystem m_shootSubsystem;
+  private final IntakeSubsystem _intakeSubsystem;
+  private IncomingBalls _ball;
+  private final ShooterSubsystem _shootSubsystem;
 
   /** Creates a new IntakeStateCommand. */
   public AutoIntakeBalls(IntakeSubsystem subsystem, ShooterSubsystem shootSubsystem) {
-    m_intakeSubsystem = subsystem;
+    _intakeSubsystem = subsystem;
     addRequirements(subsystem);
-    m_shootSubsystem = shootSubsystem;
+    _shootSubsystem = shootSubsystem;
     addRequirements(shootSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -30,40 +30,23 @@ public class AutoIntakeBalls extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_ball = m_intakeSubsystem.ballColorToEnum();
-    // switch (m_ball) {
-    // case NONE:
-    // m_subsystem.runIntakeForward();
-    // break;
-    // case RED:
-    // m_subsystem.runIntakeForward();
-    // break;
-    // case BLUE:
-    // m_subsystem.runIntakeReverse();
-    // break;
-    // }
-    // if(m_shootSubsystem.ballInBelt() == false){
-    // m_subsystem.runIntakeForward();
-    // }
-    // if(m_shootSubsystem.ballInBelt() == true){
-    // m_shootSubsystem.dontRun();
-    // }else{
-    // m_shootSubsystem.runBelt();
-    // }
+    _ball = _intakeSubsystem.ballColorToEnum();
 
+
+    
     // Run the bottom belt unless there are 2 balls in the robot
-    if ((m_shootSubsystem.ballInBelt() == true && m_ball != IncomingBalls.NONE) == false) {
-      m_intakeSubsystem.runIntakeForward();
+    if ((_shootSubsystem.ballInBelt() == true && _ball != IncomingBalls.NONE) == false) {
+      _intakeSubsystem.runIntakeForward();
     } else {
-      m_shootSubsystem.dontRun();
+      _shootSubsystem.beltOff();
     }
-    if (m_shootSubsystem.ballInBelt() == false) {
-      m_shootSubsystem.runBelt();
+    if (_shootSubsystem.ballInBelt() == false) {
+      _shootSubsystem.runBeltForward();
     } else {
-      m_shootSubsystem.dontRun();
+      _shootSubsystem.beltOff();
     }
 
-    // if (m_ball == IncomingBalls.RED) {
+    // if (_ball == IncomingBalls.RED) {
     // m_shootSubsystem.runBelt();
     // }
 

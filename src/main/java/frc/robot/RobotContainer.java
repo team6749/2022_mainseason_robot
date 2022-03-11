@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -34,13 +35,15 @@ public class RobotContainer {
    
     // The robot's subsystems and commands are defined here
   private final ClimberSubsystem _ClimberSubsystem = new ClimberSubsystem();
-  private final DrivebaseSubsystem _DrivebaseSubsystem = new DrivebaseSubsystem();
+  public final DrivebaseSubsystem _DrivebaseSubsystem = new DrivebaseSubsystem();
   private final IntakeSubsystem _IntakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem _ShooterSubsystem = new ShooterSubsystem();
   //commands - usually not put here
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    CameraServer.startAutomaticCapture();
+
     // Configure the button bindings
     configureButtonBindings();
     _IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_IntakeSubsystem, _ShooterSubsystem));
@@ -55,11 +58,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    new JoystickButton(controller, XboxController.Button.kBack.value).whenPressed(new ClimberControl(_ClimberSubsystem, 0.5, ClimberDirection.UP));
-    new JoystickButton(controller, XboxController.Button.kStart.value).whenPressed(new ClimberControl(_ClimberSubsystem, 0.5, ClimberDirection.DOWN));
-
-
-    // new JoystickButton(controller, XboxController.Button.kBack.value).(new ClimberControl(climberSubsystem, 0.5, ClimberDirection.UP));
+    new JoystickButton(controller, XboxController.Button.kBack.value).whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.UP));
+    new JoystickButton(controller, XboxController.Button.kStart.value).whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.DOWN));
     new JoystickButton(controller, XboxController.Button.kRightBumper.value).whenPressed(new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem));
 
   }

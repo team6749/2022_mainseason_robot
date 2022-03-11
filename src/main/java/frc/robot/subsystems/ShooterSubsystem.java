@@ -21,19 +21,21 @@ public class ShooterSubsystem extends SubsystemBase {
   private final WPI_TalonFX belt = new WPI_TalonFX(Constants.beltMotor);
 
   public ShooterSubsystem() {
+    belt.setNeutralMode(NeutralMode.Brake);
+    belt.setInverted(false);
     shooterMotor.setInverted(true);
     shooterMotor.configFactoryDefault();
     shooterMotor.config_kF(0, 0.05d, 0);
     shooterMotor.config_kP(0, 0.175d, 0);
     // shooterMotor.config_kI(0, 0.7d, 0);
-    shooterMotor.configNeutralDeadband(0.001);
+    //shooterMotor.configNeutralDeadband(0.001);
     shooterMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
     shooterMotor.setNeutralMode(NeutralMode.Coast);
     // upperShooter.set(ControlMode.Velocity, 204.8d * rps);
   }
 
   public boolean ballInBelt(){
-    return beltSwitch.get();
+    return !beltSwitch.get();
   }
   public void setShooterSpeed(double rpm){
     // shooterMotor.set(-(speed));
@@ -41,28 +43,26 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
    public void runBeltForward(){
-    belt.set(0.7);
-   } 
+    belt.set(0.6);
+   }
 
   public void runBeltReverse(){
-    belt.set(-0.7);
+    belt.set(-0.6);
   }
+
+  public void beltOff(){
+    belt.set(0);
+  }
+
 
   @Override
     public void periodic() {
 
       // This method will be called once per scheduler run
       // shooterMotor.set(-0.2);
-      shooterMotor.set(ControlMode.Velocity, 204.8d * 65);
+      shooterMotor.set(ControlMode.Velocity, 204.8d * 60);
       belt.set(0.0);
-      // System.out.println(ballInBelt());
-    }
-
-    public void runBelt(){
-      belt.set(0.4);
-    }
-    public void dontRun(){
-      belt.set(0);
+      //System.out.println(beltSwitch.get());
     }
 
     @Override

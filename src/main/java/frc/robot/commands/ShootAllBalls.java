@@ -14,40 +14,54 @@ import frc.robot.subsystems.IntakeSubsystem;
 
 public class ShootAllBalls extends CommandBase {
   /** Creates a new ShootAllBalls. */
-  private final ShooterSubsystem m_shooterSubsystem;
-  private final IntakeSubsystem m_intakeSubsystem;
+  private final ShooterSubsystem _shooterSubsystem;
+  private final IntakeSubsystem _intakeSubsystem;
   Timer myTimer = new Timer();
   public ShootAllBalls(ShooterSubsystem shooter, IntakeSubsystem intake) {
     // Use addRequirements() here to declare subsystem dependencies.
-     m_shooterSubsystem = shooter;
+     _shooterSubsystem = shooter;
      addRequirements(shooter);
-     m_intakeSubsystem = intake;
+     _intakeSubsystem = intake;
      addRequirements(intake);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    myTimer.reset();
     myTimer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooterSubsystem.runBeltForward();
-    m_shooterSubsystem.setShooterSpeed(75.0);
-    m_intakeSubsystem.runIntakeForward();
+    _shooterSubsystem.setShooterSpeed(70.0);
+    if(myTimer.hasElapsed(0.75)){
+      _shooterSubsystem.runBeltForward();
+      _intakeSubsystem.runIntakeForward();
+      if(_shooterSubsystem.ballInBelt()){
+        _shooterSubsystem.beltOff();
+        _intakeSubsystem.intakeOff();
+      }
+      if(_shooterSubsystem.ballInBelt() && myTimer.hasElapsed(1.5)){
+        _shooterSubsystem.runBeltForward();
+        _intakeSubsystem.runIntakeForward();
+      }
+    }
+    // if(myTimer.hasElapsed(0.75)){
+    //   myTimer.delay(0.2);
+    // }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    myTimer.reset();
+    
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return myTimer.hasElapsed(0.75);
+    return myTimer.hasElapsed(2);
   }
 }
