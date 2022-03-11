@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import frc.robot.RobotContainer;
 import frc.robot.commands.DriveWithController;
@@ -34,21 +35,22 @@ public class DrivebaseSubsystem extends SubsystemBase{
     
     public static final ADIS16470_IMU gyro = new ADIS16470_IMU();
 
-    Encoder leftEncoder = new Encoder(Constants.encoderLeft[0], Constants.encoderLeft[1]);
-    Encoder rightEncoder = new Encoder(Constants.encoderRight[0], Constants.encoderRight[1]);
-
     
     public DifferentialDriveKinematics driveKinematics;
     DifferentialDriveOdometry odometry;
     DifferentialDrive myDrive = new DifferentialDrive(left, right);
 
     public DrivebaseSubsystem() {
-      
+      frontLeft.configFactoryDefault();
+      backRight.configFactoryDefault();
 
-      leftEncoder.setDistancePerPulse(0.1524 * Math.PI / 360);
-      rightEncoder.setDistancePerPulse(0.1524 * Math.PI / 360);
-      rightEncoder.setReverseDirection(false);
-      leftEncoder.setReverseDirection(false);
+      frontLeft.getSensorCollection().setIntegratedSensorPosition(0, 20);
+      backRight.getSensorCollection().setIntegratedSensorPosition(0, 20);
+
+
+
+      // frontLeft.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+      // frontRight.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
       gyro.calibrate();
 
@@ -80,12 +82,12 @@ public class DrivebaseSubsystem extends SubsystemBase{
 
       // System.out.println(getPose());
 
-      double lDistance = leftEncoder.getDistance();
-      double rDistance = rightEncoder.getDistance();
+      double lDistance = getLeftEncoder();
+      double rDistance = getRightEncoder();
       SmartDashboard.putNumber("Encoder Left value", lDistance);  
       SmartDashboard .putNumber("Encoder Right value", rDistance);
          
-      odometry.update(Rotation2d.fromDegrees(gyro.getAngle()), leftEncoder.getDistance(), rightEncoder.getDistance());
+      odometry.update(Rotation2d.fromDegrees(gyro.getAngle()), getLeftEncoder(), getRightEncoder());
 
     }
     // This method will be called once per scheduler run
@@ -103,11 +105,11 @@ public class DrivebaseSubsystem extends SubsystemBase{
   }
 
   public double getLeftEncoder(){
-   return leftEncoder.getDistance();
+    return frontLeft.getSelectedSensorPosition() * 0.1524 * Math.PI / 2048 / 10.75;
   }
 
   public double getRightEncoder(){
-    return rightEncoder.getDistance();
+    return backRight.getSelectedSensorPosition() * 0.1524 * Math.PI / 2048 / 10.75;
   }
   
 
