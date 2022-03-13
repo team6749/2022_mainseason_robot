@@ -9,12 +9,13 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 public class ClimberSubsystem extends SubsystemBase  {
-    DigitalInput climberTop = new DigitalInput(Constants.climberLimitSwitchTop02);
-    DigitalInput climberBottom = new DigitalInput(Constants.climberLimitSwitchBottom01);
-    public WPI_TalonSRX climber = new WPI_TalonSRX(Constants.climber); 
+  DigitalInput climberTop = new DigitalInput(Constants.climberLimitSwitchTop02);
+  DigitalInput climberBottom = new DigitalInput(Constants.climberLimitSwitchBottom01);
+  public WPI_TalonSRX climber = new WPI_TalonSRX(Constants.climber); 
 
 public ClimberSubsystem() {
   climber.setNeutralMode(NeutralMode.Brake);
+  climber.setInverted(true);
 }
 
 @Override

@@ -28,14 +28,14 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
  
-  public static XboxController controller = new XboxController(0);
-  public static Joystick leftJoystick = new Joystick(1);
-  public static Joystick rightJoystick = new Joystick(2);
+  // public static XboxController controller = new XboxController(0);
+  public static Joystick leftJoystick = new Joystick(0);
+  public static Joystick rightJoystick = new Joystick(1);
 
 
-  final JoystickButton l2 = new JoystickButton(leftJoystick, 2); //climber up
-  final JoystickButton r2 = new JoystickButton(rightJoystick, 2); //climber down
-  final JoystickButton r3 = new JoystickButton(rightJoystick, 3); //shoot ballz
+  final JoystickButton climberUpButton = new JoystickButton(leftJoystick, 3); //climber up
+  final JoystickButton climberDownButton = new JoystickButton(rightJoystick, 3); //climber down
+  final JoystickButton shootBallsButton = new JoystickButton(rightJoystick, 2); //shoot ballz
   
   // final JoystickButton l3 = new JoystickButton(leftJoystick, 3);
   
@@ -66,9 +66,9 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    l2.whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.UP));
-    r2.whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.DOWN));
-    r3.whenPressed(new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem));
+    climberUpButton.whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.UP));
+    climberDownButton.whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.DOWN));
+    shootBallsButton.whenPressed(new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem));
     
     //controler code bindings
 
