@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-
 public class ClimberSubsystem extends SubsystemBase  {
   DigitalInput climberTop = new DigitalInput(Constants.climberLimitSwitchTop02);
   DigitalInput climberBottom = new DigitalInput(Constants.climberLimitSwitchBottom01);

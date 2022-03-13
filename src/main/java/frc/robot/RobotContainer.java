@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ClimberControl;
+import frc.robot.commands.DriveForwardAutonomously;
 import frc.robot.enums.ClimberDirection;
 import frc.robot.commands.AutoIntakeBalls;
 import frc.robot.commands.ShootAllBalls;
@@ -18,6 +19,7 @@ import frc.robot.subsystems.DrivebaseSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -84,6 +86,10 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return new SequentialCommandGroup(
+      new DriveForwardAutonomously(_DrivebaseSubsystem, 0.9144, 0.9144),
+      new DriveForwardAutonomously(_DrivebaseSubsystem, 0.912, 0),
+      new DriveForwardAutonomously(_DrivebaseSubsystem, -.455, .455)
+    );
   }
 }
