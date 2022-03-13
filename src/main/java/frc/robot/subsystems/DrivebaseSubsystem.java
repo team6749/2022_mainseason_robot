@@ -103,7 +103,7 @@ public class DrivebaseSubsystem extends SubsystemBase{
     }
 
   public void driveRobotRaw(double left, double right){
-    myDrive.tankDrive(-left, right);
+    myDrive.tankDrive(-left, -right);
   }
 
   public double getLeftEncoder(){
@@ -111,7 +111,7 @@ public class DrivebaseSubsystem extends SubsystemBase{
   }
 
   public double getRightEncoder(){
-    return backRight.getSelectedSensorPosition() * 0.1524 * Math.PI / 2048 / 10.75;
+    return -backRight.getSelectedSensorPosition() * 0.1524 * Math.PI / 2048 / 10.75;
   }
   
 
