@@ -15,6 +15,9 @@ public class DriveWithController extends CommandBase {
   private final DrivebaseSubsystem _drive;
   private final XboxController _controller;
 
+  private SlewRateLimiter limitSpeed = new SlewRateLimiter(5);
+  private SlewRateLimiter limitRotation = new SlewRateLimiter(5);
+
   
   /** Creates a new DriveWithController. */
   public DriveWithController(XboxController controller, DrivebaseSubsystem subsystem) {
@@ -28,17 +31,18 @@ public class DriveWithController extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+
     _drive.setBreakMode(NeutralMode.Brake);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SlewRateLimiter srl = new SlewRateLimiter(0.5);
     double speed = _controller.getLeftY(); 
     double rotation = _controller.getRightX();
     
-    _drive.arcadeDrive(srl.calculate(speed), rotation);
+    _drive.arcadeDrive(limitSpeed.calculate(speed), limitRotation.calculate(rotation));
+    // _drive.arcadeDrive(speed, rotation);
   }
 
   // Called once the command ends or is interrupted.
