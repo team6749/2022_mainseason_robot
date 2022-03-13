@@ -6,10 +6,10 @@ package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ClimberControl;
 import frc.robot.enums.ClimberDirection;
-import frc.robot.commands.DriveWithController;
 import frc.robot.commands.AutoIntakeBalls;
 import frc.robot.commands.ShootAllBalls;
 import frc.robot.commands.driveWithJoystick;
@@ -33,10 +33,11 @@ public class RobotContainer {
   public static Joystick rightJoystick = new Joystick(2);
 
 
-  final JoystickButton l2 = new JoystickButton(leftJoystick, 2);
-  final JoystickButton r2 = new JoystickButton(rightJoystick, 2);
-  final JoystickButton r3 = new JoystickButton(rightJoystick, 3);
-  final JoystickButton l3 = new JoystickButton(leftJoystick, 3);
+  final JoystickButton l2 = new JoystickButton(leftJoystick, 2); //climber up
+  final JoystickButton r2 = new JoystickButton(rightJoystick, 2); //climber down
+  final JoystickButton r3 = new JoystickButton(rightJoystick, 3); //shoot ballz
+  
+  // final JoystickButton l3 = new JoystickButton(leftJoystick, 3);
   
    
     // The robot's subsystems and commands are defined here
@@ -67,10 +68,12 @@ public class RobotContainer {
 
     l2.whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.UP));
     r2.whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.DOWN));
-    // new JoystickButton(leftJoystick, l2).whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.UP));
-    // new JoystickButton(rightJoystick, r2).whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.DOWN));
-
     r3.whenPressed(new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem));
+    
+    //controler code bindings
+
+    // new JoystickButton(controller, XboxController.Button.kBack.value).whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.UP));
+    // new JoystickButton(controller, XboxController.Button.kStart.value).whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.DOWN));
     // new JoystickButton(controller, XboxController.Button.kRightBumper.value).whenPressed(new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem));
   }
 
