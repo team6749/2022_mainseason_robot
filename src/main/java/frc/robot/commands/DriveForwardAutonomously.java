@@ -74,9 +74,9 @@ public class DriveForwardAutonomously extends CommandBase {
     System.out.println(delta);
   
     if(delta > 0) {
-      return 0.5d;
+      return 0.7d;
     } else {
-      return -0.5d;
+      return -0.7d;
     }
 
   }
