@@ -9,12 +9,10 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import frc.robot.enums.SmallArmState;
-
 public class ClimberSubsystem extends SubsystemBase  {
-    DigitalInput climberTop = new DigitalInput(Constants.climberLimitSwitchTop02);
-    DigitalInput climberBottom = new DigitalInput(Constants.climberLimitSwitchBottom01);
-    public WPI_TalonSRX climber = new WPI_TalonSRX(Constants.climber); 
+  DigitalInput climberTop = new DigitalInput(Constants.climberLimitSwitchTop02);
+  DigitalInput climberBottom = new DigitalInput(Constants.climberLimitSwitchBottom01);
+  public WPI_TalonSRX climber = new WPI_TalonSRX(Constants.climber); 
 
     Compressor pcmCompressor1 = new Compressor(Constants.compressor1, PneumaticsModuleType.CTREPCM);
     DoubleSolenoid shortArms = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.doubleSolenoid[0], Constants.doubleSolenoid[1]);
@@ -23,6 +21,7 @@ public class ClimberSubsystem extends SubsystemBase  {
 public ClimberSubsystem() {
   climber.setInverted(true);
   climber.setNeutralMode(NeutralMode.Brake);
+  climber.setInverted(true);
 }
 
 @Override
@@ -31,7 +30,8 @@ public void periodic() {
   //climber1.setVoltage(9);
   //needs to be set at break mode
   climber.set(0);
-
+  //System.out.println(climberBottom.get());
+  //System.out.println(climberTop.get());
   
 }
 
@@ -57,9 +57,9 @@ public void goUp(){
     climber.set(0.8);
   }
 }
-  
 @Override
 public void simulationPeriodic() {
   // This method will be called once per scheduler run during simulation
 }
 }
+

@@ -3,16 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
-import javax.swing.text.AttributeSet.ColorAttribute;
-
-import com.revrobotics.ColorMatch;
-import com.revrobotics.ColorMatchResult;
-
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.I2C.Port;
-import edu.wpi.first.wpilibj.util.Color;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -41,4 +32,7 @@ public final class Constants {
 
     public static int compressor1;
     public static int[] doubleSolenoid = {4, 5};
+
+    public static int[] encoderLeft = {4, 3};
+    public static int[] encoderRight = {6,5}; 
 }

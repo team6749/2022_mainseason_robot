@@ -1,26 +1,23 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.RobotContainer;
-import frc.robot.commands.AutoIntakeBalls;
+
 import frc.robot.enums.IncomingBalls;
 import frc.robot.Constants;
 
-import javax.swing.plaf.synth.SynthScrollBarUI;
 
 import edu.wpi.first.wpilibj.Timer;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+// import edu.wpi.first.wpilibj.DriverStation.Alliance;
+// import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -48,7 +45,7 @@ public class IntakeSubsystem extends SubsystemBase {
   public IntakeSubsystem() {
 
     timer.start();
-
+    intake.setInverted(false);
     // color stuff
     _colorMatcher.addColorMatch(redColor);
     _colorMatcher.addColorMatch(blueColor);
@@ -56,13 +53,15 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void runIntakeForward() {
-    intake.set(-0.6);
+    intake.set(0.9);
   }
 
   public void runIntakeReverse() {
-    intake.set(0.6);
+    intake.set(-0.9);
   }
-
+  public void intakeOff() {
+    intake.set(0);
+  }
   @Override
   public void periodic() {
     // System.out.println(ballColorToEnum());

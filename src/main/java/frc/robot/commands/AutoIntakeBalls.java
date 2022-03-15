@@ -35,11 +35,20 @@ public class AutoIntakeBalls extends CommandBase {
 
     
     // Run the bottom belt unless there are 2 balls in the robot
+    if ((_shootSubsystem.ballInBelt() == true && _ball != IncomingBalls.NONE) == false) {
+      _intakeSubsystem.runIntakeForward();
+    } else {
+      _shootSubsystem.beltOff();
+    }
+    if (_shootSubsystem.ballInBelt() == false) {
+      _shootSubsystem.runBeltForward();
+    } else {
+      _shootSubsystem.beltOff();
+    }
 
     // if (_ball == IncomingBalls.RED) {
-    // m_shootSubsystem.runBelt();
+    //   m_shootSubsystem.runBelt();
     // }
-
   }
 
   // Called once the command ends or is interrupted.
