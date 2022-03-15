@@ -10,12 +10,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ClimberControl;
 import frc.robot.commands.DriveForwardAutonomously;
+import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.SetSmallArmState;
 import frc.robot.enums.ClimberDirection;
 import frc.robot.enums.SmallArmState;
 import frc.robot.commands.AutoIntakeBalls;
 import frc.robot.commands.ShootAllBalls;
-import frc.robot.commands.driveWithJoystick;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivebaseSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -63,7 +63,7 @@ public class RobotContainer {
     configureButtonBindings();
     _IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_IntakeSubsystem, _ShooterSubsystem));
     // _DrivebaseSubsystem.setDefaultCommand(new DriveWithController(controller, _DrivebaseSubsystem));
-    _DrivebaseSubsystem.setDefaultCommand(new driveWithJoystick(rightJoystick, leftJoystick, _DrivebaseSubsystem));
+    _DrivebaseSubsystem.setDefaultCommand(new DriveWithJoystick(rightJoystick, leftJoystick, _DrivebaseSubsystem));
   }
 
   /**
