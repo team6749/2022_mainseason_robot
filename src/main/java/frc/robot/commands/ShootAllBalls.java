@@ -9,19 +9,23 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
 
 
 public class ShootAllBalls extends CommandBase {
   /** Creates a new ShootAllBalls. */
   private final ShooterSubsystem _shooterSubsystem;
   private final IntakeSubsystem _intakeSubsystem;
+  private final ClimberSubsystem _climberSubsystem;
   Timer myTimer = new Timer();
-  public ShootAllBalls(ShooterSubsystem shooter, IntakeSubsystem intake) {
+  public ShootAllBalls(ShooterSubsystem shooter, IntakeSubsystem intake, ClimberSubsystem climber) {
     // Use addRequirements() here to declare subsystem dependencies.
      _shooterSubsystem = shooter;
      addRequirements(shooter);
      _intakeSubsystem = intake;
      addRequirements(intake);
+    _climberSubsystem = climber;
+    addRequirements(climber);
   }
 
   // Called when the command is initially scheduled.
@@ -34,6 +38,7 @@ public class ShootAllBalls extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    
     _shooterSubsystem.setShooterSpeed(70.0);
     if(myTimer.hasElapsed(0.75)){
       _shooterSubsystem.runBeltForward();
@@ -47,9 +52,6 @@ public class ShootAllBalls extends CommandBase {
         _intakeSubsystem.runIntakeForward();
       }
     }
-    // if(myTimer.hasElapsed(0.75)){
-    //   myTimer.delay(0.2);
-    // }
   }
 
   // Called once the command ends or is interrupted.
@@ -61,6 +63,10 @@ public class ShootAllBalls extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(_climberSubsystem.getBool()) {
+      //Do NOT run the shoot command at all, if the climber subsystem is down.
+      return true;
+    }
     return myTimer.hasElapsed(2);
   }
 }

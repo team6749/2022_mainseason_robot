@@ -40,11 +40,11 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
    public void runBeltForward(){
-    belt.set(0.6);
+    belt.set(0.75);
    }
 
   public void runBeltReverse(){
-    belt.set(-0.6);
+    belt.set(-0.75);
   }
 
   public void beltOff(){
