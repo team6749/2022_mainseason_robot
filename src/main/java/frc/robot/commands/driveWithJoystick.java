@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.Joystick;
 
 
 
-public class DriveWithJoystick extends CommandBase {
+public class driveWithJoystick extends CommandBase {
   private final Joystick _rJoystick;
   private final Joystick _lJoystick;
   private final DrivebaseSubsystem _subsystem;
@@ -23,7 +23,7 @@ public class DriveWithJoystick extends CommandBase {
   private SlewRateLimiter limitSpeed = new SlewRateLimiter(5);
   private SlewRateLimiter limitRotation = new SlewRateLimiter(5);
   /** Creates a new driveWithJoystick. */
-  public DriveWithJoystick(Joystick rjoystick, Joystick lJoystick, DrivebaseSubsystem subsystem) {
+  public driveWithJoystick(Joystick rjoystick, Joystick lJoystick, DrivebaseSubsystem subsystem) {
     _subsystem = subsystem;
     addRequirements(subsystem);
     _lJoystick = lJoystick;
