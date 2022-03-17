@@ -61,7 +61,7 @@ public class RobotContainer {
 
     // Configure the button bindings
     configureButtonBindings();
-    _IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_IntakeSubsystem, _ShooterSubsystem));
+    // _IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_IntakeSubsystem, _ShooterSubsystem));
     // _DrivebaseSubsystem.setDefaultCommand(new DriveWithController(controller, _DrivebaseSubsystem));
     _DrivebaseSubsystem.setDefaultCommand(new driveWithJoystick(rightJoystick, leftJoystick, _DrivebaseSubsystem));
   }

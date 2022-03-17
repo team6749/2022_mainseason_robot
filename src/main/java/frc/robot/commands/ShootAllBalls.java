@@ -39,7 +39,7 @@ public class ShootAllBalls extends CommandBase {
   @Override
   public void execute() {
     
-    _shooterSubsystem.setShooterSpeed(70.0);
+    _shooterSubsystem.setShooterSpeed(60.0);
     if(myTimer.hasElapsed(0.75)){
       _shooterSubsystem.runBeltForward();
       _intakeSubsystem.runIntakeForward();
