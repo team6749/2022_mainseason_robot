@@ -25,7 +25,7 @@ public class ShootAllBalls extends CommandBase {
      _intakeSubsystem = intake;
      addRequirements(intake);
     _climberSubsystem = climber;
-    addRequirements(climber);
+    // addRequirements(climber);
   }
 
   // Called when the command is initially scheduled.
@@ -39,7 +39,7 @@ public class ShootAllBalls extends CommandBase {
   @Override
   public void execute() {
     
-    _shooterSubsystem.setShooterSpeed(70.0);
+    _shooterSubsystem.setShooterSpeed(75.0);
     if(myTimer.hasElapsed(0.75)){
       _shooterSubsystem.runBeltForward();
       _intakeSubsystem.runIntakeForward();
@@ -63,7 +63,7 @@ public class ShootAllBalls extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(_climberSubsystem.getBool()) {
+    if(_climberSubsystem.getBool()) { // if true
       //Do NOT run the shoot command at all, if the climber subsystem is down.
       return true;
     }

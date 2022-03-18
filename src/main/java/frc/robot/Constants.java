@@ -30,8 +30,7 @@ public final class Constants {
     public static int climberLimitSwitchBottom01 = 01;
     public static int climberLimitSwitchTop02 = 02;
 
-    public static int compressor1;
-    public static int[] doubleSolenoid = {4, 5};
+    public static int[] doubleSolenoid = {5, 4};
 
     public static int[] encoderLeft = {4, 3};
     public static int[] encoderRight = {6,5}; 

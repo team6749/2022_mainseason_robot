@@ -14,24 +14,27 @@ public class ClimberSubsystem extends SubsystemBase  {
   DigitalInput climberBottom = new DigitalInput(Constants.climberLimitSwitchBottom01);
   public WPI_TalonSRX climber = new WPI_TalonSRX(Constants.climber); 
   public boolean shortArmsDown = true;
-  Compressor pcmCompressor1 = new Compressor(Constants.compressor1, PneumaticsModuleType.CTREPCM);
-  DoubleSolenoid shortArms = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.doubleSolenoid[0], Constants.doubleSolenoid[1]);
+  Compressor pcmCompressor1 = new Compressor(0, PneumaticsModuleType.CTREPCM);
+  DoubleSolenoid shortArms = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.doubleSolenoid[1], Constants.doubleSolenoid[0]);
 
 
 public ClimberSubsystem() {
   climber.setInverted(true);
   climber.setNeutralMode(NeutralMode.Brake);
   climber.setInverted(true);
+  pcmCompressor1.enableDigital();
+  // shortArmsDown = false;
 }
 
 @Override
 public void periodic() {
+  // System.out.println(pcmCompressor1.getPressure());
   // This method will be called once per scheduler run
   //climber1.setVoltage(9);
   //needs to be set at break mode
   climber.set(0);
-  //System.out.println(climberBottom.get());
-  //System.out.println(climberTop.get());
+  // System.out.println(climberBottom.get());
+  // System.out.println(climberTop.get());
   
 }
 
@@ -39,9 +42,9 @@ public boolean getBool() {
   return shortArmsDown;
 }
 
-public void armOff(){
-  shortArms.set(Value.kOff);
-}
+// public void armOff(){
+//   shortArms.set(Value.kOff);
+// }
 public void armMoveBackward(){
   shortArms.set(Value.kReverse);
   shortArmsDown = true;
