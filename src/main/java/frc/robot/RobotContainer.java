@@ -21,7 +21,9 @@ import frc.robot.subsystems.DrivebaseSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -49,10 +51,10 @@ public class RobotContainer {
   
    
     // The robot's subsystems and commands are defined here
-  private final ClimberSubsystem _ClimberSubsystem = new ClimberSubsystem();
+  public final ClimberSubsystem _ClimberSubsystem = new ClimberSubsystem();
   public final DrivebaseSubsystem _DrivebaseSubsystem = new DrivebaseSubsystem();
-  private final IntakeSubsystem _IntakeSubsystem = new IntakeSubsystem();
-  private final ShooterSubsystem _ShooterSubsystem = new ShooterSubsystem();
+  public final IntakeSubsystem _IntakeSubsystem = new IntakeSubsystem();
+  public final ShooterSubsystem _ShooterSubsystem = new ShooterSubsystem();
   //commands - usually not put here
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -104,10 +106,15 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new SequentialCommandGroup(
-      new DriveForwardAutonomously(_DrivebaseSubsystem, 0.9144, 0.9144),
-      new DriveForwardAutonomously(_DrivebaseSubsystem, 0.912, 0),
-      new DriveForwardAutonomously(_DrivebaseSubsystem, -.455, .455)
+    return new ParallelCommandGroup(
+      new AutoIntakeBalls(_IntakeSubsystem, _ShooterSubsystem),
+      new SequentialCommandGroup(
+        new DriveForwardAutonomously(_DrivebaseSubsystem, 1.778, 1.778), ///forward with climber fistrt
+        new WaitCommand(1.0),
+        new DriveForwardAutonomously(_DrivebaseSubsystem, -1.778, -1.778),
+        new WaitCommand(0.5),
+        new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem)
+    )
     );
   }
 }

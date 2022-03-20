@@ -22,6 +22,7 @@ public class DriveForwardAutonomously extends CommandBase {
 
   /** Creates a new DriveForwardAutotonomously. */
   public DriveForwardAutonomously(DrivebaseSubsystem subsystem, double left, double right) {
+    //left and right are in meters
     m_subsystem = subsystem;
     addRequirements(subsystem);
     m_leftDistance = left;
@@ -82,9 +83,9 @@ public class DriveForwardAutonomously extends CommandBase {
     System.out.println(delta);
     if(Math.abs(delta) < 0.02) return 0;
     if(delta > 0) {
-      return 0.7d;
+      return 0.4d;
     } else {
-      return -0.7d;
+      return -0.4d;
     }
 
   }

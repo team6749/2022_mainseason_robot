@@ -47,10 +47,12 @@ public boolean getBool() {
 // }
 public void armMoveBackward(){
   shortArms.set(Value.kReverse);
+  shortArms.set(Value.kOff);
   shortArmsDown = true;
 }
 public void armMoveForward(){
   shortArms.set(Value.kForward);
+  shortArms.set(Value.kOff);
   shortArmsDown = false;
 }
 

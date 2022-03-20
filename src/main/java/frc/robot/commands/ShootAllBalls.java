@@ -47,7 +47,7 @@ public class ShootAllBalls extends CommandBase {
         _shooterSubsystem.beltOff();
         _intakeSubsystem.intakeOff();
       }
-      if(_shooterSubsystem.ballInBelt() && myTimer.hasElapsed(1.5)){
+      if(_shooterSubsystem.ballInBelt() && myTimer.hasElapsed(1.25)){
         _shooterSubsystem.runBeltForward();
         _intakeSubsystem.runIntakeForward();
       }
@@ -67,6 +67,6 @@ public class ShootAllBalls extends CommandBase {
       //Do NOT run the shoot command at all, if the climber subsystem is down.
       return true;
     }
-    return myTimer.hasElapsed(2);
+    return myTimer.hasElapsed(1.75);
   }
 }
