@@ -21,10 +21,10 @@ public class ShootAllBalls extends CommandBase {
   public ShootAllBalls(ShooterSubsystem shooter, IntakeSubsystem intake, ClimberSubsystem climber) {
     // Use addRequirements() here to declare subsystem dependencies.
      _shooterSubsystem = shooter;
-     addRequirements(shooter);
-     _intakeSubsystem = intake;
      addRequirements(intake);
     _climberSubsystem = climber;
+     addRequirements(shooter);
+     _intakeSubsystem = intake;
     // addRequirements(climber);
   }
 
@@ -41,14 +41,14 @@ public class ShootAllBalls extends CommandBase {
     
     _shooterSubsystem.setShooterSpeed(75.0);
     if(myTimer.hasElapsed(0.75)){
-      _shooterSubsystem.runBeltForward();
+      _intakeSubsystem.runBeltForward();
       _intakeSubsystem.runIntakeForward();
-      if(_shooterSubsystem.ballInBelt()){
-        _shooterSubsystem.beltOff();
+      if(_intakeSubsystem.ballInBelt()){
+        _intakeSubsystem.beltOff();
         _intakeSubsystem.intakeOff();
       }
-      if(_shooterSubsystem.ballInBelt() && myTimer.hasElapsed(1.25)){
-        _shooterSubsystem.runBeltForward();
+      if(_intakeSubsystem.ballInBelt() && myTimer.hasElapsed(1.25)){
+        _intakeSubsystem.runBeltForward();
         _intakeSubsystem.runIntakeForward();
       }
     }
@@ -67,6 +67,6 @@ public class ShootAllBalls extends CommandBase {
       //Do NOT run the shoot command at all, if the climber subsystem is down.
       return true;
     }
-    return myTimer.hasElapsed(1.75);
+    return myTimer.hasElapsed(1.7);
   }
 }

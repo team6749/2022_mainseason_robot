@@ -6,15 +6,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.enums.IncomingBalls;
 import frc.robot.Constants;
-
-
+import frc.robot.commands.AutoIntakeBalls;
 import edu.wpi.first.wpilibj.Timer;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 // import edu.wpi.first.wpilibj.DriverStation.Alliance;
 // import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -24,8 +25,10 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class IntakeSubsystem extends SubsystemBase {
   private final WPI_TalonSRX intake = new WPI_TalonSRX(Constants.intakeMotor);
-
+  private final WPI_TalonFX belt = new WPI_TalonFX(Constants.beltMotor);
   private final ColorSensorV3 colorSensor = new ColorSensorV3(Constants.colorSensorPort);
+  DigitalInput beltSwitch = new DigitalInput(Constants.beltLimitSwitch);
+
   private final ColorMatch _colorMatcher = new ColorMatch();
   Timer timer = new Timer();
   IncomingBalls lastBallColor;
@@ -40,10 +43,13 @@ public class IntakeSubsystem extends SubsystemBase {
 
   NetworkTable table = inst.getTable("datatable");
 
+  boolean intakeEnabled = false;
+
   public static DriverStation station;
 
   public IntakeSubsystem() {
-
+    belt.setNeutralMode(NeutralMode.Brake);
+    belt.setInverted(false);
     timer.start();
     intake.setInverted(false);
     // color stuff
@@ -62,16 +68,31 @@ public class IntakeSubsystem extends SubsystemBase {
   public void intakeOff() {
     intake.set(0);
   }
+
+  public boolean ballInBelt(){
+    return !beltSwitch.get();
+  }
+
+  public void runBeltForward(){
+    belt.set(0.9);
+   }
+
+  public void runBeltReverse(){
+    belt.set(-0.9);
+  }
+
+  public void beltOff(){
+    belt.set(0);
+  }
+
   @Override
   public void periodic() {
-    // System.out.println(ballColorToEnum());
+    
 
-    // if (DriverStation.getAlliance() == Alliance.Red) {
-
-    // } else {
-
-    // }
     intake.set(0);
+    belt.set(0);
+
+    
 
     ballColorToEnum();
     
