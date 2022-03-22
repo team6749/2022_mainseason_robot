@@ -28,6 +28,9 @@ public ClimberSubsystem() {
 
 @Override
 public void periodic() {
+  if(shortArms.get() != Value.kOff){
+    shortArms.set(Value.kOff);
+}
   // System.out.println(pcmCompressor1.getPressure());
   // This method will be called once per scheduler run
   //climber1.setVoltage(9);
@@ -47,12 +50,10 @@ public boolean getBool() {
 // }
 public void armMoveBackward(){
   shortArms.set(Value.kReverse);
-  shortArms.set(Value.kOff);
   shortArmsDown = true;
 }
 public void armMoveForward(){
   shortArms.set(Value.kForward);
-  shortArms.set(Value.kOff);
   shortArmsDown = false;
 }
 
