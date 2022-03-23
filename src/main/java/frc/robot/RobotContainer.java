@@ -150,11 +150,12 @@ public class RobotContainer {
     // An ExampleCommand will run in autonomous
 
     return new SequentialCommandGroup(
-        new ScheduleCommand(new AutoIntakeBalls(_IntakeSubsystem)),
+        // new ScheduleCommand(new AutoIntakeBalls(_IntakeSubsystem)),
         new DriveForwardAutonomously(_DrivebaseSubsystem, 1.778, 1.778), //goes direction of intake
         new WaitCommand(1.0),
         new DriveForwardAutonomously(_DrivebaseSubsystem, -1.778, -1.778),
         new WaitCommand(0.5),
+        new WaitCommand(2.0),
         new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem)
     );
   }

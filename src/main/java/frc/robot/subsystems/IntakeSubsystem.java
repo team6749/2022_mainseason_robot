@@ -44,6 +44,8 @@ public class IntakeSubsystem extends SubsystemBase {
   NetworkTable table = inst.getTable("datatable");
 
   public static DriverStation station;
+  private IncomingBalls _ball;
+  private boolean intakeEnabled;
 
   public IntakeSubsystem() {
     belt.setNeutralMode(NeutralMode.Brake);
@@ -54,6 +56,7 @@ public class IntakeSubsystem extends SubsystemBase {
     _colorMatcher.addColorMatch(redColor);
     _colorMatcher.addColorMatch(blueColor);
     intake.setNeutralMode(NeutralMode.Brake);
+    intakeEnabled = true;
   }
 
   public void runIntakeForward() {
@@ -85,15 +88,22 @@ public class IntakeSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    
-
-    intake.set(0);
-    belt.set(0);
-
-    
-
-    ballColorToEnum();
-    
+    if(intakeEnabled){
+      _ball = ballColorToEnum();
+      // Run the bottom belt unless there are 2 balls in the robot
+      if ((ballInBelt() == true && _ball != IncomingBalls.NONE) == false) {
+        runIntakeForward();
+      } else {
+        beltOff();
+      }
+      if (ballInBelt() == false) {
+        runBeltForward();
+      } else {
+        beltOff();
+      }
+      intake.set(0);
+      belt.set(0);
+    } 
   }
 
   // public boolean ballColorToTeam(IncomingBalls ballColor) {

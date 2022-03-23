@@ -64,8 +64,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     _autonomousCommand = _robotContainer.getAutonomousCommand();
-    _robotContainer._ClimberSubsystem.armMoveForward();
-    // _robotContainer._IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_robotContainer._IntakeSubsystem, _robotContainer._ShooterSubsystem));
+
     // schedule the autonomous command (example)
     if (_autonomousCommand != null) {
       _autonomousCommand.schedule();
@@ -97,7 +96,7 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
-    _robotContainer._ClimberSubsystem.armMoveForward();
+    _robotContainer._ClimberSubsystem.armMoveBackward(); //set arm to start pos in init
     _robotContainer._DrivebaseSubsystem.setBreakMode(NeutralMode.Brake);
   }
 

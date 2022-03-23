@@ -9,7 +9,7 @@ import frc.robot.enums.IncomingBalls;
 
 public class AutoIntakeBalls extends CommandBase {
   private final IntakeSubsystem _intakeSubsystem;
-  private IncomingBalls _ball;
+  
 
   /** Creates a new IntakeStateCommand. */
   public AutoIntakeBalls(IntakeSubsystem subsystem) {
@@ -26,21 +26,7 @@ public class AutoIntakeBalls extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    _ball = _intakeSubsystem.ballColorToEnum();
 
-
-    
-    // Run the bottom belt unless there are 2 balls in the robot
-    if ((_intakeSubsystem.ballInBelt() == true && _ball != IncomingBalls.NONE) == false) {
-      _intakeSubsystem.runIntakeForward();
-    } else {
-      _intakeSubsystem.beltOff();
-    }
-    if (_intakeSubsystem.ballInBelt() == false) {
-      _intakeSubsystem.runBeltForward();
-    } else {
-      _intakeSubsystem.beltOff();
-    }
   }
 
   // Called once the command ends or is interrupted.
