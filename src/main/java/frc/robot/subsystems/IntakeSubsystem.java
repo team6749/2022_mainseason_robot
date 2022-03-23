@@ -43,8 +43,6 @@ public class IntakeSubsystem extends SubsystemBase {
 
   NetworkTable table = inst.getTable("datatable");
 
-  boolean intakeEnabled = false;
-
   public static DriverStation station;
 
   public IntakeSubsystem() {
@@ -107,6 +105,8 @@ public class IntakeSubsystem extends SubsystemBase {
   //   }
   //   return false;
   // }
+
+
 
   // color sensor to enum function
   public IncomingBalls ballColorToEnum() {

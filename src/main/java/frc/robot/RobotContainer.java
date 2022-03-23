@@ -71,7 +71,7 @@ public class RobotContainer {
 
     // Configure the button bindings
     configureButtonBindings();
-    _IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_IntakeSubsystem));
+    // _IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_IntakeSubsystem));
     // _DrivebaseSubsystem.setDefaultCommand(new DriveWithController(controller,
     // _DrivebaseSubsystem));
     _DrivebaseSubsystem.setDefaultCommand(new driveWithJoystick(rightJoystick, leftJoystick, _DrivebaseSubsystem));
@@ -150,6 +150,7 @@ public class RobotContainer {
     // An ExampleCommand will run in autonomous
 
     return new SequentialCommandGroup(
+        new ScheduleCommand(new AutoIntakeBalls(_IntakeSubsystem)),
         new DriveForwardAutonomously(_DrivebaseSubsystem, 1.778, 1.778), //goes direction of intake
         new WaitCommand(1.0),
         new DriveForwardAutonomously(_DrivebaseSubsystem, -1.778, -1.778),
