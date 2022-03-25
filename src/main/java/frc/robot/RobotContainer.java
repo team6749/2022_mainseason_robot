@@ -60,7 +60,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     CameraServer.startAutomaticCapture();
-
+    CameraServer.startAutomaticCapture(); // rotate camera on roboat
     // Configure the button bindings
     configureButtonBindings();
     _IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_IntakeSubsystem, _ShooterSubsystem));
