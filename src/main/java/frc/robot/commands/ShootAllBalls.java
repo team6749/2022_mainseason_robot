@@ -11,20 +11,20 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 
-
 public class ShootAllBalls extends CommandBase {
   /** Creates a new ShootAllBalls. */
   private final ShooterSubsystem _shooterSubsystem;
   private final IntakeSubsystem _intakeSubsystem;
   private final ClimberSubsystem _climberSubsystem;
   Timer myTimer = new Timer();
+
   public ShootAllBalls(ShooterSubsystem shooter, IntakeSubsystem intake, ClimberSubsystem climber) {
     // Use addRequirements() here to declare subsystem dependencies.
-     _shooterSubsystem = shooter;
-     addRequirements(intake);
+    _shooterSubsystem = shooter;
+    addRequirements(intake);
     _climberSubsystem = climber;
-     addRequirements(shooter);
-     _intakeSubsystem = intake;
+    addRequirements(shooter);
+    _intakeSubsystem = intake;
     // addRequirements(climber);
   }
 
@@ -38,16 +38,15 @@ public class ShootAllBalls extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-    _shooterSubsystem.setShooterSpeed(75.0);
-    if(myTimer.hasElapsed(0.75)){
+    _shooterSubsystem.setShooterSpeed(67.5);
+    if (myTimer.hasElapsed(1.2)) {
       _intakeSubsystem.runBeltForward();
       _intakeSubsystem.runIntakeForward();
-      if(_intakeSubsystem.ballInBelt()){
+      if (_intakeSubsystem.ballInBelt() && myTimer.hasElapsed(1.9)) {
         _intakeSubsystem.beltOff();
         _intakeSubsystem.intakeOff();
       }
-      if(_intakeSubsystem.ballInBelt() && myTimer.hasElapsed(1.25)){
+      if(_intakeSubsystem.ballInBelt() && myTimer.hasElapsed(2.6)) {
         _intakeSubsystem.runBeltForward();
         _intakeSubsystem.runIntakeForward();
       }
@@ -57,16 +56,16 @@ public class ShootAllBalls extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    
+
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(_climberSubsystem.getBool()) { // if true
-      //Do NOT run the shoot command at all, if the climber subsystem is down.
+    if (_climberSubsystem.getBool()) { // if true
+      // Do NOT run the shoot command at all, if the climber subsystem is down.
       return true;
     }
-    return myTimer.hasElapsed(1.7);
+    return myTimer.hasElapsed(3.5);
   }
 }

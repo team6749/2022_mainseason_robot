@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.enums.IncomingBalls;
 import frc.robot.Constants;
-import frc.robot.commands.AutoIntakeBalls;
+// import frc.robot.commands.AutoIntakeBalls;
 import edu.wpi.first.wpilibj.Timer;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -45,13 +45,14 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public static DriverStation station;
   private IncomingBalls _ball;
-  private boolean intakeEnabled;
+  public boolean intakeEnabled = false;
 
   public IntakeSubsystem() {
     belt.setNeutralMode(NeutralMode.Brake);
     belt.setInverted(false);
     timer.start();
     intake.setInverted(false);
+    
     // color stuff
     _colorMatcher.addColorMatch(redColor);
     _colorMatcher.addColorMatch(blueColor);
@@ -60,11 +61,11 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void runIntakeForward() {
-    intake.set(1);
+    intake.set(0.6);
   }
 
   public void runIntakeReverse() {
-    intake.set(-1);
+    intake.set(-0.6);
   }
   public void intakeOff() {
     intake.set(0);
@@ -75,11 +76,11 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void runBeltForward(){
-    belt.set(0.9);
+    belt.set(0.65);
    }
 
   public void runBeltReverse(){
-    belt.set(-0.9);
+    belt.set(-0.65);
   }
 
   public void beltOff(){
@@ -88,6 +89,9 @@ public class IntakeSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    intake.set(0);
+    belt.set(0);
+    // System.out.println(intakeEnabled);
     if(intakeEnabled){
       _ball = ballColorToEnum();
       // Run the bottom belt unless there are 2 balls in the robot
@@ -101,9 +105,7 @@ public class IntakeSubsystem extends SubsystemBase {
       } else {
         beltOff();
       }
-      intake.set(0);
-      belt.set(0);
-    } 
+    }
   }
 
   // public boolean ballColorToTeam(IncomingBalls ballColor) {
@@ -149,7 +151,7 @@ public class IntakeSubsystem extends SubsystemBase {
         return IncomingBalls.BLUE;
       }
     }
-    if (timer.hasElapsed(2)) {
+    if (timer.hasElapsed(1)) {
       lastBallColor = IncomingBalls.NONE;
       return IncomingBalls.NONE;
     }

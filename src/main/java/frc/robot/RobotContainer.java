@@ -24,7 +24,6 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -71,7 +70,7 @@ public class RobotContainer {
 
     // Configure the button bindings
     configureButtonBindings();
-    // _IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_IntakeSubsystem));
+    // _IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_IntakeSubsystem, true));
     // _DrivebaseSubsystem.setDefaultCommand(new DriveWithController(controller,
     // _DrivebaseSubsystem));
     _DrivebaseSubsystem.setDefaultCommand(new driveWithJoystick(rightJoystick, leftJoystick, _DrivebaseSubsystem));
@@ -150,11 +149,11 @@ public class RobotContainer {
     // An ExampleCommand will run in autonomous
 
     return new SequentialCommandGroup(
-        // new ScheduleCommand(new AutoIntakeBalls(_IntakeSubsystem)),
-        new DriveForwardAutonomously(_DrivebaseSubsystem, 1.778, 1.778), //goes direction of intake
+        new AutoIntakeBalls(_IntakeSubsystem, true),
+        new DriveForwardAutonomously(_DrivebaseSubsystem, 1.6256, 1.6256), //goes direction of intake // use edge of hood as rp
         new WaitCommand(1.0),
-        new DriveForwardAutonomously(_DrivebaseSubsystem, -1.778, -1.778),
-        new WaitCommand(0.5),
+        new DriveForwardAutonomously(_DrivebaseSubsystem, -1.9, -1.9),
+        new AutoIntakeBalls(_IntakeSubsystem, false),
         new WaitCommand(2.0),
         new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem)
     );

@@ -5,22 +5,25 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.enums.IncomingBalls;
+// import frc.robot.enums.IncomingBalls;
 
 public class AutoIntakeBalls extends CommandBase {
   private final IntakeSubsystem _intakeSubsystem;
+  private boolean commandSetEnabled;
   
 
   /** Creates a new IntakeStateCommand. */
-  public AutoIntakeBalls(IntakeSubsystem subsystem) {
+  public AutoIntakeBalls(IntakeSubsystem subsystem, boolean setEnabled) {
     _intakeSubsystem = subsystem;
     addRequirements(subsystem);
+    commandSetEnabled = setEnabled;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    _intakeSubsystem.intakeEnabled = commandSetEnabled;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -32,12 +35,15 @@ public class AutoIntakeBalls extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    if(interrupted){
+      _intakeSubsystem.intakeEnabled = false;
+    }
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
 
-    return false;
+    return true;
   }
 }
