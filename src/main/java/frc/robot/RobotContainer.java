@@ -67,7 +67,7 @@ public class RobotContainer {
    */
   public RobotContainer() {
     CameraServer.startAutomaticCapture();
-
+    CameraServer.startAutomaticCapture(); // rotate camera on roboat
     // Configure the button bindings
     configureButtonBindings();
     // _IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_IntakeSubsystem, true));
