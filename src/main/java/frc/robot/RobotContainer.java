@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -66,8 +67,10 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    CameraServer.startAutomaticCapture();
-    CameraServer.startAutomaticCapture(); // rotate camera on roboat
+    UsbCamera camera1 = CameraServer.startAutomaticCapture(0);
+    // camera1.setResolution(1280, 720);
+    UsbCamera camera2 = CameraServer.startAutomaticCapture(1); // rotate camera on roboat
+    // camera1.setResolution(320, 240); 
     // Configure the button bindings
     configureButtonBindings();
     // _IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_IntakeSubsystem, true));

@@ -17,6 +17,14 @@ public class ShootAllBalls extends CommandBase {
   private final IntakeSubsystem _intakeSubsystem;
   private final ClimberSubsystem _climberSubsystem;
   Timer myTimer = new Timer();
+  Timer secondBallWarmpupTimer = new Timer();
+
+  //Time for shooter to warm up to speed
+  static double warmupTime = 1;
+  //Time for shooter to recover after shooting.
+  static double recoveryTime = 0.5;
+
+  boolean firstBallExited = false;
 
   public ShootAllBalls(ShooterSubsystem shooter, IntakeSubsystem intake, ClimberSubsystem climber) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -33,22 +41,36 @@ public class ShootAllBalls extends CommandBase {
   public void initialize() {
     myTimer.reset();
     myTimer.start();
+    secondBallWarmpupTimer.reset();
+    secondBallWarmpupTimer.stop();
+    firstBallExited = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    _shooterSubsystem.setShooterSpeed(67.5);
-    if (myTimer.hasElapsed(1.2)) {
+    //Always run the shooter during the duration of this command.
+    _shooterSubsystem.setShooterSpeed(75.0);
+    // Wait for the inital warm up time before feeding the first ball through
+    if (myTimer.hasElapsed(warmupTime)) {
+      // Runs balls through by default
       _intakeSubsystem.runBeltForward();
       _intakeSubsystem.runIntakeForward();
-      if (_intakeSubsystem.ballInBelt() && myTimer.hasElapsed(1.9)) {
-        _intakeSubsystem.beltOff();
-        _intakeSubsystem.intakeOff();
+      // Check to see if the first ball has been released from the switch.
+      if (_intakeSubsystem.ballInBelt() == false && firstBallExited == false) {
+        firstBallExited = true;
       }
-      if(_intakeSubsystem.ballInBelt() && myTimer.hasElapsed(2.6)) {
-        _intakeSubsystem.runBeltForward();
-        _intakeSubsystem.runIntakeForward();
+      //Start the second ball warmup timer if there is a ball loaded into the top belt
+      // and the first ball has been shot
+      if(firstBallExited && _intakeSubsystem.ballInBelt()) {
+        secondBallWarmpupTimer.start(); // No-op if timer is already running
+        // Stop the belt from moving if the second ball is loaded into the switch
+        // unless the second ball warmpup timer has elapsed.
+        // The second ball cannot be loaded in without the first ball having been shot.
+        if (secondBallWarmpupTimer.hasElapsed(recoveryTime) == false) {
+          _intakeSubsystem.beltOff();
+          _intakeSubsystem.intakeOff();
+        }
       }
     }
   }
@@ -66,6 +88,6 @@ public class ShootAllBalls extends CommandBase {
       // Do NOT run the shoot command at all, if the climber subsystem is down.
       return true;
     }
-    return myTimer.hasElapsed(3.5);
+    return myTimer.hasElapsed(3.0);
   }
 }
