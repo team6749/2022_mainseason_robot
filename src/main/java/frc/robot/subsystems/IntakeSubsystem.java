@@ -83,14 +83,6 @@ public class IntakeSubsystem extends SubsystemBase {
     belt.set(-0.5);
   }
 
-  public void runBeltForward(){
-    belt.set(0.65);
-   }
-
-  public void runBeltReverse(){
-    belt.set(-0.65);
-  }
-
   public void beltOff(){
     belt.set(0);
   }

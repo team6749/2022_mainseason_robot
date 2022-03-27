@@ -143,7 +143,7 @@ public class RobotContainer {
       new AutoIntakeBalls(_IntakeSubsystem, true),
       new DriveForwardAutonomously(_DrivebaseSubsystem, 1.4224, 1.4224), //goes direction of intake // use edge of hood as rp
       new WaitCommand(0.5),
-      new DriveForwardAutonomously(_DrivebaseSubsystem, -2.6416, -2.6416),
+      new DriveForwardAutonomously(_DrivebaseSubsystem, -1.95, -1.95),
       new AutoIntakeBalls(_IntakeSubsystem, false),
       new WaitCommand(1.0),
       new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem)
