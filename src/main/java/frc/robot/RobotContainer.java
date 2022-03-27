@@ -140,13 +140,13 @@ public class RobotContainer {
     // An ExampleCommand will run in autonomous
 
     return new SequentialCommandGroup(
-        new AutoIntakeBalls(_IntakeSubsystem, true),
-        new DriveForwardAutonomously(_DrivebaseSubsystem, 1.6256, 1.6256), //goes direction of intake // use edge of hood as rp
-        new WaitCommand(1.0),
-        new DriveForwardAutonomously(_DrivebaseSubsystem, -1.9, -1.9),
-        new AutoIntakeBalls(_IntakeSubsystem, false),
-        new WaitCommand(2.0),
-        new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem)
+      new AutoIntakeBalls(_IntakeSubsystem, true),
+      new DriveForwardAutonomously(_DrivebaseSubsystem, 1.4224, 1.4224), //goes direction of intake // use edge of hood as rp
+      new WaitCommand(0.5),
+      new DriveForwardAutonomously(_DrivebaseSubsystem, -1.95, -1.95),
+      new AutoIntakeBalls(_IntakeSubsystem, false),
+      new WaitCommand(1.0),
+      new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem)
     );
   }
 }

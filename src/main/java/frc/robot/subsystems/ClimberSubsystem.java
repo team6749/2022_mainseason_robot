@@ -23,8 +23,8 @@ public ClimberSubsystem() {
   climber.setNeutralMode(NeutralMode.Brake);
   climber.setInverted(true);
   pcmCompressor1.enableDigital();
-  // armMoveBackward();
-  // shortArmsDown = false;
+  armMoveBackward();
+  shortArmsDown = false;
 }
 
 @Override
