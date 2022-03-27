@@ -8,6 +8,8 @@ import frc.robot.enums.IncomingBalls;
 import frc.robot.Constants;
 // import frc.robot.commands.AutoIntakeBalls;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -105,18 +107,23 @@ public class IntakeSubsystem extends SubsystemBase {
       } else {
         beltOff();
       }
+      SmartDashboard.putString("TeamColor", DriverStation.getAlliance().toString());
+      SmartDashboard.putBoolean("BAllNotMatchTeam", ballNotMatchTeam(_ball));
+      if(ballNotMatchTeam(_ball)){ //if the ball color is not the team color
+        runIntakeReverse(); //maybe run shooter if ball in belt is right color
+      }
     }
   }
 
-  // public boolean ballColorToTeam(IncomingBalls ballColor) {
-  //   if (DriverStation.getAlliance() == Alliance.Red && ballColor == IncomingBalls.RED) {
-  //     return true;
-  //   }
-  //   if (DriverStation.getAlliance() == Alliance.Blue && ballColor == IncomingBalls.BLUE) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
+  public boolean ballNotMatchTeam(IncomingBalls ballColor) {
+    if ((DriverStation.getAlliance() == Alliance.Red) && (ballColor == IncomingBalls.BLUE)) {
+      return true;
+    }
+    if ((DriverStation.getAlliance() == Alliance.Blue) && (ballColor == IncomingBalls.RED)) {
+      return true;
+    }
+    return false;
+  }
 
 
 
