@@ -121,6 +121,8 @@ public class RobotContainer {
     smallArmsBackward.whenPressed(new SetSmallArmState(_ClimberSubsystem, SmallArmState.BACKWARD));
     smallArmsOff.whenPressed(new SetSmallArmState(_ClimberSubsystem, SmallArmState.OFF));
 
+    climbOneStep.whenPressed(getClimbOnceCommand());
+
     // controler code bindings
 
     // new JoystickButton(controller,
@@ -157,6 +159,8 @@ public class RobotContainer {
   public Command getClimbOnceCommand() {
     // An ExampleCommand will run in autonomous
     return new SequentialCommandGroup(
+      //Turn off belt and intake motors
+      new AutoIntakeBalls(_IntakeSubsystem, false),
       //Ensure the climber is correct position for move up
       new SetSmallArmState(_ClimberSubsystem, SmallArmState.FORWARD),
       //Lift the robot up
