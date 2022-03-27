@@ -89,6 +89,14 @@ public class IntakeSubsystem extends SubsystemBase {
     belt.set(0);
   }
 
+  public void runIntakeSlowerReverse(){
+    intake.set(-0.3); //may need to change power or time of pause of intake (same for runIntakeSlowerForward)
+  }
+
+  public void runIntakeSlowerForward(){
+    intake.set(0.3);
+  } 
+
   @Override
   public void periodic() {
     intake.set(0);
@@ -110,7 +118,7 @@ public class IntakeSubsystem extends SubsystemBase {
       SmartDashboard.putString("TeamColor", DriverStation.getAlliance().toString());
       SmartDashboard.putBoolean("BAllNotMatchTeam", ballNotMatchTeam(_ball));
       if(ballNotMatchTeam(_ball)){ //if the ball color is not the team color
-        runIntakeReverse(); //maybe run shooter if ball in belt is right color
+        runIntakeSlowerReverse(); //maybe run shooter if ball in belt is right color
       }
     }
   }
