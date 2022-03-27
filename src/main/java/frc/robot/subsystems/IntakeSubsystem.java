@@ -66,7 +66,17 @@ public class IntakeSubsystem extends SubsystemBase {
   public void periodic() {
     // System.out.println(ballColorToEnum());
 
-    // if (DriverStation.getAlliance() == Alliance.Red) {
+  public boolean ballInBelt(){
+    return !beltSwitch.get();
+  }
+
+  public void runBeltForward(){
+    belt.set(0.5);
+   }
+
+  public void runBeltReverse(){
+    belt.set(-0.5);
+  }
 
     // } else {
 
