@@ -13,7 +13,7 @@ public class ClimberSubsystem extends SubsystemBase  {
   DigitalInput climberTop = new DigitalInput(Constants.climberLimitSwitchTop02);
   DigitalInput climberBottom = new DigitalInput(Constants.climberLimitSwitchBottom01);
   public WPI_TalonSRX climber = new WPI_TalonSRX(Constants.climber); 
-  public boolean shortArmsDown = true;
+  public boolean shortArmsDown = false;
   Compressor pcmCompressor1 = new Compressor(0, PneumaticsModuleType.CTREPCM);
   DoubleSolenoid shortArms = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.doubleSolenoid[1], Constants.doubleSolenoid[0]);
 
@@ -23,6 +23,7 @@ public ClimberSubsystem() {
   climber.setNeutralMode(NeutralMode.Brake);
   climber.setInverted(true);
   pcmCompressor1.enableDigital();
+  // armMoveBackward();
   // shortArmsDown = false;
 }
 
@@ -50,11 +51,11 @@ public boolean getBool() {
 // }
 public void armMoveBackward(){
   shortArms.set(Value.kReverse);
-  shortArmsDown = true;
+  shortArmsDown = false;
 }
 public void armMoveForward(){
   shortArms.set(Value.kForward);
-  shortArmsDown = false;
+  shortArmsDown = true;
 }
 
 public void goDown(){

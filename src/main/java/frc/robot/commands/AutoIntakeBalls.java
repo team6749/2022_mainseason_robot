@@ -5,60 +5,45 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.enums.IncomingBalls;
-import frc.robot.subsystems.ShooterSubsystem;
+// import frc.robot.enums.IncomingBalls;
 
 public class AutoIntakeBalls extends CommandBase {
   private final IntakeSubsystem _intakeSubsystem;
-  private IncomingBalls _ball;
-  private final ShooterSubsystem _shootSubsystem;
+  private boolean commandSetEnabled;
+  
 
   /** Creates a new IntakeStateCommand. */
-  public AutoIntakeBalls(IntakeSubsystem subsystem, ShooterSubsystem shootSubsystem) {
+  public AutoIntakeBalls(IntakeSubsystem subsystem, boolean setEnabled) {
     _intakeSubsystem = subsystem;
     addRequirements(subsystem);
-    _shootSubsystem = shootSubsystem;
-    addRequirements(shootSubsystem);
+    commandSetEnabled = setEnabled;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    _intakeSubsystem.intakeEnabled = commandSetEnabled;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    _ball = _intakeSubsystem.ballColorToEnum();
 
-
-    
-    // Run the bottom belt unless there are 2 balls in the robot
-    if ((_shootSubsystem.ballInBelt() == true && _ball != IncomingBalls.NONE) == false) {
-      _intakeSubsystem.runIntakeForward();
-    } else {
-      _shootSubsystem.beltOff();
-    }
-    if (_shootSubsystem.ballInBelt() == false) {
-      _shootSubsystem.runBeltForward();
-    } else {
-      _shootSubsystem.beltOff();
-    }
-
-    // if (_ball == IncomingBalls.RED) {
-    //   m_shootSubsystem.runBelt();
-    // }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    if(interrupted){
+      _intakeSubsystem.intakeEnabled = false;
+    }
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+
+    return true;
   }
 }
