@@ -9,7 +9,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-// import frc.robot.commands.AutoIntakeBalls;
+import frc.robot.commands.AutoIntakeBalls;
 
 
 /**
@@ -64,8 +64,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     _autonomousCommand = _robotContainer.getAutonomousCommand();
-    _robotContainer._ClimberSubsystem.armMoveForward();
-    // _robotContainer._IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_robotContainer._IntakeSubsystem, _robotContainer._ShooterSubsystem));
+
     // schedule the autonomous command (example)
     if (_autonomousCommand != null) {
       _autonomousCommand.schedule();
@@ -85,6 +84,7 @@ public class Robot extends TimedRobot {
     if (_autonomousCommand != null) {
       _autonomousCommand.cancel();
     }
+    new AutoIntakeBalls(_robotContainer._IntakeSubsystem, true);
   }
 
   /** This function is called periodically during operator control. */
@@ -97,7 +97,7 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
-    _robotContainer._ClimberSubsystem.armMoveForward();
+    _robotContainer._ClimberSubsystem.armMoveBackward(); //set arm to start pos in init
     _robotContainer._DrivebaseSubsystem.setBreakMode(NeutralMode.Brake);
   }
 

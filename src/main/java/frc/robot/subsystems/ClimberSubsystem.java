@@ -30,7 +30,8 @@ public ClimberSubsystem() {
   climber.setNeutralMode(NeutralMode.Brake);
   climber.setInverted(true);
   pcmCompressor1.enableDigital();
-  // shortArmsDown = false;
+  armMoveBackward();
+  shortArmsDown = false;
 }
 
 @Override
@@ -89,11 +90,11 @@ public boolean getBool() {
 // }
 public void armMoveBackward(){
   shortArms.set(Value.kReverse);
-  shortArmsDown = true;
+  shortArmsDown = false;
 }
 public void armMoveForward(){
   shortArms.set(Value.kForward);
-  shortArmsDown = false;
+  shortArmsDown = true;
 }
 
 
