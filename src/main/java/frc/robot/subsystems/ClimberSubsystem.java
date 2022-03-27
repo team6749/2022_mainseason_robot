@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -16,7 +17,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 public class ClimberSubsystem extends SubsystemBase  {
   DigitalInput climberTop = new DigitalInput(Constants.climberLimitSwitchTop02);
   DigitalInput climberBottom = new DigitalInput(Constants.climberLimitSwitchBottom01);
-  public TalonFX climber = new TalonFX(Constants.climber); 
+  public WPI_TalonFX climber = new WPI_TalonFX(Constants.climber); 
   public boolean shortArmsDown = true;
   Compressor pcmCompressor1 = new Compressor(0, PneumaticsModuleType.CTREPCM);
   DoubleSolenoid shortArms = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.doubleSolenoid[1], Constants.doubleSolenoid[0]);

@@ -4,17 +4,11 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ClimberSubsystem;
 
-public class AutoClimb extends CommandBase {
-  private final ClimberSubsystem _subsystem;
-  Timer myTimer = new Timer();
-  /** Creates a new AutoClimb. */
-  public AutoClimb(ClimberSubsystem subsystem) {
-    _subsystem = subsystem;
-    addRequirements(subsystem);
+public class AutoClimbRoutine extends CommandBase {
+  /** Creates a new AutoClimbRoutine. */
+  public AutoClimbRoutine() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -24,14 +18,7 @@ public class AutoClimb extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    if(_subsystem.getTopSwitch() == true){
-      if(_subsystem.getBottomSwitch() == false){
-        _subsystem.goDown();
-      }else{
-      }
-    }
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
