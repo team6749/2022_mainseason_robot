@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ClimberControl;
 import frc.robot.commands.DriveForwardAutonomously;
+import frc.robot.commands.MoveClimberToPosition;
 import frc.robot.commands.SetSmallArmState;
 import frc.robot.enums.ClimberDirection;
 import frc.robot.enums.SmallArmState;
@@ -46,6 +47,8 @@ public class RobotContainer {
   final JoystickButton smallArmsForward = new JoystickButton(leftJoystick, 5); 
   final JoystickButton smallArmsBackward = new JoystickButton(leftJoystick, 4);
   final JoystickButton smallArmsOff = new JoystickButton(leftJoystick, 2);
+
+  final JoystickButton climbOneStep = new JoystickButton(leftJoystick, 7);
   
   // final JoystickButton l3 = new JoystickButton(leftJoystick, 3);
   
@@ -91,6 +94,7 @@ public class RobotContainer {
     smallArmsForward.whenPressed(new SetSmallArmState(_ClimberSubsystem, SmallArmState.FORWARD));
     smallArmsBackward.whenPressed(new SetSmallArmState(_ClimberSubsystem, SmallArmState.BACKWARD));
     smallArmsOff.whenPressed(new SetSmallArmState(_ClimberSubsystem, SmallArmState.OFF));
+
     
     //controler code bindings
 
@@ -115,6 +119,29 @@ public class RobotContainer {
         new WaitCommand(0.5),
         new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem)
     )
+    );
+  }
+
+
+  public Command getClimbOnceCommand() {
+    // An ExampleCommand will run in autonomous
+    return new SequentialCommandGroup(
+      //Ensure the climber is correct position for move up
+      new SetSmallArmState(_ClimberSubsystem, SmallArmState.FORWARD),
+      //Lift the robot up
+      new MoveClimberToPosition(_ClimberSubsystem, 0),
+      //Move the arms up slightly to clear the top hooks
+      new MoveClimberToPosition(_ClimberSubsystem, 0.2),
+      //Move the climber fully backwards
+      new SetSmallArmState(_ClimberSubsystem, SmallArmState.BACKWARD),
+      //Wait for the climber to rotate backwards.
+      new WaitCommand(3),
+      //Move climber all the way up
+      new MoveClimberToPosition(_ClimberSubsystem, 0.5),
+      //Climber should be over the next section
+      new MoveClimberToPosition(_ClimberSubsystem, 0.25)
+      //pneumatic arms should be off bar and ready to move forward
+      
     );
   }
 }
