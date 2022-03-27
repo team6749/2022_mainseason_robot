@@ -69,7 +69,7 @@ public class RobotContainer {
   public RobotContainer() {
     UsbCamera camera1 = CameraServer.startAutomaticCapture(0);
     // camera1.setResolution(1280, 720);
-    UsbCamera camera2 = CameraServer.startAutomaticCapture(1); // rotate camera on roboat
+    UsbCamera camera2 = CameraServer.startAutomaticCapture(1);
     // camera1.setResolution(320, 240); 
     // Configure the button bindings
     configureButtonBindings();
@@ -77,18 +77,6 @@ public class RobotContainer {
     // _DrivebaseSubsystem.setDefaultCommand(new DriveWithController(controller,
     // _DrivebaseSubsystem));
     _DrivebaseSubsystem.setDefaultCommand(new driveWithJoystick(rightJoystick, leftJoystick, _DrivebaseSubsystem));
-    CommandScheduler.getInstance()
-        .onCommandInitialize(
-            command -> Shuffleboard.addEventMarker(
-                "Command initialized", command.getName(), EventImportance.kNormal));
-    CommandScheduler.getInstance()
-        .onCommandInterrupt(
-            command -> Shuffleboard.addEventMarker(
-                "Command interrupted", command.getName(), EventImportance.kNormal));
-    CommandScheduler.getInstance()
-        .onCommandFinish(
-            command -> Shuffleboard.addEventMarker(
-                "Command finished", command.getName(), EventImportance.kNormal));
   }
 
   /**
