@@ -20,8 +20,8 @@ public class driveWithJoystick extends CommandBase {
   private final DrivebaseSubsystem _subsystem;
 
   
-  private SlewRateLimiter limitSpeed = new SlewRateLimiter(5);
-  private SlewRateLimiter limitRotation = new SlewRateLimiter(5);
+  private SlewRateLimiter limitSpeed = new SlewRateLimiter(3);
+  private SlewRateLimiter limitRotation = new SlewRateLimiter(3);
   /** Creates a new driveWithJoystick. */
   public driveWithJoystick(Joystick rjoystick, Joystick lJoystick, DrivebaseSubsystem subsystem) {
     _subsystem = subsystem;
