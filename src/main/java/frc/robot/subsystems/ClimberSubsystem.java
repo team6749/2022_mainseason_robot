@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ClimberSubsystem extends SubsystemBase  {
   DigitalInput climberTop = new DigitalInput(Constants.climberLimitSwitchTop02);
   DigitalInput climberBottom = new DigitalInput(Constants.climberLimitSwitchBottom01);
@@ -31,15 +32,10 @@ public ClimberSubsystem() {
 public void periodic() {
   if(shortArms.get() != Value.kOff){
     shortArms.set(Value.kOff);
-}
-  // System.out.println(pcmCompressor1.getPressure());
-  // This method will be called once per scheduler run
-  //climber1.setVoltage(9);
-  //needs to be set at break mode
+  }
   climber.set(0);
-  // System.out.println(climberBottom.get());
-  // System.out.println(climberTop.get());
-  
+  SmartDashboard.putBoolean("Top Switch", climberTop.get());
+  SmartDashboard.putBoolean("Bottom Switch", climberBottom.get());
 }
 
 public boolean getBool() {

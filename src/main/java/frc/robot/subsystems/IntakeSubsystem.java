@@ -122,19 +122,16 @@ public class IntakeSubsystem extends SubsystemBase {
         beltOff();
       }
       // SmartDashboard.putString("TeamColor", DriverStation.getAlliance().toString());
-      // SmartDashboard.putBoolean("BAllNotMatchTeam", ballNotMatchTeam(_ball));
+      SmartDashboard.putBoolean("Ball In Belt", ballInBelt());
       System.out.println(topBeltBallColor);
       if(ballNotMatchTeam(_ball)){ //if the ball color is not the team color
         //if there is a ball at top of robot and its the right color;  then run intake reverse
-        
         if(ballInBelt() && (lastBallCheck(topBeltBallColor))){
           runIntakeReverse(); //runs intake reverse slowly for delay
         }
-
         if(ballInBelt() && (ballNotMatchTeam(topBeltBallColor))) {
           runBeltForward();
         }
-        
       }
     }
   }

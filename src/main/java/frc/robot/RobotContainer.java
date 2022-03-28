@@ -65,9 +65,9 @@ public class RobotContainer {
    */
   public RobotContainer() {
     UsbCamera camera1 = CameraServer.startAutomaticCapture(0);
-    // camera1.setResolution(1280, 720);
+    camera1.setResolution(320, 240);
     UsbCamera camera2 = CameraServer.startAutomaticCapture(1);
-    // camera1.setResolution(320, 240); 
+    camera2.setResolution(320, 240); 
     // Configure the button bindings
     configureButtonBindings();
     // _IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_IntakeSubsystem, true));
