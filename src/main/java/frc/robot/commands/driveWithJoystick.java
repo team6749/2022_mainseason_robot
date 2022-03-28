@@ -21,7 +21,7 @@ public class driveWithJoystick extends CommandBase {
 
   
   private SlewRateLimiter limitSpeed = new SlewRateLimiter(3);
-  private SlewRateLimiter limitRotation = new SlewRateLimiter(3);
+  private SlewRateLimiter limitRotation = new SlewRateLimiter(5);
   /** Creates a new driveWithJoystick. */
   public driveWithJoystick(Joystick rjoystick, Joystick lJoystick, DrivebaseSubsystem subsystem) {
     _subsystem = subsystem;
@@ -47,7 +47,7 @@ public class driveWithJoystick extends CommandBase {
 
     
     //acceleration curve
-    _subsystem.arcadeDrive(limitSpeed.calculate(speed), limitRotation.calculate(rotation));
+    _subsystem.arcadeDrive(limitSpeed.calculate(speed), limitRotation.calculate(rotation * 0.7));
 
   
     

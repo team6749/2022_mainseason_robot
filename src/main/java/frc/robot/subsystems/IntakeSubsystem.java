@@ -33,8 +33,8 @@ public class IntakeSubsystem extends SubsystemBase {
 
   private final ColorMatch _colorMatcher = new ColorMatch();
   Timer timer = new Timer();
-  IncomingBalls lastBallColor;
-  IncomingBalls lastBallIntaked;
+  IncomingBalls lastBallColor = IncomingBalls.NONE;
+  IncomingBalls topBeltBallColor = IncomingBalls.NONE;
 
   private final Color redColor = new Color(0.48, 0.35, 0.13);
   private final Color blueColor = new Color(0.15, 0.40, 0.43);
@@ -79,11 +79,11 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void runBeltForward(){
-    belt.set(0.5);
+    belt.set(0.4);
    }
 
   public void runBeltReverse(){
-    belt.set(-0.5);
+    belt.set(-0.4);
   }
 
   public void beltOff(){
@@ -105,6 +105,11 @@ public class IntakeSubsystem extends SubsystemBase {
     // System.out.println(intakeEnabled);
     if(intakeEnabled){
       _ball = ballColorToEnum();
+
+      if(!ballInBelt() && _ball != IncomingBalls.NONE) {
+        topBeltBallColor = _ball; //sets last ball to the ball current ball
+      }
+
       // Run the bottom belt unless there are 2 balls in the robot
       if ((ballInBelt() && _ball != IncomingBalls.NONE) == false) {
         runIntakeForward();
@@ -115,26 +120,21 @@ public class IntakeSubsystem extends SubsystemBase {
         runBeltForward();
       } else {
         beltOff();
-        lastBallIntaked = _ball;
       }
-      SmartDashboard.putString("TeamColor", DriverStation.getAlliance().toString());
-      SmartDashboard.putBoolean("BAllNotMatchTeam", ballNotMatchTeam(_ball));
+      // SmartDashboard.putString("TeamColor", DriverStation.getAlliance().toString());
+      // SmartDashboard.putBoolean("BAllNotMatchTeam", ballNotMatchTeam(_ball));
+      System.out.println(topBeltBallColor);
       if(ballNotMatchTeam(_ball)){ //if the ball color is not the team color
         //if there is a ball at top of robot and its the right color;  then run intake reverse
         
-        if(ballInBelt() && (lastBallCheck(lastBallIntaked))){
-          runIntakeSlowerReverse(); //runs intake reverse slowly for delay
-        } else if(!ballInBelt() && lastBallIntaked == IncomingBalls.NONE) {  //if there is no ball at top of robot; then run shooter at low speed (30 - 50)
-          // how to run shooter in intake subsytem
-          //in theory running the belt with the shooter at slow default
-          // will result in a low ball shot
-          runIntakeSlowerForward();
-          if(ballInBelt()){
-            runBeltForward();
-          }
-        } else { // default behavior : run intake slowly
-          runIntakeSlowerReverse(); 
+        if(ballInBelt() && (lastBallCheck(topBeltBallColor))){
+          runIntakeReverse(); //runs intake reverse slowly for delay
         }
+
+        if(ballInBelt() && (ballNotMatchTeam(topBeltBallColor))) {
+          runBeltForward();
+        }
+        
       }
     }
   }
