@@ -22,8 +22,8 @@ public class ClimberSubsystem extends SubsystemBase  {
   Compressor pcmCompressor1 = new Compressor(0, PneumaticsModuleType.CTREPCM);
   DoubleSolenoid shortArms = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.doubleSolenoid[1], Constants.doubleSolenoid[0]);
 
-  PIDController pid = new PIDController(0, 0, 0);
-  double climberSetpoint = 0;
+  PIDController pid = new PIDController(40, 0, 0);
+  double climberSetpoint = -10;
 
 public ClimberSubsystem() {
   climber.setInverted(true);
@@ -46,37 +46,40 @@ public void periodic() {
   // System.out.println(climberBottom.get());
   // System.out.println(climberTop.get());
 
-  System.out.println(getClimberSensor());
+  // System.out.println(getClimberSensor());
 
   //Reset the climber sensor position to zero IF we are at the bottom.
   if(climberBottom.get()){
+    if(climberSetpoint < 0) {
+      climberSetpoint = 0;
+    }
     climber.setSelectedSensorPosition(0);
   }
 
   //Calculate and apply motor movement if it is safe.
-  climber.set(ControlMode.PercentOutput, 0);
+  // climber.set(ControlMode.PercentOutput, 0);
 
-  if(climberSetpoint == 0) {
-    //Run the climber all of the way down to the limit switch
-
-    //   if(climberBottom.get() == false){
-    //     climber.set(ControlMode.PercentOutput, -0.3);
-    //   }
+  double pidResult = pid.calculate(getClimberSensor(), climberSetpoint);
+  if(climberSetpoint < 0){
+    pidResult = pidResult * 0.2;
+  }
+  System.out.println("pid " + pidResult);
+  System.out.println("setpoint " + climberSetpoint);
+  if(pidResult > 0) {
+    //Go up check
+    if(climberTop.get() == false){
+      climber.set(ControlMode.PercentOutput, pidResult);
+    } else {
+       climber.set(ControlMode.PercentOutput, 0);
+    }
   } else {
-    //Otherwise control using PID
-
-    // double pidResult = pid.calculate(getClimberSensor(), climberSetpoint);
-    // if(pidResult >= 0) {
-    //   //Go up check
-    //   if(climberTop.get() == false){
-    //     climber.set(ControlMode.PercentOutput, pidResult);
-    //   }
-    // } else {
-    //   //Go down check
-    //   if(climberBottom.get() == false){
-    //     climber.set(ControlMode.PercentOutput, pidResult);
-    //   }
-    // }
+    // System.out.println("something else");
+    //Go down check
+    if(climberBottom.get() == false){
+      climber.set(ControlMode.PercentOutput, pidResult);
+    } else {
+      climber.set(ControlMode.PercentOutput, 0);
+   }
   }
   
 }
@@ -108,18 +111,20 @@ public boolean isClimberAtPosition() {
 
 //Position in meters.
 double getClimberSensor(){
-  return climber.getSelectedSensorPosition() * 0.029 * Math.PI / 2048;
+  return climber.getSelectedSensorPosition() * 0.025 * Math.PI / 2048 / 40;
 }
 
 public void goDown(){
-  if(climberBottom.get() == false){
-    climber.set(ControlMode.PercentOutput, -0.3);
-  }
+  climberSetpoint -= 0.05;
+  // if(climberBottom.get() == false){
+  //   climber.set(ControlMode.PercentOutput, -0.3);
+  // }
 }
 public void goUp(){
-  if(climberTop.get() == false){
-    climber.set(ControlMode.PercentOutput, 0.3);
-  }
+  climberSetpoint += 0.05;
+  // if(climberTop.get() == false){
+  //   climber.set(ControlMode.PercentOutput, 0.3);
+  // }
 }
 
 public boolean getTopSwitch(){
