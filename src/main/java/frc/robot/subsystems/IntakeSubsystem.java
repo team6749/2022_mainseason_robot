@@ -105,7 +105,7 @@ public class IntakeSubsystem extends SubsystemBase {
     if(intakeEnabled){
       _ball = ballColorToEnum();
       // Run the bottom belt unless there are 2 balls in the robot
-      if ((ballInBelt() == true && _ball != IncomingBalls.NONE) == false) {
+      if ((ballInBelt() && _ball != IncomingBalls.NONE) == false) {
         runIntakeForward();
       } else {
         beltOff();
@@ -114,11 +114,24 @@ public class IntakeSubsystem extends SubsystemBase {
         runBeltForward();
       } else {
         beltOff();
+        lastBallColor = _ball;
       }
       SmartDashboard.putString("TeamColor", DriverStation.getAlliance().toString());
       SmartDashboard.putBoolean("BAllNotMatchTeam", ballNotMatchTeam(_ball));
       if(ballNotMatchTeam(_ball)){ //if the ball color is not the team color
-        runIntakeSlowerReverse(); //maybe run shooter if ball in belt is right color
+        //if there is a ball at top of robot and its the right color;  then run intake reverse
+        
+        if(ballInBelt() && (lastBallCheck(lastBallColor))){
+          runIntakeSlowerReverse(); //runs intake reverse slowly for delay
+        } else if(!ballInBelt()) {  //if there is no ball at top of robot; then run shooter at low speed (30 - 50)
+          // how to run shooter in intake subsytem
+          ;
+        } else { // default behavior : run intake slowly
+          runIntakeSlowerReverse(); 
+        }
+        
+
+
       }
     }
   }
@@ -133,6 +146,15 @@ public class IntakeSubsystem extends SubsystemBase {
     return false;
   }
 
+  public boolean lastBallCheck(IncomingBalls ballColor) {
+    if ((DriverStation.getAlliance() == Alliance.Blue) && (ballColor == IncomingBalls.BLUE)) {
+      return true;
+    }
+    if ((DriverStation.getAlliance() == Alliance.Red) && (ballColor == IncomingBalls.RED)) {
+      return true;
+    }
+    return false;
+  }
 
 
   // color sensor to enum function
