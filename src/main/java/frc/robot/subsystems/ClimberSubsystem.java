@@ -61,7 +61,7 @@ public void periodic() {
 
   double pidResult = pid.calculate(getClimberSensor(), climberSetpoint);
   if(climberSetpoint < 0){
-    pidResult = pidResult * 0.2;
+    pidResult = pidResult * 0.1;
   }
   System.out.println("pid " + pidResult);
   System.out.println("setpoint " + climberSetpoint);
