@@ -8,6 +8,8 @@ import frc.robot.enums.IncomingBalls;
 import frc.robot.Constants;
 // import frc.robot.commands.AutoIntakeBalls;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -31,7 +33,8 @@ public class IntakeSubsystem extends SubsystemBase {
 
   private final ColorMatch _colorMatcher = new ColorMatch();
   Timer timer = new Timer();
-  IncomingBalls lastBallColor;
+  IncomingBalls lastBallColor = IncomingBalls.NONE;
+  IncomingBalls topBeltBallColor = IncomingBalls.NONE;
 
   private final Color redColor = new Color(0.48, 0.35, 0.13);
   private final Color blueColor = new Color(0.15, 0.40, 0.43);
@@ -76,16 +79,24 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void runBeltForward(){
-    belt.set(0.65);
+    belt.set(0.4);
    }
 
   public void runBeltReverse(){
-    belt.set(-0.65);
+    belt.set(-0.4);
   }
 
   public void beltOff(){
     belt.set(0);
   }
+
+  public void runIntakeSlowerReverse(){
+    intake.set(-0.3); //may need to change power or time of pause of intake (same for runIntakeSlowerForward)
+  }
+
+  public void runIntakeSlowerForward(){
+    intake.set(0.3);
+  } 
 
   @Override
   public void periodic() {
@@ -94,8 +105,13 @@ public class IntakeSubsystem extends SubsystemBase {
     // System.out.println(intakeEnabled);
     if(intakeEnabled){
       _ball = ballColorToEnum();
+
+      if(!ballInBelt() && _ball != IncomingBalls.NONE) {
+        topBeltBallColor = _ball; //sets last ball to the ball current ball
+      }
+
       // Run the bottom belt unless there are 2 balls in the robot
-      if ((ballInBelt() == true && _ball != IncomingBalls.NONE) == false) {
+      if ((ballInBelt() && _ball != IncomingBalls.NONE) == false) {
         runIntakeForward();
       } else {
         beltOff();
@@ -105,19 +121,40 @@ public class IntakeSubsystem extends SubsystemBase {
       } else {
         beltOff();
       }
+      // SmartDashboard.putString("TeamColor", DriverStation.getAlliance().toString());
+      SmartDashboard.putBoolean("Ball In Belt", ballInBelt());
+      System.out.println(topBeltBallColor);
+      if(ballNotMatchTeam(_ball)){ //if the ball color is not the team color
+        //if there is a ball at top of robot and its the right color;  then run intake reverse
+        if(ballInBelt() && (lastBallCheck(topBeltBallColor))){
+          runIntakeReverse(); //runs intake reverse slowly for delay
+        }
+        if(ballInBelt() && (ballNotMatchTeam(topBeltBallColor))) {
+          runBeltForward();
+        }
+      }
     }
   }
 
-  // public boolean ballColorToTeam(IncomingBalls ballColor) {
-  //   if (DriverStation.getAlliance() == Alliance.Red && ballColor == IncomingBalls.RED) {
-  //     return true;
-  //   }
-  //   if (DriverStation.getAlliance() == Alliance.Blue && ballColor == IncomingBalls.BLUE) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
+  public boolean ballNotMatchTeam(IncomingBalls ballColor) {
+    if ((DriverStation.getAlliance() == Alliance.Red) && (ballColor == IncomingBalls.BLUE)) {
+      return true;
+    }
+    if ((DriverStation.getAlliance() == Alliance.Blue) && (ballColor == IncomingBalls.RED)) {
+      return true;
+    }
+    return false;
+  }
 
+  public boolean lastBallCheck(IncomingBalls ballColor) {
+    if ((DriverStation.getAlliance() == Alliance.Blue) && (ballColor == IncomingBalls.BLUE)) {
+      return true;
+    }
+    if ((DriverStation.getAlliance() == Alliance.Red) && (ballColor == IncomingBalls.RED)) {
+      return true;
+    }
+    return false;
+  }
 
 
   // color sensor to enum function

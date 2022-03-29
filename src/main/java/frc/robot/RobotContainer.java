@@ -77,9 +77,9 @@ public class RobotContainer {
    */
   public RobotContainer() {
     UsbCamera camera1 = CameraServer.startAutomaticCapture(0);
-    // camera1.setResolution(1280, 720);
+    camera1.setResolution(320, 240);
     UsbCamera camera2 = CameraServer.startAutomaticCapture(1);
-    // camera1.setResolution(320, 240); 
+    camera2.setResolution(320, 240); 
     // Configure the button bindings
     configureButtonBindings();
     // _IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_IntakeSubsystem, true));
@@ -167,9 +167,7 @@ public class RobotContainer {
       //drive forward to ball position
       new DriveForwardAutonomously(_DrivebaseSubsystem, 1.4224, 1.4224), //goes direction of intake // use edge of hood as rp
       new WaitCommand(0.5),
-      //drive back to the base of hoop
-      new DriveForwardAutonomously(_DrivebaseSubsystem, -2.6416, -2.6416),
-      //turn off intake and belt once at hoop
+      new DriveForwardAutonomously(_DrivebaseSubsystem, -1.95, -1.95),
       new AutoIntakeBalls(_IntakeSubsystem, false),
       new WaitCommand(1.0),
       //run intake, belt, and shooter to shoot all balls into hoop

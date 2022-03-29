@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ClimberSubsystem extends SubsystemBase  {
   DigitalInput climberTop = new DigitalInput(Constants.climberLimitSwitchTop02);
   DigitalInput climberBottom = new DigitalInput(Constants.climberLimitSwitchBottom01);
@@ -82,6 +83,9 @@ public void periodic() {
    }
   }
   
+  
+  SmartDashboard.putBoolean("Top Switch", climberTop.get());
+  SmartDashboard.putBoolean("Bottom Switch", climberBottom.get());
 }
 
 public boolean getBool() {
