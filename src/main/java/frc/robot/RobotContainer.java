@@ -62,6 +62,8 @@ public class RobotContainer {
   final JoystickButton climberTop = new JoystickButton(leftJoystick, 11);
   final JoystickButton climberBottom = new JoystickButton(leftJoystick, 9);
   final JoystickButton climberMiddle = new JoystickButton(leftJoystick, 10);
+
+  final JoystickButton intakeOff = new JoystickButton(rightJoystick, 10);
   
   // final JoystickButton l3 = new JoystickButton(leftJoystick, 3);
 
@@ -136,9 +138,11 @@ public class RobotContainer {
     climbOneStep.whenPressed(getClimbOnceCommand());
 
     //climber specific positions
-    climberTop.whenPressed(new MoveClimberToPosition(_ClimberSubsystem, 0.55));
-    climberBottom.whenPressed(new MoveClimberToPosition(_ClimberSubsystem, 0));
+    climberTop.whenPressed(new MoveClimberToPosition(_ClimberSubsystem, 0.53));
+    climberBottom.whenPressed(new MoveClimberToPosition(_ClimberSubsystem, -0.2));
     climberMiddle.whenPressed(new MoveClimberToPosition(_ClimberSubsystem, 0.25));
+
+    intakeOff.whenPressed(new AutoIntakeBalls(_IntakeSubsystem, false));
 
     // controler code bindings
 
@@ -175,7 +179,7 @@ public class RobotContainer {
     );
   }
 
-
+  
   public Command getClimbOnceCommand() {
     // An ExampleCommand will run in autonomous
     return new SequentialCommandGroup(
@@ -185,10 +189,10 @@ public class RobotContainer {
       new SetSmallArmState(_ClimberSubsystem, SmallArmState.FORWARD),
       //Lift the robot up
       new WaitCommand(4),
-      new MoveClimberToPosition(_ClimberSubsystem, 0),
+      new MoveClimberToPosition(_ClimberSubsystem, -0.2),
       //Move the arms up slightly to clear the top hooks
       new WaitCommand(4),
-      new MoveClimberToPosition(_ClimberSubsystem, 0.2)
+      new MoveClimberToPosition(_ClimberSubsystem, 0.25)
       // //Move the climber fully backwards
       // new WaitCommand(4),
       // new SetSmallArmState(_ClimberSubsystem, SmallArmState.BACKWARD),

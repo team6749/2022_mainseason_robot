@@ -84,7 +84,7 @@ public class ShootAllBalls extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (_climberSubsystem.getBool()) { // if true
+    if (_climberSubsystem.getShortArms()) { // if true
       // Do NOT run the shoot command at all, if the climber subsystem is down.
       return true;
     }

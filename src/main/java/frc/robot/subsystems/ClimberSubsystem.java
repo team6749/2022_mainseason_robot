@@ -88,7 +88,7 @@ public void periodic() {
   SmartDashboard.putBoolean("Bottom Switch", climberBottom.get());
 }
 
-public boolean getBool() {
+public boolean getShortArms() {
   return shortArmsDown;
 }
 
@@ -115,7 +115,7 @@ public boolean isClimberAtPosition() {
 
 //Position in meters.
 double getClimberSensor(){
-  return climber.getSelectedSensorPosition() * 0.025 * Math.PI / 2048 / 40;
+  return climber.getSelectedSensorPosition() * 0.03 * Math.PI / 2048 / 40;
 }
 
 public void goDown(){
