@@ -42,7 +42,6 @@ public class ShooterSubsystem extends SubsystemBase {
       // shooterMotor.set(-0.2);
       shooterMotor.set(ControlMode.Velocity, 204.8d * 30);
       
-      //System.out.println(beltSwitch.get());
     }
 
     @Override
