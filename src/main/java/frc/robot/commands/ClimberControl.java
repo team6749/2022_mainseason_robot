@@ -30,7 +30,6 @@ public class ClimberControl extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //System.out.println("Climber command init");
     timer.reset();
     timer.start();
   }
@@ -51,8 +50,6 @@ public class ClimberControl extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //System.out.println("Climber command ended");
-
   }
 
   // Returns true when the command should end.

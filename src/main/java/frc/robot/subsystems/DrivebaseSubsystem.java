@@ -8,8 +8,13 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.math.util.*;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.drive.*;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -22,6 +27,8 @@ public class DrivebaseSubsystem extends SubsystemBase{
     private final WPI_TalonFX backLeft = new WPI_TalonFX(Constants.blMotor);
     private final WPI_TalonFX backRight = new WPI_TalonFX(Constants.brMotor);
     
+    private final AnalogInput input = new AnalogInput(Constants.ultrasonic);
+
     MotorControllerGroup left = new MotorControllerGroup(frontLeft, backLeft);
     MotorControllerGroup right = new MotorControllerGroup(frontRight, backRight);
     
@@ -35,7 +42,7 @@ public class DrivebaseSubsystem extends SubsystemBase{
     public DrivebaseSubsystem() {
       frontLeft.configFactoryDefault();
       backRight.configFactoryDefault();
-
+      input.setAverageBits(2);
       frontLeft.getSensorCollection().setIntegratedSensorPosition(0, 20);
       backRight.getSensorCollection().setIntegratedSensorPosition(0, 20);
 
@@ -49,7 +56,7 @@ public class DrivebaseSubsystem extends SubsystemBase{
       driveKinematics = new DifferentialDriveKinematics(0.5842);
       odometry = new DifferentialDriveOdometry(new Rotation2d());
 
-
+      
 
 
       left.setInverted(true);
@@ -65,30 +72,37 @@ public class DrivebaseSubsystem extends SubsystemBase{
       backRight.setNeutralMode(mode);
     }
     public void arcadeDrive(double speed, double rotation){
-      // System.out.println(rotation);
-      // double nspeed = Math.pow(speed, 2);
-      // double nrotation = Math.pow(rotation, 2);
-      // if(speed < 0){
-      //   nspeed = -(nspeed);
-      // }
-      // if(rotation < 0){
-      //   nrotation = -(nrotation);
-      // }
-      // myDrive.arcadeDrive(-nspeed, -nrotation);
       myDrive.arcadeDrive(-speed, -rotation);
     }
     
-  
+    public double atShootPosNum(){
+      double currentDistanceMeters = ((input.getAverageValue() / 200d) - 0.6);
+      SmartDashboard.putNumber("ultrasonic in m", currentDistanceMeters);
+      // -0.3 to 0.3 is the feesible range
+      return currentDistanceMeters - 0.9;
+    }
+
+    public boolean atShootPosBool(){
+      double currentDistanceMeters = ((input.getAverageValue() / 200d) - 0.6);
+      double currentDistanceCM = currentDistanceMeters * 100;
+      //0.3m to 5m range
+      if(currentDistanceCM <= 120 && currentDistanceCM >= 60){
+        return true;
+      }
+      return false;
+    }
+
+
     @Override
     public void periodic() {
-
-      // System.out.println(getPose());
-
+      //distance from hoop is good or not
+      SmartDashboard.putNumber("Ultrasonic distance from hoop (try to be within ±0.3", atShootPosNum());
+      SmartDashboard.putBoolean("Close enough to hoop?", atShootPosBool());
       double lDistance = getLeftEncoder();
       double rDistance = getRightEncoder();
-      SmartDashboard.putNumber("Encoder Left value", lDistance);  
-      SmartDashboard .putNumber("Encoder Right value", rDistance);
-         
+      SmartDashboard.putNumber("Encoder Left value", Math.floor(lDistance * 100) / 100);  
+      SmartDashboard .putNumber("Encoder Right value", Math.floor(rDistance * 100) / 100);
+      
       odometry.update(Rotation2d.fromDegrees(gyro.getAngle()), getLeftEncoder(), getRightEncoder());
 
     }
