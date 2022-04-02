@@ -75,10 +75,16 @@ public class DrivebaseSubsystem extends SubsystemBase{
       myDrive.arcadeDrive(-speed, -rotation);
     }
     
-    public boolean atShootPos(){
+    public double atShootPosNum(){
+      double currentDistanceMeters = ((input.getAverageValue() / 200d) - 0.6);
+      SmartDashboard.putNumber("ultrasonic in m", currentDistanceMeters);
+      // -0.3 to 0.3 is the feesible range
+      return currentDistanceMeters - 0.9;
+    }
+
+    public boolean atShootPosBool(){
       double currentDistanceMeters = ((input.getAverageValue() / 200d) - 0.6);
       double currentDistanceCM = currentDistanceMeters * 100;
-      SmartDashboard.putNumber("ultrasonic in cm", currentDistanceMeters * 100d);
       //0.3m to 5m range
       if(currentDistanceCM <= 120 && currentDistanceCM >= 60){
         return true;
@@ -86,15 +92,16 @@ public class DrivebaseSubsystem extends SubsystemBase{
       return false;
     }
 
+
     @Override
     public void periodic() {
       //distance from hoop is good or not
-      SmartDashboard.putBoolean("atShootPos", atShootPos());
-      
+      SmartDashboard.putNumber("Ultrasonic distance from hoop (try to be within ±0.3", atShootPosNum());
+      SmartDashboard.putBoolean("Close enough to hoop?", atShootPosBool());
       double lDistance = getLeftEncoder();
       double rDistance = getRightEncoder();
-      SmartDashboard.putNumber("Encoder Left value", lDistance);  
-      SmartDashboard .putNumber("Encoder Right value", rDistance);
+      SmartDashboard.putNumber("Encoder Left value", Math.floor(lDistance * 100) / 100);  
+      SmartDashboard .putNumber("Encoder Right value", Math.floor(rDistance * 100) / 100);
       
       odometry.update(Rotation2d.fromDegrees(gyro.getAngle()), getLeftEncoder(), getRightEncoder());
 

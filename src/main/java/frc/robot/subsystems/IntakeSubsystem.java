@@ -161,18 +161,15 @@ public class IntakeSubsystem extends SubsystemBase {
   public IncomingBalls ballColorToEnum() {
     Color detectedColor = colorSensor.getColor();
 
-    SmartDashboard.putNumber("red color", detectedColor.red);
-    SmartDashboard.putNumber("blue color", detectedColor.blue);
-    SmartDashboard.putNumber("green color", detectedColor.green);
 
     _colorMatcher.matchColor(detectedColor);
 
     if (lastBallColor == IncomingBalls.RED) {
-      SmartDashboard.putString("ballColor", "red");
+      SmartDashboard.putString("lastBallColor", "red");
     } else if (lastBallColor == IncomingBalls.BLUE) {
-      SmartDashboard.putString("ballColor", "blue");
+      SmartDashboard.putString("lastBallColor", "blue");
     } else {
-      SmartDashboard.putString("ballColor", "none");
+      SmartDashboard.putString("lastBallColor", "none");
     }
 
     ColorMatchResult foundColor = _colorMatcher.matchColor(detectedColor);
