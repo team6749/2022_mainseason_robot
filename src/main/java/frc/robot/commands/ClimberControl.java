@@ -30,6 +30,12 @@ public class ClimberControl extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    if(_direction == ClimberDirection.DOWN) {
+      _system.goDown();
+    } else if (_direction == ClimberDirection.UP) {
+      _system.goUp();
+    }
+    //System.out.println("Climber command init");
     timer.reset();
     timer.start();
   }
@@ -37,11 +43,11 @@ public class ClimberControl extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(_direction == ClimberDirection.DOWN) {
-      _system.goDown();
-    } else if (_direction == ClimberDirection.UP) {
-      _system.goUp();
-    }
+    // if(_direction == ClimberDirection.DOWN) {
+    //   _system.goDown();
+    // } else if (_direction == ClimberDirection.UP) {
+    //   _system.goUp();
+    // }
 
 
     
