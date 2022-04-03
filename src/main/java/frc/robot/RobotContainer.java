@@ -9,6 +9,7 @@ import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ClimberControl;
 import frc.robot.commands.DriveForwardAutonomously;
 import frc.robot.commands.MoveClimberToPosition;
@@ -23,6 +24,7 @@ import frc.robot.subsystems.DrivebaseSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -57,13 +59,14 @@ public class RobotContainer {
 
   //run climber auto routine
   final JoystickButton climbOneStep = new JoystickButton(leftJoystick, 7);
- 
+  final JoystickButton cancelAutoClimb = new JoystickButton(leftJoystick, 6);
   //specific climber positions mapped to buttons
   final JoystickButton climberTop = new JoystickButton(leftJoystick, 11);
   final JoystickButton climberBottom = new JoystickButton(leftJoystick, 9);
   final JoystickButton climberMiddle = new JoystickButton(leftJoystick, 10);
 
   final JoystickButton intakeOff = new JoystickButton(rightJoystick, 10);
+  final JoystickButton intakeOn = new JoystickButton(rightJoystick, 11);
   
   // final JoystickButton l3 = new JoystickButton(leftJoystick, 3);
 
@@ -136,13 +139,14 @@ public class RobotContainer {
 
     //run auto routine once on button press
     climbOneStep.whenPressed(getClimbOnceCommand());
-
+    
     //climber specific positions
-    climberTop.whenPressed(new MoveClimberToPosition(_ClimberSubsystem, 0.53));
+    climberTop.whenPressed(new MoveClimberToPosition(_ClimberSubsystem, 0.6));
     climberBottom.whenPressed(new MoveClimberToPosition(_ClimberSubsystem, -0.2));
     climberMiddle.whenPressed(new MoveClimberToPosition(_ClimberSubsystem, 0.25));
 
     intakeOff.whenPressed(new AutoIntakeBalls(_IntakeSubsystem, false));
+    intakeOn.whenPressed(new AutoIntakeBalls(_IntakeSubsystem, true));
 
     // controler code bindings
 
@@ -162,6 +166,12 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
+  public void periodic() {
+    if(leftJoystick.getRawButtonPressed(7)){
+      CommandScheduler.getInstance().cancel(getAutonomousCommand());
+    }
+  }
+
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
 
@@ -179,33 +189,31 @@ public class RobotContainer {
     );
   }
 
-  
+
   public Command getClimbOnceCommand() {
     // An ExampleCommand will run in autonomous
     return new SequentialCommandGroup(
       //Turn off belt and intake motors
       new AutoIntakeBalls(_IntakeSubsystem, false),
       //Ensure the climber is correct position for move up
-      new SetSmallArmState(_ClimberSubsystem, SmallArmState.FORWARD),
+      new SetSmallArmState(_ClimberSubsystem, SmallArmState.BACKWARD),
       //Lift the robot up
       new WaitCommand(4),
       new MoveClimberToPosition(_ClimberSubsystem, -0.2),
       //Move the arms up slightly to clear the top hooks
       new WaitCommand(4),
+      new MoveClimberToPosition(_ClimberSubsystem, 0.25),
+      //Move the climber fully backwards
+      new WaitCommand(4),
+      new SetSmallArmState(_ClimberSubsystem, SmallArmState.FORWARD),
+      //Wait for the climber to rotate backwards.
+      new WaitCommand(4),
+      //Move climber all the way up
+      new MoveClimberToPosition(_ClimberSubsystem, 0.6),
+      //Climber should be over the next section
+      new WaitCommand(4),
       new MoveClimberToPosition(_ClimberSubsystem, 0.25)
-      // //Move the climber fully backwards
-      // new WaitCommand(4),
-      // new SetSmallArmState(_ClimberSubsystem, SmallArmState.BACKWARD),
-      // //Wait for the climber to rotate backwards.
-      // new WaitCommand(4),
-      // new WaitCommand(3),
-      // //Move climber all the way up
-      // new MoveClimberToPosition(_ClimberSubsystem, 0.5),
-      // //Climber should be over the next section
-      // new WaitCommand(4),
-      // new MoveClimberToPosition(_ClimberSubsystem, 0.25)
-      // //pneumatic arms should be off bar and ready to move forward
-      
+      //pneumatic arms should be off bar and ready to move forward
     );
   }
 }

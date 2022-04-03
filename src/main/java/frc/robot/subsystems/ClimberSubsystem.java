@@ -57,6 +57,12 @@ public void periodic() {
     climber.setSelectedSensorPosition(0);
   }
 
+  if(climberTop.get()){
+    if(climberSetpoint > getClimberSensor()){
+      climberSetpoint = getClimberSensor();
+    }
+  }
+
   //Calculate and apply motor movement if it is safe.
   // climber.set(ControlMode.PercentOutput, 0);
 
@@ -64,8 +70,9 @@ public void periodic() {
   if(climberSetpoint < 0){
     pidResult = pidResult * 0.1;
   }
-  System.out.println("pid " + pidResult);
-  System.out.println("setpoint " + climberSetpoint);
+  SmartDashboard.putNumber("pid", pidResult);
+  SmartDashboard.putNumber("setpoint", climberSetpoint);
+
   if(pidResult > 0) {
     //Go up check
     if(climberTop.get() == false){
@@ -115,7 +122,7 @@ public boolean isClimberAtPosition() {
 
 //Position in meters.
 double getClimberSensor(){
-  return climber.getSelectedSensorPosition() * 0.03 * Math.PI / 2048 / 40;
+  return climber.getSelectedSensorPosition() * 0.0235 * Math.PI / 2048 / 40;
 }
 
 public void goDown(){
