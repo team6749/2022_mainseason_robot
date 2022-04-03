@@ -13,6 +13,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ClimberControl;
 import frc.robot.commands.DriveForwardAutonomously;
 import frc.robot.commands.MoveClimberToPosition;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frc.robot.commands.ClimberControl;
+import frc.robot.commands.DriveForwardAutonomously;
+import frc.robot.commands.RotateByDegrees;
 import frc.robot.commands.SetSmallArmState;
 import frc.robot.enums.ClimberDirection;
 import frc.robot.enums.SmallArmState;
@@ -69,7 +73,7 @@ public class RobotContainer {
   final JoystickButton intakeOn = new JoystickButton(rightJoystick, 11);
   
   // final JoystickButton l3 = new JoystickButton(leftJoystick, 3);
-
+  SendableChooser<Command> _chooser = new SendableChooser<Command>();
   // The robot's subsystems and commands are defined here
   public final ClimberSubsystem _ClimberSubsystem = new ClimberSubsystem();
   public final DrivebaseSubsystem _DrivebaseSubsystem = new DrivebaseSubsystem();
@@ -88,6 +92,10 @@ public class RobotContainer {
     // _IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_IntakeSubsystem, true));
     // _DrivebaseSubsystem.setDefaultCommand(new DriveWithController(controller,
     // _DrivebaseSubsystem));
+    _chooser.setDefaultOption("Simple Straight", simpleAutoCommand);
+    _chooser.addOption("Complex (turn)", complexAutoCommand);
+    _chooser.addOption("Easy", easyAutoCommand);
+    _chooser.addOption("test", testAutoCommand);
     _DrivebaseSubsystem.setDefaultCommand(new driveWithJoystick(rightJoystick, leftJoystick, _DrivebaseSubsystem));
   }
 
@@ -172,9 +180,11 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
+    return _chooser.getSelected();
+    
+  }
 
-    return new SequentialCommandGroup(
-      //run intake and belt by defauly
+  Command simpleAutoCommand = new SequentialCommandGroup(
       new AutoIntakeBalls(_IntakeSubsystem, true),
       new DriveForwardAutonomously(_DrivebaseSubsystem, 1.3, 1.3), //goes direction of intake // use edge of hood as rp
       new WaitCommand(0.5),
@@ -212,4 +222,32 @@ public class RobotContainer {
       //pneumatic arms should be off bar and ready to move forward
     );
   }
+  );
+
+  Command complexAutoCommand = new SequentialCommandGroup(
+    new AutoIntakeBalls(_IntakeSubsystem, true),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, 1.3, 1.3), //goes direction of intake // use edge of hood as rp
+    new WaitCommand(0.5),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, -1.8, -1.8),
+    // new RotateByDegrees(_DrivebaseSubsystem, 90),
+    new AutoIntakeBalls(_IntakeSubsystem, false),
+    new WaitCommand(1.0),
+    new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
+    new AutoIntakeBalls(_IntakeSubsystem, true)
+  );
+  Command testAutoCommand = new SequentialCommandGroup(
+    new RotateByDegrees(_DrivebaseSubsystem, 90)
+  );
+
+  Command easyAutoCommand = new SequentialCommandGroup(
+    new AutoIntakeBalls(_IntakeSubsystem, true),
+    new WaitCommand(1.5),
+    new AutoIntakeBalls(_IntakeSubsystem, false),
+    new WaitCommand(0.5),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, -0.45, -0.45),
+    new WaitCommand(0.5),
+    new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
+    new WaitCommand(0.5),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, 0.7, 0.7)
+  );
 }
