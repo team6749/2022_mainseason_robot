@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ClimberControl;
 import frc.robot.commands.DriveForwardAutonomously;
 import frc.robot.commands.RotateByDegrees;
@@ -77,6 +78,7 @@ public class RobotContainer {
     _chooser.addOption("Complex (turn)", complexAutoCommand);
     _chooser.addOption("Easy", easyAutoCommand);
     _chooser.addOption("test", testAutoCommand);
+    SmartDashboard.putData(_chooser);
     _DrivebaseSubsystem.setDefaultCommand(new driveWithJoystick(rightJoystick, leftJoystick, _DrivebaseSubsystem));
   }
 
@@ -156,10 +158,13 @@ public class RobotContainer {
 
   Command complexAutoCommand = new SequentialCommandGroup(
     new AutoIntakeBalls(_IntakeSubsystem, true),
-    new DriveForwardAutonomously(_DrivebaseSubsystem, 1.3, 1.3), //goes direction of intake // use edge of hood as rp
+    new DriveForwardAutonomously(_DrivebaseSubsystem, 1.7, 1.7), //goes direction of intake // use edge of hood as rp
+    new RotateByDegrees(_DrivebaseSubsystem, -8),
     new WaitCommand(0.5),
-    new DriveForwardAutonomously(_DrivebaseSubsystem, -1.8, -1.8),
-    // new RotateByDegrees(_DrivebaseSubsystem, 90),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, -1.9, -1.9),
+    new WaitCommand(0.5),
+    new RotateByDegrees(_DrivebaseSubsystem, 45),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, -0.05, -0.05),
     new AutoIntakeBalls(_IntakeSubsystem, false),
     new WaitCommand(1.0),
     new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
