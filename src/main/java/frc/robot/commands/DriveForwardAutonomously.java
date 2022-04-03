@@ -53,7 +53,6 @@ public class DriveForwardAutonomously extends CommandBase {
     SmartDashboard.putNumber("speed left", leftMotorSpeed);
     SmartDashboard.putNumber("right2", rightMotorSpeed);
 
-    // System.out.println(rightMotorSpeed);
 
     m_subsystem.driveRobotRaw(leftMotorSpeed, rightMotorSpeed);
 
@@ -79,8 +78,6 @@ public class DriveForwardAutonomously extends CommandBase {
   public double calculateMotorOutput(double value, double targetposition){
 
     double delta = targetposition - value;
-
-    // System.out.println(delta);
     if(Math.abs(delta) < 0.02) return 0;
     if(delta > 0) {
       return 0.5d;

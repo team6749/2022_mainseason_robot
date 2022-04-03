@@ -102,7 +102,6 @@ public class IntakeSubsystem extends SubsystemBase {
   public void periodic() {
     intake.set(0);
     belt.set(0);
-    // System.out.println(intakeEnabled);
     if(intakeEnabled){
       _ball = ballColorToEnum();
 
@@ -123,7 +122,6 @@ public class IntakeSubsystem extends SubsystemBase {
       }
       // SmartDashboard.putString("TeamColor", DriverStation.getAlliance().toString());
       SmartDashboard.putBoolean("Ball In Belt", ballInBelt());
-      // System.out.println(topBeltBallColor);
       if(ballNotMatchTeam(_ball)){ //if the ball color is not the team color
         //if there is a ball at top of robot and its the right color;  then run intake reverse
         if(ballInBelt() && (lastBallCheck(topBeltBallColor))){
@@ -161,18 +159,15 @@ public class IntakeSubsystem extends SubsystemBase {
   public IncomingBalls ballColorToEnum() {
     Color detectedColor = colorSensor.getColor();
 
-    SmartDashboard.putNumber("red color", detectedColor.red);
-    SmartDashboard.putNumber("blue color", detectedColor.blue);
-    SmartDashboard.putNumber("green color", detectedColor.green);
 
     _colorMatcher.matchColor(detectedColor);
 
     if (lastBallColor == IncomingBalls.RED) {
-      SmartDashboard.putString("ballColor", "red");
+      SmartDashboard.putString("lastBallColor", "red");
     } else if (lastBallColor == IncomingBalls.BLUE) {
-      SmartDashboard.putString("ballColor", "blue");
+      SmartDashboard.putString("lastBallColor", "blue");
     } else {
-      SmartDashboard.putString("ballColor", "none");
+      SmartDashboard.putString("lastBallColor", "none");
     }
 
     ColorMatchResult foundColor = _colorMatcher.matchColor(detectedColor);
