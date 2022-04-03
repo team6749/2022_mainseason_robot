@@ -65,9 +65,7 @@ public class RobotContainer {
    */
   public RobotContainer() {
     UsbCamera camera1 = CameraServer.startAutomaticCapture(0);
-    camera1.setResolution(320, 240);
     UsbCamera camera2 = CameraServer.startAutomaticCapture(1);
-    camera2.setResolution(320, 240); 
     // Configure the button bindings
     configureButtonBindings();
     // _IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_IntakeSubsystem, true));
@@ -138,12 +136,13 @@ public class RobotContainer {
 
     return new SequentialCommandGroup(
       new AutoIntakeBalls(_IntakeSubsystem, true),
-      new DriveForwardAutonomously(_DrivebaseSubsystem, 1.4224, 1.4224), //goes direction of intake // use edge of hood as rp
+      new DriveForwardAutonomously(_DrivebaseSubsystem, 1.3, 1.3), //goes direction of intake // use edge of hood as rp
       new WaitCommand(0.5),
-      new DriveForwardAutonomously(_DrivebaseSubsystem, -1.95, -1.95),
+      new DriveForwardAutonomously(_DrivebaseSubsystem, -1.8, -1.8),
       new AutoIntakeBalls(_IntakeSubsystem, false),
       new WaitCommand(1.0),
-      new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem)
+      new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
+      new AutoIntakeBalls(_IntakeSubsystem, true)
     );
   }
 }
