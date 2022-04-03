@@ -53,8 +53,8 @@ public class RobotContainer {
   final JoystickButton shootBallsButton = new JoystickButton(rightJoystick, 2); // shoot ballz
 
   //pneumatic arms position control
-  final JoystickButton smallArmsForward = new JoystickButton(leftJoystick, 5);
-  final JoystickButton smallArmsBackward = new JoystickButton(leftJoystick, 4);
+  final JoystickButton smallArmsForward = new JoystickButton(rightJoystick, 9);
+  final JoystickButton smallArmsBackward = new JoystickButton(rightJoystick, 8);
   final JoystickButton smallArmsOff = new JoystickButton(leftJoystick, 2);
 
   //run climber auto routine
@@ -82,9 +82,7 @@ public class RobotContainer {
    */
   public RobotContainer() {
     UsbCamera camera1 = CameraServer.startAutomaticCapture(0);
-    camera1.setResolution(320, 240);
     UsbCamera camera2 = CameraServer.startAutomaticCapture(1);
-    camera2.setResolution(320, 240); 
     // Configure the button bindings
     configureButtonBindings();
     // _IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_IntakeSubsystem, true));
@@ -178,14 +176,13 @@ public class RobotContainer {
     return new SequentialCommandGroup(
       //run intake and belt by defauly
       new AutoIntakeBalls(_IntakeSubsystem, true),
-      //drive forward to ball position
-      new DriveForwardAutonomously(_DrivebaseSubsystem, 1.4224, 1.4224), //goes direction of intake // use edge of hood as rp
+      new DriveForwardAutonomously(_DrivebaseSubsystem, 1.3, 1.3), //goes direction of intake // use edge of hood as rp
       new WaitCommand(0.5),
-      new DriveForwardAutonomously(_DrivebaseSubsystem, -1.95, -1.95),
+      new DriveForwardAutonomously(_DrivebaseSubsystem, -1.8, -1.8),
       new AutoIntakeBalls(_IntakeSubsystem, false),
       new WaitCommand(1.0),
-      //run intake, belt, and shooter to shoot all balls into hoop
-      new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem)
+      new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
+      new AutoIntakeBalls(_IntakeSubsystem, true)
     );
   }
 
@@ -198,20 +195,19 @@ public class RobotContainer {
       //Ensure the climber is correct position for move up
       new SetSmallArmState(_ClimberSubsystem, SmallArmState.BACKWARD),
       //Lift the robot up
-      new WaitCommand(4),
       new MoveClimberToPosition(_ClimberSubsystem, -0.2),
       //Move the arms up slightly to clear the top hooks
-      new WaitCommand(4),
+      new WaitCommand(2),
       new MoveClimberToPosition(_ClimberSubsystem, 0.25),
       //Move the climber fully backwards
-      new WaitCommand(4),
+      new WaitCommand(2),
       new SetSmallArmState(_ClimberSubsystem, SmallArmState.FORWARD),
       //Wait for the climber to rotate backwards.
       new WaitCommand(4),
       //Move climber all the way up
       new MoveClimberToPosition(_ClimberSubsystem, 0.6),
       //Climber should be over the next section
-      new WaitCommand(4),
+      new WaitCommand(2),
       new MoveClimberToPosition(_ClimberSubsystem, 0.25)
       //pneumatic arms should be off bar and ready to move forward
     );

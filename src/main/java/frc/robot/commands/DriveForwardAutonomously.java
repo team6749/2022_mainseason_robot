@@ -80,9 +80,9 @@ public class DriveForwardAutonomously extends CommandBase {
     double delta = targetposition - value;
     if(Math.abs(delta) < 0.02) return 0;
     if(delta > 0) {
-      return 0.5d;
+      return 0.575d;
     } else {
-      return -0.5d;
+      return -0.575d;
     }
 
   }
