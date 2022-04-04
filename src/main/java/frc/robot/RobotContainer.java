@@ -194,7 +194,7 @@ public class RobotContainer {
       new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
       new AutoIntakeBalls(_IntakeSubsystem, true)
     );
-  }
+  
 
 
   public Command getClimbOnceCommand() {
@@ -217,10 +217,11 @@ public class RobotContainer {
       //Climber should be over the next section
       new WaitCommand(2),
       //pneumatic arms should be off bar and ready to move forward
-      new MoveClimberToPosition(_ClimberSubsystem, 0.25)
+      new MoveClimberToPosition(_ClimberSubsystem, 0.25),
+      new SetSmallArmState(_ClimberSubsystem, SmallArmState.BACKWARD)
     );
   }
-  );
+  
 
   Command complexAutoCommand = new SequentialCommandGroup(
     new AutoIntakeBalls(_IntakeSubsystem, true),
