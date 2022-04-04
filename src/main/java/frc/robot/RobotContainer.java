@@ -92,10 +92,10 @@ public class RobotContainer {
     // _IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_IntakeSubsystem, true));
     // _DrivebaseSubsystem.setDefaultCommand(new DriveWithController(controller,
     // _DrivebaseSubsystem));
-    _chooser.setDefaultOption("Simple Straight", simpleAutoCommand);
-    _chooser.addOption("Complex (turn)", complexAutoCommand);
-    _chooser.addOption("Easy", easyAutoCommand);
-    _chooser.addOption("test", testAutoCommand);
+    _chooser.setDefaultOption("Straight one ball", twoBallAuto);
+    _chooser.addOption("Complex two ball)", complexTwoBallAuto);
+    _chooser.addOption("simple one ball", simpleAuto);
+    _chooser.addOption("testAuto", testAuto);
     _DrivebaseSubsystem.setDefaultCommand(new driveWithJoystick(rightJoystick, leftJoystick, _DrivebaseSubsystem));
   }
 
@@ -184,19 +184,6 @@ public class RobotContainer {
     
   }
 
-  Command simpleAutoCommand = new SequentialCommandGroup(
-      new AutoIntakeBalls(_IntakeSubsystem, true),
-      new DriveForwardAutonomously(_DrivebaseSubsystem, 1.3, 1.3), //goes direction of intake // use edge of hood as rp
-      new WaitCommand(0.5),
-      new DriveForwardAutonomously(_DrivebaseSubsystem, -1.8, -1.8),
-      new AutoIntakeBalls(_IntakeSubsystem, false),
-      new WaitCommand(1.0),
-      new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
-      new AutoIntakeBalls(_IntakeSubsystem, true)
-    );
-  }
-
-
   public Command getClimbOnceCommand() {
     // An ExampleCommand will run in autonomous
     return new SequentialCommandGroup(
@@ -222,9 +209,19 @@ public class RobotContainer {
       //pneumatic arms should be off bar and ready to move forward
     );
   }
+
+  Command twoBallAuto = new SequentialCommandGroup(
+      new AutoIntakeBalls(_IntakeSubsystem, true),
+      new DriveForwardAutonomously(_DrivebaseSubsystem, 1.3, 1.3), //goes direction of intake // use edge of hood as rp
+      new WaitCommand(0.5),
+      new DriveForwardAutonomously(_DrivebaseSubsystem, -1.8, -1.8),
+      new AutoIntakeBalls(_IntakeSubsystem, false),
+      new WaitCommand(1.0),
+      new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
+      new AutoIntakeBalls(_IntakeSubsystem, true)
   );
 
-  Command complexAutoCommand = new SequentialCommandGroup(
+  Command complexTwoBallAuto = new SequentialCommandGroup(
     new AutoIntakeBalls(_IntakeSubsystem, true),
     new DriveForwardAutonomously(_DrivebaseSubsystem, 1.3, 1.3), //goes direction of intake // use edge of hood as rp
     new WaitCommand(0.5),
@@ -235,11 +232,8 @@ public class RobotContainer {
     new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
     new AutoIntakeBalls(_IntakeSubsystem, true)
   );
-  Command testAutoCommand = new SequentialCommandGroup(
-    new RotateByDegrees(_DrivebaseSubsystem, 90)
-  );
 
-  Command easyAutoCommand = new SequentialCommandGroup(
+  Command simpleAuto = new SequentialCommandGroup(
     new AutoIntakeBalls(_IntakeSubsystem, true),
     new WaitCommand(1.5),
     new AutoIntakeBalls(_IntakeSubsystem, false),
@@ -249,5 +243,9 @@ public class RobotContainer {
     new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
     new WaitCommand(0.5),
     new DriveForwardAutonomously(_DrivebaseSubsystem, 0.7, 0.7)
+  );
+
+  Command testAuto = new SequentialCommandGroup(
+    new RotateByDegrees(_DrivebaseSubsystem, 90)
   );
 }
