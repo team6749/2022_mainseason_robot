@@ -47,7 +47,7 @@ public class driveWithJoystick extends CommandBase {
 
     
     //acceleration curve
-    _subsystem.arcadeDrive(limitSpeed.calculate(speed), limitRotation.calculate(rotation * 0.7));
+    _subsystem.arcadeDrive(limitSpeed.calculate(speed), limitRotation.calculate(rotation * 0.35));
 
   
     

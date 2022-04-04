@@ -29,7 +29,7 @@ public class RotateByDegrees extends CommandBase {
    
 
   public double DegreesToDistance(double x){
-    return (Math.PI * 0.5842d * (x / 360d)) / 2d;
+    return (Math.PI * 0.5842d * (x / 360d));
   }
   // Called when the command is initially scheduled.
   @Override
