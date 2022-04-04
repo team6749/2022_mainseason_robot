@@ -2,7 +2,7 @@
   "tabPane": [
     {
       "title": "Main",
-      "autoPopulate": true,
+      "autoPopulate": false,
       "autoPopulatePrefix": "SmartDashboard/",
       "widgetPane": {
         "gridSize": 128.0,
@@ -24,7 +24,7 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "0,1": {
+          "2,1": {
             "size": [
               1,
               1
@@ -123,7 +123,7 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "0,0": {
+          "2,0": {
             "size": [
               1,
               1
@@ -143,6 +143,17 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/setpoint",
               "_title": "setpoint"
+            }
+          },
+          "1,2": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "ComboBox Chooser",
+              "_source0": "network_table:///SmartDashboard/SendableChooser[0]",
+              "_title": "Auto Selecter"
             }
           }
         }
@@ -224,6 +235,17 @@
               "Range/Center": 0.0,
               "Visuals/Num tick marks": 5,
               "Visuals/Show text": true
+            }
+          },
+          "6,7": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "ComboBox Chooser",
+              "_source0": "network_table:///SmartDashboard/SendableChooser[0]",
+              "_title": "Auto Selecter"
             }
           }
         }
