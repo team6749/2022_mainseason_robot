@@ -94,9 +94,10 @@ public class RobotContainer {
     // _DrivebaseSubsystem.setDefaultCommand(new DriveWithController(controller,
     // _DrivebaseSubsystem));
     _chooser.setDefaultOption("Straight one ball", twoBallAuto);
-    _chooser.addOption("Complex two ball)", complexTwoBallAuto);
+    _chooser.addOption("Complex two ball", complexTwoBallAuto);
     _chooser.addOption("simple one ball", simpleAuto);
     _chooser.addOption("testAuto", testAuto);
+    SmartDashboard.putData(_chooser);
     _DrivebaseSubsystem.setDefaultCommand(new driveWithJoystick(rightJoystick, leftJoystick, _DrivebaseSubsystem));
   }
 
