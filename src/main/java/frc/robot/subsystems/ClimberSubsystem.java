@@ -40,6 +40,8 @@ public void periodic() {
   if(shortArms.get() != Value.kOff){
     shortArms.set(Value.kOff);
 }
+
+SmartDashboard.setDefaultBoolean("Climber ready", !pcmCompressor1.enabled());
   // System.out.println(pcmCompressor1.getPressure());
   // This method will be called once per scheduler run
   //climber1.setVoltage(9);
