@@ -70,9 +70,11 @@ public class RobotContainer {
   final JoystickButton climberBottom = new JoystickButton(leftJoystick, 9);
   final JoystickButton climberMiddle = new JoystickButton(leftJoystick, 10);
 
+  //intake on and off
   final JoystickButton intakeOff = new JoystickButton(rightJoystick, 10);
   final JoystickButton intakeOn = new JoystickButton(rightJoystick, 11);
-  
+  //turn robot 180 deg
+  final JoystickButton turn180 = new JoystickButton(rightJoystick, 7);
   // final JoystickButton l3 = new JoystickButton(leftJoystick, 3);
   SendableChooser<Command> _chooser = new SendableChooser<Command>();
   // The robot's subsystems and commands are defined here
@@ -93,7 +95,7 @@ public class RobotContainer {
     // _IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_IntakeSubsystem, true));
     // _DrivebaseSubsystem.setDefaultCommand(new DriveWithController(controller,
     // _DrivebaseSubsystem));
-    _chooser.setDefaultOption("Straight one ball", twoBallAuto);
+    _chooser.setDefaultOption("Straight two ball", twoBallAuto);
     _chooser.addOption("Complex two ball", complexTwoBallAuto);
     _chooser.addOption("simple one ball", simpleAuto);
     _chooser.addOption("testAuto", testAuto);
@@ -156,6 +158,8 @@ public class RobotContainer {
     intakeOff.whenPressed(new AutoIntakeBalls(_IntakeSubsystem, false));
     intakeOn.whenPressed(new AutoIntakeBalls(_IntakeSubsystem, true));
 
+    //turn 180 degree button
+    turn180.whenPressed(new RotateByDegrees(_DrivebaseSubsystem, 180));
     // controler code bindings
 
     // new JoystickButton(controller,
@@ -242,11 +246,12 @@ public class RobotContainer {
     new WaitCommand(1.5),
     new AutoIntakeBalls(_IntakeSubsystem, false),
     new WaitCommand(0.5),
-    new DriveForwardAutonomously(_DrivebaseSubsystem, -0.45, -0.45),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, -0.6, -0.6),
     new WaitCommand(0.5),
     new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
     new WaitCommand(0.5),
-    new DriveForwardAutonomously(_DrivebaseSubsystem, 0.7, 0.7)
+    new DriveForwardAutonomously(_DrivebaseSubsystem, 0.7, 0.7),
+    new AutoIntakeBalls(_IntakeSubsystem, true)
   );
 
   Command testAuto = new SequentialCommandGroup(

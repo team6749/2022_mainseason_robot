@@ -37,6 +37,7 @@ public class DriveForwardAutonomously extends CommandBase {
     m_leftStarting = m_subsystem.getLeftEncoder();
     m_rightStarting = m_subsystem.getRightEncoder();
     m_subsystem.setBreakMode(NeutralMode.Brake);
+    atTarget = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.

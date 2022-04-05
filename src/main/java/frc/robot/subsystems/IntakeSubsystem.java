@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.enums.IncomingBalls;
 import frc.robot.Constants;
+import frc.robot.commands.AutoIntakeBalls;
 // import frc.robot.commands.AutoIntakeBalls;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -64,11 +65,11 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void runIntakeForward() {
-    intake.set(0.7);
+    intake.set(0.65);
   }
 
   public void runIntakeReverse() {
-    intake.set(-0.7);
+    intake.set(-0.65);
   }
   
   public void intakeOff() {
