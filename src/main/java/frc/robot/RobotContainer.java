@@ -218,15 +218,15 @@ public class RobotContainer {
   }
 
   Command twoBallAuto = new SequentialCommandGroup(
-      new AutoIntakeBalls(_IntakeSubsystem, true),
-      new DriveForwardAutonomously(_DrivebaseSubsystem, 1.3, 1.3), //goes direction of intake // use edge of hood as rp
-      new WaitCommand(0.5),
-      new DriveForwardAutonomously(_DrivebaseSubsystem, -1.8, -1.8),
-      new AutoIntakeBalls(_IntakeSubsystem, false),
-      new WaitCommand(1.0),
-      new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
-      new AutoIntakeBalls(_IntakeSubsystem, true)
-  );
+    new AutoIntakeBalls(_IntakeSubsystem, true),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, 1.3, 1.3), //goes direction of intake // use edge of hood as rp
+    new WaitCommand(0.5),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, -1.9, -1.9),
+    new AutoIntakeBalls(_IntakeSubsystem, false),
+    new WaitCommand(1.0),
+    new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
+    new AutoIntakeBalls(_IntakeSubsystem, true)
+  ); 
 
   Command complexTwoBallAuto = new SequentialCommandGroup(
     new AutoIntakeBalls(_IntakeSubsystem, true),
@@ -235,7 +235,7 @@ public class RobotContainer {
     new WaitCommand(0.5),
     new DriveForwardAutonomously(_DrivebaseSubsystem, -1.9, -1.9),
     new WaitCommand(0.5),
-    new RotateByDegrees(_DrivebaseSubsystem, 45),
+    new RotateByDegrees(_DrivebaseSubsystem, 50),
     new DriveForwardAutonomously(_DrivebaseSubsystem, -0.05, -0.05),
     new AutoIntakeBalls(_IntakeSubsystem, false),
     new WaitCommand(1.0),
@@ -245,14 +245,12 @@ public class RobotContainer {
 
   Command simpleAuto = new SequentialCommandGroup(
     new AutoIntakeBalls(_IntakeSubsystem, true),
-    new WaitCommand(1.5),
+    new WaitCommand(2),
     new AutoIntakeBalls(_IntakeSubsystem, false),
-    new WaitCommand(0.5),
-    new DriveForwardAutonomously(_DrivebaseSubsystem, -0.6, -0.6),
     new WaitCommand(0.5),
     new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
     new WaitCommand(0.5),
-    new DriveForwardAutonomously(_DrivebaseSubsystem, 0.7, 0.7),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, 1.75, 1.75),
     new AutoIntakeBalls(_IntakeSubsystem, true)
   );
 
