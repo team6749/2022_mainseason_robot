@@ -202,6 +202,7 @@ public class RobotContainer {
       //Move the arms up slightly to clear the top hooks
       new MoveClimberToPosition(_ClimberSubsystem, 0.25),
       //Move the climber fully backwards
+      new  WaitCommand(1),
       new SetSmallArmState(_ClimberSubsystem, SmallArmState.FORWARD),
       //Wait for the climber to rotate backwards.
       new WaitCommand(4),
@@ -211,6 +212,7 @@ public class RobotContainer {
       new WaitCommand(2),
       //pneumatic arms should be off bar and ready to move forward
       new MoveClimberToPosition(_ClimberSubsystem, 0.25),
+      new WaitCommand(1),
       new SetSmallArmState(_ClimberSubsystem, SmallArmState.BACKWARD)
     );
   }

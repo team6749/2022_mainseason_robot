@@ -40,7 +40,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
       // This method will be called once per scheduler run
       // shooterMotor.set(-0.2);
-      shooterMotor.set(ControlMode.Velocity, 204.8d * 30);
+      shooterMotor.set(ControlMode.Velocity, 204.8d * 40);
       
     }
 
