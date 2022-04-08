@@ -20,7 +20,7 @@ public class ShootAllBalls extends CommandBase {
   Timer secondBallWarmpupTimer = new Timer();
 
   //Time for shooter to warm up to speed
-  static double warmupTime = 1;
+  static double warmupTime = 1.5;
   //Time for shooter to recover after shooting.
   static double recoveryTime = 0.5;
 
@@ -88,6 +88,6 @@ public class ShootAllBalls extends CommandBase {
       // Do NOT run the shoot command at all, if the climber subsystem is down.
       return true;
     }
-    return myTimer.hasElapsed(3.0);
+    return myTimer.hasElapsed(4.0);
   }
 }
