@@ -95,9 +95,9 @@ public class RobotContainer {
     // _IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_IntakeSubsystem, true));
     // _DrivebaseSubsystem.setDefaultCommand(new DriveWithController(controller,
     // _DrivebaseSubsystem));
-    _chooser.setDefaultOption("left two ball", leftTwoBallAuto);
+    _chooser.setDefaultOption("simple one ball", simpleAuto);
+    _chooser.addOption("left two ball", leftTwoBallAuto);
     _chooser.addOption("Complex two ball", complexTwoBallAuto);
-    _chooser.addOption("simple one ball", simpleAuto);
     _chooser.addOption("right two ball", rightTwoBallAuto);
     _chooser.addOption("testAuto", testAuto);
     SmartDashboard.putData(_chooser);
