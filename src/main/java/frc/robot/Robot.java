@@ -64,8 +64,9 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    _robotContainer._ClimberSubsystem.armMoveBackward();
+    new AutoIntakeBalls(_robotContainer._IntakeSubsystem, true);
     _autonomousCommand = _robotContainer.getAutonomousCommand();
-
     // schedule the autonomous command (example)
     if (_autonomousCommand != null) {
       _autonomousCommand.schedule();
@@ -85,6 +86,7 @@ public class Robot extends TimedRobot {
     if (_autonomousCommand != null) {
       _autonomousCommand.cancel();
     }
+    _robotContainer._ClimberSubsystem.armMoveBackward();
     new AutoIntakeBalls(_robotContainer._IntakeSubsystem, true);
   }
 

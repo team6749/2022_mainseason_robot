@@ -268,6 +268,5 @@ public class RobotContainer {
   );
 
   Command testAuto = new SequentialCommandGroup(
-    new RotateByDegrees(_DrivebaseSubsystem, 90)
   );
 }
