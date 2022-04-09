@@ -245,29 +245,7 @@
             "content": {
               "_type": "ComboBox Chooser",
               "_source0": "network_table:///SmartDashboard/SendableChooser[0]",
-              "_title": "Auto Selecter"
-            }
-          },
-          "2,7": {
-            "size": [
-              2,
-              2
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/pid",
-              "_title": "pid"
-            }
-          },
-          "4,7": {
-            "size": [
-              2,
-              2
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/setpoint",
-              "_title": "setpoint"
+              "_title": "SmartDashboard/SendableChooser[0]"
             }
           }
         }
