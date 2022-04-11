@@ -21,7 +21,7 @@ public class ShootAllBalls extends CommandBase {
 
   //Time for shooter to warm up to speed
   static double warmupTime = 1.5;
-  //Time for shooter to recover after shooting.
+  //Time for shooeeeeeeter to recover after shooting.
   static double recoveryTime = 0.5;
 
   boolean firstBallExited = false;
