@@ -33,7 +33,9 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterMotor.set(ControlMode.Velocity, 204.8d * rpm);
   }
 
-
+  public double getShooterSpeed () {
+    return shooterMotor.getSelectedSensorVelocity() * 204.8d;
+  }
 
   @Override
     public void periodic() {

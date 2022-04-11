@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.enums.IncomingBalls;
 import frc.robot.Constants;
-import frc.robot.commands.AutoIntakeBalls;
 // import frc.robot.commands.AutoIntakeBalls;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
