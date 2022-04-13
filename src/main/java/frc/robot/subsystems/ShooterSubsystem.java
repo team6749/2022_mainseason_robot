@@ -30,6 +30,9 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void setShooterSpeed(double rpm){
     // shooterMotor.set(-(speed));
+    if(rpm < 0){
+      rpm = 0;
+    }
     shooterMotor.set(ControlMode.Velocity, 204.8d * rpm);
   }
 

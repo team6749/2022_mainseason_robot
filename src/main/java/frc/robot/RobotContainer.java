@@ -23,6 +23,8 @@ import frc.robot.enums.ClimberDirection;
 import frc.robot.enums.SmallArmState;
 import frc.robot.commands.AutoIntakeBalls;
 import frc.robot.commands.ShootAllBalls;
+import frc.robot.commands.ShootOneBall;
+import frc.robot.commands.ShooterSpeed;
 import frc.robot.commands.driveWithJoystick;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivebaseSubsystem;
@@ -30,6 +32,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -113,35 +116,13 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-
-    // new JoystickButton(controller,
-    // XboxController.Button.kBack.value).whileHeld(new
-    // ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.UP));
-    // new JoystickButton(controller,
-    // XboxController.Button.kStart.value).whileHeld(new
-    // ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.DOWN));
-
-    // new JoystickButton(controller,
-    // XboxController.Button.kA.value).whenPressed(new
-    // SetSmallArmState(_ClimberSubsystem, SmallArmState.OFF));
-    // new JoystickButton(controller,
-    // XboxController.Button.kY.value).whenPressed(new
-    // SetSmallArmState(_ClimberSubsystem, SmallArmState.FORWARD));
-    // new JoystickButton(controller,
-    // XboxController.Button.kX.value).whenPressed(new
-    // SetSmallArmState(_ClimberSubsystem, SmallArmState.BACKWARD));
-    // // new JoystickButton(controller, XboxController.Button.kBack.value).(new
-    // ClimberControl(climberSubsystem, 0.5, ClimberDirection.UP));
-    // new JoystickButton(controller,
-    // XboxController.Button.kRightBumper.value).whenPressed(new
-    // ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem));
-    
     //move climber up and down respectively while buttons are held
     climberUpButton.whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.UP));
     climberDownButton.whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.DOWN));
     
     //shoot balls when button is pressed
-    shootBallsButton.whenPressed(new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem));
+    // shootBallsButton.whenPressed(new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem));
+    shootBallsButton.whenPressed(shootCommand);
 
     //move arms certain direction when button is pressed
     smallArmsForward.whenPressed(new SetSmallArmState(_ClimberSubsystem, SmallArmState.FORWARD));
@@ -161,17 +142,6 @@ public class RobotContainer {
 
     //turn 180 degree button
     turn180.whenPressed(new RotateByDegrees(_DrivebaseSubsystem, 180));
-    // controler code bindings
-
-    // new JoystickButton(controller,
-    // XboxController.Button.kBack.value).whileHeld(new
-    // ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.UP));
-    // new JoystickButton(controller,
-    // XboxController.Button.kStart.value).whileHeld(new
-    // ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.DOWN));
-    // new JoystickButton(controller,
-    // XboxController.Button.kRightBumper.value).whenPressed(new
-    // ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem));
   }
 
   /**
@@ -268,5 +238,15 @@ public class RobotContainer {
   );
 
   Command testAuto = new SequentialCommandGroup(
+  );
+
+  public Command shootCommand = new SequentialCommandGroup(
+    new ShooterSpeed(_ShooterSubsystem, 75),
+    new ShootOneBall(_IntakeSubsystem), 
+    new ParallelCommandGroup(
+      new WaitCommand(0.75),
+      new ShooterSpeed(_ShooterSubsystem, 75)
+    ),
+    new ShootOneBall(_IntakeSubsystem)
   );
 }

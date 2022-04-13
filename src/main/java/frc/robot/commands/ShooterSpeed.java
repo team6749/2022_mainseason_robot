@@ -14,9 +14,6 @@ public class ShooterSpeed extends CommandBase{
 
     @Override
     public void initialize() {
-        if(speed < 0 || speed > 120){
-            speed = 60;
-        }
     }
 
     @Override
@@ -31,6 +28,6 @@ public class ShooterSpeed extends CommandBase{
 
     @Override
     public boolean isFinished() {
-        return (_shooterSubsystem.getShooterSpeed() >= speed) ? true : false;
+        return Math.abs(speed - _shooterSubsystem.getShooterSpeed()) < 2.5d; // 5 is the +- range of variablity
     }
 }
