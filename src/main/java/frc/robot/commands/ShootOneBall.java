@@ -24,8 +24,11 @@ public class ShootOneBall extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      _intakeSubsystem.runBeltForward();
-      _intakeSubsystem.runIntakeForward();
+    if(_intakeSubsystem.ballInBelt()){
+      _intakeSubsystem.runBeltForwardFaster();
+      _intakeSubsystem.runIntakeForwardFaster();      
+    }
+
   }
 
   // Called once the command ends or is interrupted.
@@ -35,6 +38,6 @@ public class ShootOneBall extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return _intakeSubsystem.ballInBelt();
+    return !_intakeSubsystem.ballInBelt();
   }
 }

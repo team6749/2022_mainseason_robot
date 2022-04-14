@@ -27,7 +27,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class IntakeSubsystem extends SubsystemBase {
   private final WPI_TalonSRX intake = new WPI_TalonSRX(Constants.intakeMotor);
-  private final WPI_TalonFX belt = new WPI_TalonFX(Constants.beltMotor);
+  private final WPI_TalonSRX belt = new WPI_TalonSRX(Constants.beltMotor);
   private final ColorSensorV3 colorSensor = new ColorSensorV3(Constants.colorSensorPort);
   DigitalInput beltSwitch = new DigitalInput(Constants.beltLimitSwitch);
 
@@ -54,7 +54,7 @@ public class IntakeSubsystem extends SubsystemBase {
     belt.setNeutralMode(NeutralMode.Brake);
     belt.setInverted(false);
     timer.start();
-    intake.setInverted(false);
+    intake.setInverted(true);
     
     // color stuff
     _colorMatcher.addColorMatch(redColor);
@@ -75,13 +75,20 @@ public class IntakeSubsystem extends SubsystemBase {
     intake.set(0);
   }
 
+  public void runIntakeForwardFaster(){
+    intake.set(0.8);
+  }
   public boolean ballInBelt(){
-    return !beltSwitch.get();
+    return beltSwitch.get();
   }
 
   public void runBeltForward(){
     belt.set(0.4);
-   }
+  }
+
+  public void runBeltForwardFaster(){
+    belt.set(0.6);
+  }
 
   public void runBeltReverse(){
     belt.set(-0.4);

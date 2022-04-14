@@ -241,11 +241,11 @@ public class RobotContainer {
   );
 
   public Command shootCommand = new SequentialCommandGroup(
-    new ShooterSpeed(_ShooterSubsystem, 75),
-    new ShootOneBall(_IntakeSubsystem), 
-    new ParallelCommandGroup(
-      new WaitCommand(0.75),
-      new ShooterSpeed(_ShooterSubsystem, 75)
+    new ShooterSpeed(_ShooterSubsystem, 85),
+    new ShootOneBall(_IntakeSubsystem),
+    new ParallelCommandGroup (
+      new ShooterSpeed(_ShooterSubsystem, 85),
+      new WaitCommand(2.5)
     ),
     new ShootOneBall(_IntakeSubsystem)
   );
