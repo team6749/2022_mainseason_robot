@@ -52,7 +52,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public IntakeSubsystem() {
     belt.setNeutralMode(NeutralMode.Brake);
-    belt.setInverted(false);
+    belt.setInverted(true);
     timer.start();
     intake.setInverted(true);
     
@@ -75,20 +75,13 @@ public class IntakeSubsystem extends SubsystemBase {
     intake.set(0);
   }
 
-  public void runIntakeForwardFaster(){
-    intake.set(0.8);
-  }
   public boolean ballInBelt(){
     return beltSwitch.get();
   }
 
   public void runBeltForward(){
     belt.set(0.4);
-  }
-
-  public void runBeltForwardFaster(){
-    belt.set(0.6);
-  }
+   }
 
   public void runBeltReverse(){
     belt.set(-0.4);

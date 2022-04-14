@@ -5,7 +5,6 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class ShooterSpeed extends CommandBase{
     private final ShooterSubsystem _shooterSubsystem;
     private double speed;
-    private double x = 0;
 
     public ShooterSpeed(ShooterSubsystem _subsystem, double spd){
         _shooterSubsystem = _subsystem;
@@ -20,21 +19,15 @@ public class ShooterSpeed extends CommandBase{
     @Override
     public void execute() {
         _shooterSubsystem.setShooterSpeed(speed);
-        x = Math.abs((speed - _shooterSubsystem.getShooterSpeed()) + 22.5) - 46;
-        System.out.println(x);
     }
 
     @Override
     public void end(boolean interrupted) {
-        System.out.println("finished");
+        
     }
 
     @Override
     public boolean isFinished() {
-        if(x < 3.5d){
-            return true;
-        } else {
-            return false;
-        }
+        return Math.abs(speed - _shooterSubsystem.getShooterSpeed()) < 2.5d; // 5 is the +- range of variablity
     }
 }

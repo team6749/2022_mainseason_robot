@@ -25,10 +25,9 @@ public class ShootOneBall extends CommandBase {
   @Override
   public void execute() {
     if(_intakeSubsystem.ballInBelt()){
-      _intakeSubsystem.runBeltForwardFaster();
-      _intakeSubsystem.runIntakeForwardFaster();      
+      _intakeSubsystem.runBeltForward();
+      _intakeSubsystem.runIntakeForward();      
     }
-
   }
 
   // Called once the command ends or is interrupted.
@@ -38,6 +37,6 @@ public class ShootOneBall extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !_intakeSubsystem.ballInBelt();
+    return _intakeSubsystem.ballInBelt();
   }
 }
