@@ -241,7 +241,7 @@ public class RobotContainer {
   );
 
   public Command shootCommand = new SequentialCommandGroup(
-    new ShooterSpeed(_ShooterSubsystem, 85),
+    new ShooterSpeed(_ShooterSubsystem, 85),// shooter speed cmd was never ending, skuffed fix, need  to revert changes from 4/13
     new ShootOneBall(_IntakeSubsystem),
     new ParallelCommandGroup (
       new ShooterSpeed(_ShooterSubsystem, 85),
