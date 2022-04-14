@@ -240,13 +240,13 @@ public class RobotContainer {
   Command testAuto = new SequentialCommandGroup(
   );
 
-  public Command shootCommand = new SequentialCommandGroup(
-    new ShooterSpeed(_ShooterSubsystem, 75),
-    new ShootOneBall(_IntakeSubsystem), 
-    new ParallelCommandGroup(
-      new WaitCommand(0.75),
-      new ShooterSpeed(_ShooterSubsystem, 75)
-    ),
-    new ShootOneBall(_IntakeSubsystem)
-  );
+  // public Command shootCommand = new SequentialCommandGroup(
+  //   new ShooterSpeed(_ShooterSubsystem, 75),
+  //   new ShootOneBall(_IntakeSubsystem), 
+  //   new ParallelCommandGroup(
+  //     new WaitCommand(1.1),
+  //     new ShooterSpeed(_ShooterSubsystem, 75)
+  //   ),
+  //   new ShootOneBall(_IntakeSubsystem)
+  // );
 }

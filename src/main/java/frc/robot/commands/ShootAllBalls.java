@@ -20,7 +20,7 @@ public class ShootAllBalls extends CommandBase {
   Timer secondBallWarmpupTimer = new Timer();
 
   //Time for shooter to warm up to speed
-  static double warmupTime = 1.5;
+  // static double warmupTime = 1.5;
   //Time for shooter to recover after shooting.
   static double recoveryTime = 0.5;
 
@@ -45,16 +45,18 @@ public class ShootAllBalls extends CommandBase {
     secondBallWarmpupTimer.stop();
     firstBallExited = false;
   }
-
+  public boolean shooterUptoSPeed(){
+    return Math.abs(75 - _shooterSubsystem.getShooterSpeed()) < 2.5d;
+  }
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     //Always run the shooter during the duration of this command.
     _shooterSubsystem.setShooterSpeed(75.0);
     // Wait for the inital warm up time before feeding the first ball through
-    if (myTimer.hasElapsed(warmupTime)) {
+    if (shooterUptoSPeed()) {
       // Runs balls through by default
-      _intakeSubsystem.runBeltForward();
+      _intakeSubsystem.runBeltForwardShooting();
       _intakeSubsystem.runIntakeForward();
       // Check to see if the first ball has been released from the switch.
       if (_intakeSubsystem.ballInBelt() == false && firstBallExited == false) {
@@ -67,7 +69,7 @@ public class ShootAllBalls extends CommandBase {
         // Stop the belt from moving if the second ball is loaded into the switch
         // unless the second ball warmpup timer has elapsed.
         // The second ball cannot be loaded in without the first ball having been shot.
-        if (secondBallWarmpupTimer.hasElapsed(recoveryTime) == false) {
+        if (shooterUptoSPeed() == false && secondBallWarmpupTimer.hasElapsed(recoveryTime) == false) {
           _intakeSubsystem.beltOff();
           _intakeSubsystem.intakeOff();
         }
@@ -88,6 +90,6 @@ public class ShootAllBalls extends CommandBase {
       // Do NOT run the shoot command at all, if the climber subsystem is down.
       return true;
     }
-    return myTimer.hasElapsed(4.0);
+    return myTimer.hasElapsed(3);
   }
 }
