@@ -52,7 +52,7 @@ public class ShootAllBalls extends CommandBase {
   @Override
   public void execute() {
     //Always run the shooter during the duration of this command.
-    _shooterSubsystem.setShooterSpeed(75.0);
+    _shooterSubsystem.setShooterSpeed(80.0);
     // Wait for the inital warm up time before feeding the first ball through
     if (shooterUptoSPeed()) {
       // Runs balls through by default

@@ -98,10 +98,10 @@ public class RobotContainer {
     // _IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_IntakeSubsystem, true));
     // _DrivebaseSubsystem.setDefaultCommand(new DriveWithController(controller,
     // _DrivebaseSubsystem));
-    _chooser.setDefaultOption("simple one ball", simpleAuto);
+    _chooser.addOption("simple one ball", simpleAuto);
     _chooser.addOption("left two ball", leftTwoBallAuto);
     _chooser.addOption("Complex two ball", complexTwoBallAuto);
-    _chooser.addOption("right two ball", rightTwoBallAuto);
+    _chooser.setDefaultOption("right two ball", rightTwoBallAuto);
     _chooser.addOption("testAuto", testAuto);
     SmartDashboard.putData(_chooser);
     _DrivebaseSubsystem.setDefaultCommand(new driveWithJoystick(rightJoystick, leftJoystick, _DrivebaseSubsystem));
@@ -215,13 +215,13 @@ public class RobotContainer {
     new AutoIntakeBalls(_IntakeSubsystem, true),
     new DriveForwardAutonomously(_DrivebaseSubsystem, 1.7, 1.7),
     new RotateByDegrees(_DrivebaseSubsystem, 8),
-    new WaitCommand(0.5),
+    new WaitCommand(0.3),
     new DriveForwardAutonomously(_DrivebaseSubsystem, -1.9, -1.9),
-    new WaitCommand(0.5),
+    new WaitCommand(0.3),
     new RotateByDegrees(_DrivebaseSubsystem, -50),
     new DriveForwardAutonomously(_DrivebaseSubsystem, -0.05, -0.05),
     new AutoIntakeBalls(_IntakeSubsystem, false),
-    new WaitCommand(1.0),
+    new WaitCommand(0.5),
     new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
     new AutoIntakeBalls(_IntakeSubsystem, true)
   );
