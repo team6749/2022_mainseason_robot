@@ -155,6 +155,83 @@
               "_source0": "network_table:///SmartDashboard/SendableChooser[0]",
               "_title": "Auto Selecter"
             }
+          },
+          "2,3": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Command executed",
+              "_title": "SmartDashboard/Command executed"
+            }
+          },
+          "4,3": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Command initialized",
+              "_title": "SmartDashboard/Command initialized"
+            }
+          },
+          "8,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Command finished",
+              "_title": "SmartDashboard/Command finished"
+            }
+          },
+          "6,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Command executed",
+              "_title": "SmartDashboard/Command executed"
+            }
+          },
+          "7,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Command interrupted",
+              "_title": "SmartDashboard/Command interrupted"
+            }
+          },
+          "8,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/shooter speed",
+              "_title": "SmartDashboard/shooter speed"
+            }
+          },
+          "9,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/shooting time",
+              "_title": "SmartDashboard/shooting time"
+            }
           }
         }
       }
@@ -245,7 +322,40 @@
             "content": {
               "_type": "ComboBox Chooser",
               "_source0": "network_table:///SmartDashboard/SendableChooser[0]",
-              "_title": "SmartDashboard/SendableChooser[0]"
+              "_title": "Auto Selecter"
+            }
+          },
+          "2,7": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/pid",
+              "_title": "pid"
+            }
+          },
+          "0,7": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/setpoint",
+              "_title": "setpoint"
+            }
+          },
+          "4,7": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/shooting time",
+              "_title": "shooting time"
             }
           }
         }

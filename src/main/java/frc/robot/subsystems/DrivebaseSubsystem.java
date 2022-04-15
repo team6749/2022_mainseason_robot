@@ -68,7 +68,7 @@ public class DrivebaseSubsystem extends SubsystemBase{
       backRight.setNeutralMode(mode);
     }
     public void arcadeDrive(double speed, double rotation){
-      myDrive.arcadeDrive(-speed, -rotation);
+      myDrive.arcadeDrive(-speed, -rotation * 0.65);
     }
     
     public double atShootPosNum(){

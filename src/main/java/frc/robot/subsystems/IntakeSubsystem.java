@@ -64,11 +64,11 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void runIntakeForward() {
-    intake.set(0.65);
+    intake.set(0.75);
   }
 
   public void runIntakeReverse() {
-    intake.set(-0.65);
+    intake.set(-0.95);
   }
   
   public void intakeOff() {
