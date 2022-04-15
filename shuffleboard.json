@@ -164,7 +164,7 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Command executed",
-              "_title": "SmartDashboard/Command executed"
+              "_title": "/SmartDashboard/Command executed"
             }
           },
           "4,3": {
@@ -175,7 +175,7 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Command initialized",
-              "_title": "SmartDashboard/Command initialized"
+              "_title": "/SmartDashboard/Command initialized"
             }
           },
           "8,3": {
@@ -186,7 +186,7 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Command finished",
-              "_title": "SmartDashboard/Command finished"
+              "_title": "/SmartDashboard/Command finished"
             }
           },
           "6,3": {
@@ -197,7 +197,7 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Command executed",
-              "_title": "SmartDashboard/Command executed"
+              "_title": "/SmartDashboard/Command executed"
             }
           },
           "7,3": {
@@ -208,7 +208,7 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Command interrupted",
-              "_title": "SmartDashboard/Command interrupted"
+              "_title": "/SmartDashboard/Command interrupted"
             }
           },
           "8,0": {
@@ -230,7 +230,7 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/shooting time",
-              "_title": "SmartDashboard/shooting time"
+              "_title": "/SmartDashboard/shooting time"
             }
           }
         }
@@ -288,7 +288,7 @@
           "18,0": {
             "size": [
               3,
-              9
+              7
             ],
             "content": {
               "_type": "Boolean Box",
@@ -347,7 +347,7 @@
               "_title": "setpoint"
             }
           },
-          "4,7": {
+          "18,7": {
             "size": [
               2,
               2
@@ -355,7 +355,18 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/shooting time",
-              "_title": "shooting time"
+              "_title": "/SmartDashboard/shooting time"
+            }
+          },
+          "4,7": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "ComboBox Chooser",
+              "_source0": "network_table:///SmartDashboard/SendableChooser[1]",
+              "_title": "Ball Rejection"
             }
           }
         }

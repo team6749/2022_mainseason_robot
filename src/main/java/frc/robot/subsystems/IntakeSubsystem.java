@@ -63,8 +63,8 @@ public class IntakeSubsystem extends SubsystemBase {
     _colorMatcher.addColorMatch(blueColor);
     intake.setNeutralMode(NeutralMode.Brake);
     intakeEnabled = true;
-    _chooser2.setDefaultOption("only team color intaked", true);
-    _chooser2.addOption("any ball color", false);
+    _chooser2.setDefaultOption("true", true);
+    _chooser2.addOption("false", false);
     SmartDashboard.putData(_chooser2);
   }
 
