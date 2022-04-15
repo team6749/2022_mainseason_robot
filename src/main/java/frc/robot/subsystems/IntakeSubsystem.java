@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -16,7 +17,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
-
+import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 // import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -49,6 +50,7 @@ public class IntakeSubsystem extends SubsystemBase {
   public static DriverStation station;
   private IncomingBalls _ball;
   public boolean intakeEnabled = false;
+  SendableChooser<Boolean> _chooser2 = new SendableChooser<Boolean>();
 
   public IntakeSubsystem() {
     belt.setNeutralMode(NeutralMode.Brake);
@@ -61,6 +63,9 @@ public class IntakeSubsystem extends SubsystemBase {
     _colorMatcher.addColorMatch(blueColor);
     intake.setNeutralMode(NeutralMode.Brake);
     intakeEnabled = true;
+    _chooser2.setDefaultOption("only team color intaked", true);
+    _chooser2.addOption("any ball color", false);
+    SmartDashboard.putData(_chooser2);
   }
 
   public void runIntakeForward() {
@@ -96,6 +101,10 @@ public class IntakeSubsystem extends SubsystemBase {
     belt.set(0);
   }
 
+  public boolean ballRejOn() {
+    return _chooser2.getSelected();
+  }   
+
   @Override
   public void periodic() {
     intake.set(0);
@@ -120,13 +129,15 @@ public class IntakeSubsystem extends SubsystemBase {
       }
       // SmartDashboard.putString("TeamColor", DriverStation.getAlliance().toString());
       SmartDashboard.putBoolean("Ball In Belt", ballInBelt());
-      if(ballNotMatchTeam(_ball)){ //if the ball color is not the team color
-        //if there is a ball at top of robot and its the right color;  then run intake reverse
-        if(ballInBelt() && (lastBallCheck(topBeltBallColor))){
-          runIntakeReverse(); //runs intake reverse slowly for delay
-        }
-        if(ballInBelt() && (ballNotMatchTeam(topBeltBallColor))) {
-          runBeltForward();
+      if(ballRejOn()){
+        if(ballNotMatchTeam(_ball)){ //if the ball color is not the team color
+          //if there is a ball at top of robot and its the right color;  then run intake reverse
+          if(ballInBelt() && (lastBallCheck(topBeltBallColor))){
+            runIntakeReverse(); //runs intake reverse slowly for delay
+          }
+          if(ballInBelt() && (ballNotMatchTeam(topBeltBallColor))) {
+            runBeltForward();
+          }
         }
       }
     }
