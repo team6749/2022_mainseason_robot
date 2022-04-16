@@ -7,7 +7,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -57,7 +56,7 @@ public class ShootAllBalls extends CommandBase {
     hasLogged = false;
     
   }
-  public boolean shooterUptoSPeed(){
+  public boolean shooterUpToSpeed(){
     return Math.abs(75 - _shooterSubsystem.getShooterSpeed()) < 2.5d;
   }
   // Called every time the scheduler runs while the command is scheduled.
@@ -66,7 +65,7 @@ public class ShootAllBalls extends CommandBase {
     //Always run the shooter during the duration of this command.
     _shooterSubsystem.setShooterSpeed(75.0);
     // Wait for the inital warm up time before feeding the first ball through
-    if (shooterUptoSPeed()) {
+    if (shooterUpToSpeed()) {
       // Runs balls through by default
       _intakeSubsystem.runBeltForwardShooting();
       _intakeSubsystem.runIntakeForward();
@@ -90,7 +89,7 @@ public class ShootAllBalls extends CommandBase {
         // Stop the belt from moving if the second ball is loaded into the switch
         // unless the second ball warmpup timer has elapsed.
         // The second ball cannot be loaded in without the first ball having been shot.
-        if (shooterUptoSPeed() == false || secondBallWarmpupTimer.hasElapsed(recoveryTime) == false) {
+        if (shooterUpToSpeed() == false || secondBallWarmpupTimer.hasElapsed(recoveryTime) == false) {
           _intakeSubsystem.beltOff();
           _intakeSubsystem.intakeOff();
         } else {

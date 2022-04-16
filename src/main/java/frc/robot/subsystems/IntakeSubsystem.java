@@ -10,21 +10,25 @@ import frc.robot.Constants;
 // import frc.robot.commands.AutoIntakeBalls;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
-import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.math.controller.PIDController;
 // import edu.wpi.first.wpilibj.DriverStation.Alliance;
 // import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+
+
+
+// sensor positive for intake motor is when it is intaking balls
+// motor speed is logged in rps, range is -15 to +15
 
 public class IntakeSubsystem extends SubsystemBase {
   private final WPI_TalonSRX intake = new WPI_TalonSRX(Constants.intakeMotor);
@@ -32,6 +36,9 @@ public class IntakeSubsystem extends SubsystemBase {
   private final ColorSensorV3 colorSensor = new ColorSensorV3(Constants.colorSensorPort);
   DigitalInput beltSwitch = new DigitalInput(Constants.beltLimitSwitch);
 
+  private final Encoder intakeEncoder = new Encoder(Constants.intakeEncoder[0] , Constants.intakeEncoder[1]);
+  private final PIDController intakePID = new PIDController(0.1, 0.2, 0);
+  
   private final ColorMatch _colorMatcher = new ColorMatch();
   Timer timer = new Timer();
   IncomingBalls lastBallColor = IncomingBalls.NONE;
@@ -52,6 +59,7 @@ public class IntakeSubsystem extends SubsystemBase {
   public boolean intakeEnabled = false;
   SendableChooser<Boolean> _chooser2 = new SendableChooser<Boolean>();
 
+  private double intakeSpeed = 0;
   public IntakeSubsystem() {
     belt.setNeutralMode(NeutralMode.Brake);
     belt.setInverted(false);
@@ -67,19 +75,28 @@ public class IntakeSubsystem extends SubsystemBase {
     _chooser2.addOption("false", false);
     SmartDashboard.putData(_chooser2);
   }
-
+  //intake methods
   public void runIntakeForward() {
-    intake.set(0.75);
+    intakeSpeed = 7.5;
   }
 
   public void runIntakeReverse() {
-    intake.set(-0.95);
+    intakeSpeed = -9.5;
   }
   
   public void intakeOff() {
-    intake.set(0);
+    intakeSpeed = 0;
   }
 
+  public double getIntakeSpeed(){
+    return intakeEncoder.getRate() / 2048;
+  }
+
+  public boolean ballRejOn() {
+    return _chooser2.getSelected();
+  }
+  
+  //belt methods
   public boolean ballInBelt(){
     return beltSwitch.get();
   }
@@ -101,14 +118,19 @@ public class IntakeSubsystem extends SubsystemBase {
     belt.set(0);
   }
 
-  public boolean ballRejOn() {
-    return _chooser2.getSelected();
-  }   
-
   @Override
   public void periodic() {
-    intake.set(0);
-    belt.set(0);
+    double power = intakePID.calculate(getIntakeSpeed(), intakeSpeed) + (intakeSpeed * 0.03);
+    intake.set(power);
+    // intake.set(intakeSpeed * 0.03);
+
+
+    SmartDashboard.putNumber("intake power", power);
+    SmartDashboard.putNumber("intake speed", getIntakeSpeed());
+    SmartDashboard.putNumber("intake setpoint", intakeSpeed);
+
+    intakeOff();
+    beltOff();
     if(intakeEnabled){
       _ball = ballColorToEnum();
 
