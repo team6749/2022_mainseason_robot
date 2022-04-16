@@ -93,6 +93,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     _robotContainer._ClimberSubsystem.armMoveBackward();
+    _robotContainer._DrivebaseSubsystem.setBreakMode(NeutralMode.Brake);
     new AutoIntakeBalls(_robotContainer._IntakeSubsystem, true);
     _autonomousCommand = _robotContainer.getAutonomousCommand();
     // schedule the autonomous command (example)
