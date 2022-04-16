@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ClimberSubsystem extends SubsystemBase  {
   DigitalInput climberTop = new DigitalInput(Constants.climberLimitSwitchTop02);
   DigitalInput climberBottom = new DigitalInput(Constants.climberLimitSwitchBottom01);
+  DigitalInput hangarSwitch = new DigitalInput(Constants.hangarSwitch);
   public WPI_TalonFX climber = new WPI_TalonFX(Constants.climber); 
   public boolean shortArmsDown = true;
   Compressor pcmCompressor1 = new Compressor(0, PneumaticsModuleType.CTREPCM);
@@ -113,6 +114,9 @@ public void armMoveForward(){
   shortArmsDown = true;
 }
 
+public boolean hangarSwitchPressed(){
+  return hangarSwitch.get();
+}
 
 public void setClimberPosition(double newPosition) {
   climberSetpoint = newPosition;

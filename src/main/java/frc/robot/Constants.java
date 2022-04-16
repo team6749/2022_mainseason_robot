@@ -36,4 +36,6 @@ public final class Constants {
     public static int[] encoderRight = {6, 5}; 
     public static int[] intakeEncoder = {4, 5};
     public static int ultrasonic = 2;
+
+    public static int hangarSwitch = 8;
 }
