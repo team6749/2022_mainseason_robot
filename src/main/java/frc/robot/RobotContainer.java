@@ -173,7 +173,6 @@ public class RobotContainer {
       //Move the arms up slightly to clear the top hooks
       new MoveClimberToPosition(_ClimberSubsystem, 0.25),
       //Move the climber fully backwards
-      new  WaitCommand(1),
       new SetSmallArmState(_ClimberSubsystem, SmallArmState.FORWARD),
       //Wait for the climber to rotate backwards.
       new WaitCommand(4),
@@ -183,7 +182,6 @@ public class RobotContainer {
       new WaitCommand(2),
       //pneumatic arms should be off bar and ready to move forward
       new MoveClimberToPosition(_ClimberSubsystem, 0.25),
-      new WaitCommand(1),
       new SetSmallArmState(_ClimberSubsystem, SmallArmState.BACKWARD)
     );
   }
@@ -203,9 +201,9 @@ public class RobotContainer {
     new AutoIntakeBalls(_IntakeSubsystem, true),
     new DriveForwardAutonomously(_DrivebaseSubsystem, 1.3, 1.3),
     new WaitCommand(0.5),
-    new DriveForwardAutonomously(_DrivebaseSubsystem, -1.85, -1.85),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, -1.9, -1.9),
     new AutoIntakeBalls(_IntakeSubsystem, false),
-    new RotateByDegrees(_DrivebaseSubsystem, 15), //turn
+    new RotateByDegrees(_DrivebaseSubsystem, -15), //turn
     new WaitCommand(0.5),
     new DriveForwardAutonomously(_DrivebaseSubsystem, -0.15, -0.15),
     new WaitCommand(1.0),
@@ -217,17 +215,18 @@ public class RobotContainer {
     new AutoIntakeBalls(_IntakeSubsystem, true),
     new DriveForwardAutonomously(_DrivebaseSubsystem, 1.7, 1.7),
     new RotateByDegrees(_DrivebaseSubsystem, 8),
-    new WaitCommand(0.3),
-    new DriveForwardAutonomously(_DrivebaseSubsystem, -1.9, -1.9),
-    new WaitCommand(0.3),
-    new RotateByDegrees(_DrivebaseSubsystem, -50),
-    new DriveForwardAutonomously(_DrivebaseSubsystem, -0.4, -0.4),
+    new WaitCommand(0.5),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, -2.25, -2.25),
+    new WaitCommand(0.5),
+    new RotateByDegrees(_DrivebaseSubsystem, -45),
+    new WaitCommand(0.75),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, -0.325, -0.325),
     new AutoIntakeBalls(_IntakeSubsystem, false),
     new WaitCommand(0.5),
     new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
     new AutoIntakeBalls(_IntakeSubsystem, true)
   );
-
+  //align so ultrasonic is 0
   Command simpleAuto = new SequentialCommandGroup(
     new AutoIntakeBalls(_IntakeSubsystem, true),
     new WaitCommand(2),

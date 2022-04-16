@@ -55,8 +55,8 @@ public class ShootAllBalls extends CommandBase {
     secondBallExited = false;
     secondBallReady = false;
     hasLogged = false;
-    
   }
+
   public boolean shooterUptoSPeed(){
     return Math.abs(75 - _shooterSubsystem.getShooterSpeed()) < 2.5d;
   }
