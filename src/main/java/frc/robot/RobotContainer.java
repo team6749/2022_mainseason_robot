@@ -96,7 +96,6 @@ public class RobotContainer {
     _chooser.addOption("left two ball", leftTwoBallAuto);
     _chooser.addOption("Complex two ball", complexTwoBallAuto);
     _chooser.setDefaultOption("right two ball", rightTwoBallAuto);
-    _chooser.addOption("testAuto", testAuto);
     SmartDashboard.putData(_chooser);
     _DrivebaseSubsystem.setDefaultCommand(new driveWithJoystick(rightJoystick, leftJoystick, _DrivebaseSubsystem));
   }
@@ -179,7 +178,7 @@ public class RobotContainer {
       new SetSmallArmState(_ClimberSubsystem, SmallArmState.BACKWARD)
     );
   }
-
+  //DO NOT CHANGE
   Command leftTwoBallAuto = new SequentialCommandGroup(
     new AutoIntakeBalls(_IntakeSubsystem, true),
     new DriveForwardAutonomously(_DrivebaseSubsystem, 1.3, 1.3),
@@ -214,7 +213,6 @@ public class RobotContainer {
     new WaitCommand(0.5),
     new RotateByDegrees(_DrivebaseSubsystem, -45),
     new WaitCommand(0.75),
-    new DriveForwardAutonomously(_DrivebaseSubsystem, -0.325, -0.325),
     new AutoIntakeBalls(_IntakeSubsystem, false),
     new WaitCommand(0.5),
     new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
@@ -230,9 +228,6 @@ public class RobotContainer {
     new WaitCommand(2.5),
     new DriveForwardAutonomously(_DrivebaseSubsystem, 1.75, 1.75),
     new AutoIntakeBalls(_IntakeSubsystem, true)
-  );
-
-  Command testAuto = new SequentialCommandGroup(
   );
 
   // public Command shootCommand = new SequentialCommandGroup(
