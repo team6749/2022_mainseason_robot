@@ -203,7 +203,7 @@ public class RobotContainer {
     new WaitCommand(0.5),
     new DriveForwardAutonomously(_DrivebaseSubsystem, -1.9, -1.9),
     new AutoIntakeBalls(_IntakeSubsystem, false),
-    new RotateByDegrees(_DrivebaseSubsystem, -15), //turn
+    new RotateByDegrees(_DrivebaseSubsystem, 15), //turn
     new WaitCommand(0.5),
     new DriveForwardAutonomously(_DrivebaseSubsystem, -0.15, -0.15),
     new WaitCommand(1.0),
