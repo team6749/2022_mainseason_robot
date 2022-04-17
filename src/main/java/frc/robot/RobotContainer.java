@@ -14,9 +14,6 @@ import frc.robot.commands.ClimberControl;
 import frc.robot.commands.DriveForwardAutonomously;
 import frc.robot.commands.MoveClimberToPosition;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.ClimberControl;
-import frc.robot.commands.DriveForwardAutonomously;
 import frc.robot.commands.RotateByDegrees;
 import frc.robot.commands.SetSmallArmState;
 import frc.robot.enums.ClimberDirection;
@@ -99,7 +96,6 @@ public class RobotContainer {
     _chooser.addOption("left two ball", leftTwoBallAuto);
     _chooser.addOption("Complex two ball", complexTwoBallAuto);
     _chooser.setDefaultOption("right two ball", rightTwoBallAuto);
-    _chooser.addOption("testAuto", testAuto);
     SmartDashboard.putData(_chooser);
     _DrivebaseSubsystem.setDefaultCommand(new driveWithJoystick(rightJoystick, leftJoystick, _DrivebaseSubsystem));
   }
@@ -113,35 +109,13 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-
-    // new JoystickButton(controller,
-    // XboxController.Button.kBack.value).whileHeld(new
-    // ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.UP));
-    // new JoystickButton(controller,
-    // XboxController.Button.kStart.value).whileHeld(new
-    // ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.DOWN));
-
-    // new JoystickButton(controller,
-    // XboxController.Button.kA.value).whenPressed(new
-    // SetSmallArmState(_ClimberSubsystem, SmallArmState.OFF));
-    // new JoystickButton(controller,
-    // XboxController.Button.kY.value).whenPressed(new
-    // SetSmallArmState(_ClimberSubsystem, SmallArmState.FORWARD));
-    // new JoystickButton(controller,
-    // XboxController.Button.kX.value).whenPressed(new
-    // SetSmallArmState(_ClimberSubsystem, SmallArmState.BACKWARD));
-    // // new JoystickButton(controller, XboxController.Button.kBack.value).(new
-    // ClimberControl(climberSubsystem, 0.5, ClimberDirection.UP));
-    // new JoystickButton(controller,
-    // XboxController.Button.kRightBumper.value).whenPressed(new
-    // ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem));
-    
     //move climber up and down respectively while buttons are held
     climberUpButton.whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.UP));
     climberDownButton.whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.DOWN));
     
     //shoot balls when button is pressed
     shootBallsButton.whenPressed(new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem));
+    // shootBallsButton.whenPressed(shootCommand);
 
     //move arms certain direction when button is pressed
     smallArmsForward.whenPressed(new SetSmallArmState(_ClimberSubsystem, SmallArmState.FORWARD));
@@ -161,17 +135,6 @@ public class RobotContainer {
 
     //turn 180 degree button
     turn180.whenPressed(new RotateByDegrees(_DrivebaseSubsystem, 180));
-    // controler code bindings
-
-    // new JoystickButton(controller,
-    // XboxController.Button.kBack.value).whileHeld(new
-    // ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.UP));
-    // new JoystickButton(controller,
-    // XboxController.Button.kStart.value).whileHeld(new
-    // ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.DOWN));
-    // new JoystickButton(controller,
-    // XboxController.Button.kRightBumper.value).whenPressed(new
-    // ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem));
   }
 
   /**
@@ -203,26 +166,24 @@ public class RobotContainer {
       //Move the arms up slightly to clear the top hooks
       new MoveClimberToPosition(_ClimberSubsystem, 0.25),
       //Move the climber fully backwards
-      new  WaitCommand(1),
       new SetSmallArmState(_ClimberSubsystem, SmallArmState.FORWARD),
       //Wait for the climber to rotate backwards.
-      new WaitCommand(4),
+      new WaitCommand(3.5),
       //Move climber all the way up
       new MoveClimberToPosition(_ClimberSubsystem, 0.6),
       //Climber should be over the next section
-      new WaitCommand(2),
       //pneumatic arms should be off bar and ready to move forward
-      new MoveClimberToPosition(_ClimberSubsystem, 0.25),
-      new WaitCommand(1),
+      new WaitCommand(0.2),
+      new MoveClimberToPosition(_ClimberSubsystem, 0.2),
       new SetSmallArmState(_ClimberSubsystem, SmallArmState.BACKWARD)
     );
   }
-
+  //DO NOT CHANGE
   Command leftTwoBallAuto = new SequentialCommandGroup(
     new AutoIntakeBalls(_IntakeSubsystem, true),
     new DriveForwardAutonomously(_DrivebaseSubsystem, 1.3, 1.3),
     new WaitCommand(0.5),
-    new DriveForwardAutonomously(_DrivebaseSubsystem, -1.75, -1.75),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, -1.85, -1.85),
     new AutoIntakeBalls(_IntakeSubsystem, false),
     new WaitCommand(1.0),
     new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
@@ -233,9 +194,11 @@ public class RobotContainer {
     new AutoIntakeBalls(_IntakeSubsystem, true),
     new DriveForwardAutonomously(_DrivebaseSubsystem, 1.3, 1.3),
     new WaitCommand(0.5),
-    new DriveForwardAutonomously(_DrivebaseSubsystem, -1.75, -1.75),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, -1.9, -1.9),
     new AutoIntakeBalls(_IntakeSubsystem, false),
     new RotateByDegrees(_DrivebaseSubsystem, 15), //turn
+    new WaitCommand(0.5),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, -0.15, -0.15),
     new WaitCommand(1.0),
     new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
     new AutoIntakeBalls(_IntakeSubsystem, true)   
@@ -245,17 +208,17 @@ public class RobotContainer {
     new AutoIntakeBalls(_IntakeSubsystem, true),
     new DriveForwardAutonomously(_DrivebaseSubsystem, 1.7, 1.7),
     new RotateByDegrees(_DrivebaseSubsystem, 8),
-    new WaitCommand(0.3),
-    new DriveForwardAutonomously(_DrivebaseSubsystem, -1.9, -1.9),
-    new WaitCommand(0.3),
-    new RotateByDegrees(_DrivebaseSubsystem, -50),
-    new DriveForwardAutonomously(_DrivebaseSubsystem, -0.05, -0.05),
+    new WaitCommand(0.5),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, -2.25, -2.25),
+    new WaitCommand(0.5),
+    new RotateByDegrees(_DrivebaseSubsystem, -45),
+    new WaitCommand(0.75),
     new AutoIntakeBalls(_IntakeSubsystem, false),
     new WaitCommand(0.5),
     new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
     new AutoIntakeBalls(_IntakeSubsystem, true)
   );
-
+  //align so ultrasonic is 0
   Command simpleAuto = new SequentialCommandGroup(
     new AutoIntakeBalls(_IntakeSubsystem, true),
     new WaitCommand(2),
@@ -267,6 +230,13 @@ public class RobotContainer {
     new AutoIntakeBalls(_IntakeSubsystem, true)
   );
 
-  Command testAuto = new SequentialCommandGroup(
-  );
+  // public Command shootCommand = new SequentialCommandGroup(
+  //   new ShooterSpeed(_ShooterSubsystem, 75),
+  //   new ShootOneBall(_IntakeSubsystem), 
+  //   new ParallelCommandGroup(
+  //     new WaitCommand(1.1),
+  //     new ShooterSpeed(_ShooterSubsystem, 75)
+  //   ),
+  //   new ShootOneBall(_IntakeSubsystem)
+  // );
 }

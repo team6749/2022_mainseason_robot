@@ -33,7 +33,9 @@ public final class Constants {
     public static int[] doubleSolenoid = {5, 4};
 
     public static int[] encoderLeft = {4, 3};
-    public static int[] encoderRight = {6,5}; 
-
+    public static int[] encoderRight = {6, 5}; 
+    public static int[] intakeEncoder = {4, 5};
     public static int ultrasonic = 2;
+
+    public static int hangarSwitch = 8;
 }

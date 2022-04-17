@@ -7,6 +7,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.AutoIntakeBalls;
@@ -32,6 +33,30 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     _robotContainer = new RobotContainer();
+    
+    CommandScheduler.getInstance()
+      .onCommandInitialize(
+        command ->
+          SmartDashboard.putString(
+            "Command initialized", command.getName()));
+
+    CommandScheduler.getInstance()
+      .onCommandInterrupt(
+        command ->
+          SmartDashboard.putString(
+            "Command executed", command.getName()));
+
+    CommandScheduler.getInstance()
+      .onCommandInterrupt(
+        command ->
+          SmartDashboard.putString(
+            "Command interrupted", command.getName()));
+
+    CommandScheduler.getInstance()
+      .onCommandFinish(
+        command ->
+          SmartDashboard.putString(
+            "Command finished", command.getName()));
   }
 
   /**
@@ -49,6 +74,7 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     _robotContainer.periodic();
+
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -65,6 +91,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     _robotContainer._ClimberSubsystem.armMoveBackward();
+    _robotContainer._DrivebaseSubsystem.setBreakMode(NeutralMode.Brake);
     new AutoIntakeBalls(_robotContainer._IntakeSubsystem, true);
     _autonomousCommand = _robotContainer.getAutonomousCommand();
     // schedule the autonomous command (example)
