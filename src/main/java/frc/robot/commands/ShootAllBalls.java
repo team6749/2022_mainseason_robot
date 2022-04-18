@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -32,7 +31,7 @@ public class ShootAllBalls extends CommandBase {
 
 
   boolean hasLogged = false;
-
+  boolean hasLogged2 = false;
   public ShootAllBalls(ShooterSubsystem shooter, IntakeSubsystem intake, ClimberSubsystem climber) {
     // Use addRequirements() here to declare subsystem dependencies.
     _shooterSubsystem = shooter;
@@ -54,6 +53,7 @@ public class ShootAllBalls extends CommandBase {
     secondBallExited = false;
     secondBallReady = false;
     hasLogged = false;
+    hasLogged2 = false;
   }
   public boolean shooterUpToSpeed(){
     return Math.abs(75 - _shooterSubsystem.getShooterSpeed()) < 2.5d;
@@ -71,6 +71,10 @@ public class ShootAllBalls extends CommandBase {
       // Check to see if the first ball has been released from the switch.
       if (_intakeSubsystem.ballInBelt() == false && firstBallExited == false) {
         firstBallExited = true;
+        if(!hasLogged2){
+          System.out.println("Ball to shot at " + myTimer.get());
+          hasLogged2 = true;
+        }
       }
 
       //
@@ -114,12 +118,11 @@ public class ShootAllBalls extends CommandBase {
       return true;
     }
     if(secondBallExited) {
-      if(hasLogged == false) {
-        System.out.println(myTimer.get());
-        SmartDashboard.putNumber("shooting time", myTimer.get());
+      if(!hasLogged) {
+        System.out.println("Ball to shot at " + myTimer.get());
         hasLogged = true;
       } 
     }
-    return myTimer.hasElapsed(2);
+    return myTimer.hasElapsed(3);
   }
 }
