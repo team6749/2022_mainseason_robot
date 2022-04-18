@@ -24,6 +24,7 @@ import frc.robot.commands.driveWithJoystick;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivebaseSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LightsSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -79,6 +80,7 @@ public class RobotContainer {
   public final DrivebaseSubsystem _DrivebaseSubsystem = new DrivebaseSubsystem();
   public final IntakeSubsystem _IntakeSubsystem = new IntakeSubsystem();
   public final ShooterSubsystem _ShooterSubsystem = new ShooterSubsystem();
+  public final LightsSubsystem _lights = new LightsSubsystem();
   // commands - usually not put here
 
   /**
@@ -143,6 +145,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public void periodic() {
+    _lights.Cyan();
     if(leftJoystick.getRawButtonPressed(7)){
       CommandScheduler.getInstance().cancel(getAutonomousCommand());
     }

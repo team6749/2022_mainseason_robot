@@ -38,4 +38,9 @@ public final class Constants {
     public static int ultrasonic = 3;
 
     public static int hangarSwitch = 8;
+
+    public static int lights1 = 1;
+    public static int lights2 = 2;
+    public static int lights3 = 3;
+
 }
