@@ -145,7 +145,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public void periodic() {
-    _lights.Cyan();
     if(leftJoystick.getRawButtonPressed(7)){
       CommandScheduler.getInstance().cancel(getAutonomousCommand());
     }
@@ -157,6 +156,9 @@ public class RobotContainer {
     
   }
 
+  public void disabled() {
+    _lights.Green();
+  }  
   public Command getClimbOnceCommand() {
     // An ExampleCommand will run in autonomous
     return new SequentialCommandGroup(

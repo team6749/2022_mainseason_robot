@@ -40,13 +40,13 @@ public class LightsSubsystem extends SubsystemBase {
     }
     
     public void Red() {
-		r3.set(Relay.Value.kReverse);
-		r2.set(Relay.Value.kOn);
+		r3.set(Relay.Value.kOn);
+		r2.set(Relay.Value.kReverse);
 	}
     
     public void Blue() {
-		r3.set(Relay.Value.kOn);
-		r2.set(Relay.Value.kReverse);
+		r3.set(Relay.Value.kReverse);
+		r2.set(Relay.Value.kOn);
 	}
     
 	public void Green() {
