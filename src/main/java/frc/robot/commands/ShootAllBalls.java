@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -18,17 +19,19 @@ public class ShootAllBalls extends CommandBase {
   Timer myTimer = new Timer();
   Timer secondBallWarmpupTimer = new Timer();
 
-  // Time for shooter to warm up to speed
+  //Time for shooter to warm up to speed
   // static double warmupTime = 1.5;
-  // Time for shooter to recover after shooting.
-  static double recoveryTime = 0.9;
+  //Time for shooter to recover after shooting.
+  static double recoveryTime = 0.75;
 
-  boolean firstBallInBelt = false;
   boolean firstBallExited = false;
+
+
   boolean secondBallExited = false;
-  boolean secondBallInBelt = false;
-  boolean hasLoggedB1 = false;
-  boolean hasLoggedB2 = false;
+  boolean secondBallReady = false;
+
+
+  boolean hasLogged = false;
 
   public ShootAllBalls(ShooterSubsystem shooter, IntakeSubsystem intake, ClimberSubsystem climber) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -47,65 +50,51 @@ public class ShootAllBalls extends CommandBase {
     myTimer.start();
     secondBallWarmpupTimer.reset();
     secondBallWarmpupTimer.stop();
-    firstBallInBelt = false;
     firstBallExited = false;
     secondBallExited = false;
-    secondBallInBelt = false;
-    hasLoggedB1 = false;
-    hasLoggedB2 = false;
+    secondBallReady = false;
+    hasLogged = false;
   }
-
-  public boolean shooterUpToSpeed() {
-    return Math.abs(75 - _shooterSubsystem.getShooterSpeed()) < 2d;
+  public boolean shooterUpToSpeed(){
+    return Math.abs(75 - _shooterSubsystem.getShooterSpeed()) < 2.5d;
   }
-
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Always run the shooter during the duration of this command.
+    //Always run the shooter during the duration of this command.
+    _shooterSubsystem.setShooterSpeed(75.0);
     // Wait for the inital warm up time before feeding the first ball through
-    _shooterSubsystem.setShooterSpeed(75);
     if (shooterUpToSpeed()) {
-      if (_intakeSubsystem.ballInBelt()) {
-        firstBallInBelt = true;
-      } else {
-        _intakeSubsystem.runBeltForwardShooting();
-        _intakeSubsystem.runIntakeForward();
-      }
-      if (firstBallInBelt) {
-        _intakeSubsystem.runBeltForwardShooting();
-        if (!_intakeSubsystem.ballInBelt()) {
-          firstBallExited = true;
-          if(!hasLoggedB1){
-            System.out.println("Ball 1 shot at " + (double) Math.round(myTimer.get() * 1000d) / 1000d);
-            hasLoggedB1 = true;
-          }
-        }
+      // Runs balls through by default
+      _intakeSubsystem.runBeltForwardShooting();
+      _intakeSubsystem.runIntakeForward();
+      // Check to see if the first ball has been released from the switch.
+      if (_intakeSubsystem.ballInBelt() == false && firstBallExited == false) {
+        firstBallExited = true;
       }
 
-      if (firstBallExited) {
-        secondBallWarmpupTimer.start();
+      //
+      if(secondBallReady) {
+        if(_intakeSubsystem.ballInBelt() == false) {
+          //The second ball has left the robot
+          secondBallExited = true;
+        }
       }
-      if (secondBallWarmpupTimer.hasElapsed(recoveryTime) && shooterUpToSpeed()) {
-        // System.out.println("ready to shoot second ball");
-        if (_intakeSubsystem.ballInBelt()) {
-          secondBallInBelt = true;
-          // System.out.println("second ball in belt");
+      
+      //Start the second ball warmup timer if there is a ball loaded into the top belt
+      // and the first ball has been shot
+      if(firstBallExited && _intakeSubsystem.ballInBelt()) {
+        secondBallWarmpupTimer.start(); // No-op if timer is already running
+        // Stop the belt from moving if the second ball is loaded into the switch
+        // unless the second ball warmpup timer has elapsed.
+        // The second ball cannot be loaded in without the first ball having been shot.
+        if (shooterUpToSpeed() == false || secondBallWarmpupTimer.hasElapsed(recoveryTime) == false) {
+          _intakeSubsystem.beltOff();
+          _intakeSubsystem.intakeOff();
         } else {
-          _intakeSubsystem.runBeltForwardShooting();
-          _intakeSubsystem.runIntakeForward();
-        }
-
-        if (secondBallInBelt) {
-          // System.out.println("shooting second ball");
-          _intakeSubsystem.runBeltForwardShooting();
-          if (!_intakeSubsystem.ballInBelt()) {
-            secondBallExited = true;
-            if(!hasLoggedB2){
-              System.out.println("Ball 2 shot at " + (double) Math.round(myTimer.get() * 1000d) / 1000d);
-              hasLoggedB2 = true;
-            }
-          }
+          //We aare shooting the next blall
+          // System.out.println("Shooting next ball");
+          secondBallReady = true;
         }
       }
     }
@@ -124,6 +113,13 @@ public class ShootAllBalls extends CommandBase {
       // Do NOT run the shoot command at all, if the climber subsystem is down.
       return true;
     }
-    return myTimer.hasElapsed(2.25);
+    if(secondBallExited) {
+      if(hasLogged == false) {
+        System.out.println(myTimer.get());
+        SmartDashboard.putNumber("shooting time", myTimer.get());
+        hasLogged = true;
+      } 
+    }
+    return myTimer.hasElapsed(2);
   }
 }
