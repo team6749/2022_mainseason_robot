@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.AutoIntakeBalls;
+import frc.robot.commands.SetLights;
 
 
 /**
@@ -73,7 +74,6 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    _robotContainer._lights.setAllianceColors();
     _robotContainer.periodic();
 
   }
@@ -93,6 +93,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    new SetLights(_robotContainer._lights, "Alliance Colors");
     _robotContainer._ClimberSubsystem.armMoveBackward();
     _robotContainer._DrivebaseSubsystem.setBreakMode(NeutralMode.Brake);
     new AutoIntakeBalls(_robotContainer._IntakeSubsystem, true);
@@ -116,6 +117,7 @@ public class Robot extends TimedRobot {
     if (_autonomousCommand != null) {
       _autonomousCommand.cancel();
     }
+    _robotContainer._lights.setAllianceColors();
     _robotContainer._ClimberSubsystem.armMoveBackward();
     new AutoIntakeBalls(_robotContainer._IntakeSubsystem, true);
   }

@@ -29,42 +29,42 @@ public class LightsSubsystem extends SubsystemBase {
     	}
     }
     
-    public void Off() {
+    public void Off() {//works
 		r3.set(Relay.Value.kOn);
     	r2.set(Relay.Value.kOn);
     } 
     
-    public void White() {
-		r3.set(Relay.Value.kOff);
-    	r2.set(Relay.Value.kReverse);
+    public void White() { //needs to be tested
+		r3.set(Relay.Value.kReverse);
+    	r2.set(Relay.Value.kOff);
     }
     
-    public void Red() {
+    public void Red() {//works
 		r3.set(Relay.Value.kOn);
 		r2.set(Relay.Value.kReverse);
 	}
     
-    public void Blue() {
+    public void Blue() {// work
 		r3.set(Relay.Value.kReverse);
 		r2.set(Relay.Value.kOn);
 	}
     
-	public void Green() {
-		r3.set(Relay.Value.kForward);
-		r2.set(Relay.Value.kOn);
+	public void Green() {//works
+		r3.set(Relay.Value.kOn);
+		r2.set(Relay.Value.kForward);
 	}
     
-    public void Yellow() {
-    	r3.set(Relay.Value.kOff);
-    	r2.set(Relay.Value.kOn);
+    public void Yellow() {//works
+    	r3.set(Relay.Value.kOn);
+    	r2.set(Relay.Value.kOff);
     }
     
-    public void Cyan() {
+    public void Cyan() {//need to re order
     	r3.set(Relay.Value.kForward);
     	r2.set(Relay.Value.kReverse);
     }
     
-    public void Magenta() {
+    public void Magenta() {//need to re order
     	r3.set(Relay.Value.kReverse);
     	r2.set(Relay.Value.kReverse);
     }

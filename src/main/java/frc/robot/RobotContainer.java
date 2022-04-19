@@ -15,6 +15,7 @@ import frc.robot.commands.DriveForwardAutonomously;
 import frc.robot.commands.MoveClimberToPosition;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.RotateByDegrees;
+import frc.robot.commands.SetLights;
 import frc.robot.commands.SetSmallArmState;
 import frc.robot.enums.ClimberDirection;
 import frc.robot.enums.SmallArmState;
@@ -116,7 +117,11 @@ public class RobotContainer {
     climberDownButton.whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.DOWN));
     
     //shoot balls when button is pressed
-    shootBallsButton.whenPressed(new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem));
+    shootBallsButton.whenPressed(new SequentialCommandGroup(
+      new SetLights(_lights, "Magenta"),
+      new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
+      new SetLights(_lights, "Alliance Color")
+    ));
     // shootBallsButton.whenPressed(shootCommand);
 
     //move arms certain direction when button is pressed
@@ -162,6 +167,7 @@ public class RobotContainer {
   public Command getClimbOnceCommand() {
     // An ExampleCommand will run in autonomous
     return new SequentialCommandGroup(
+      new SetLights(_lights, "Green"),
       //Turn off belt and intake motors
       new AutoIntakeBalls(_IntakeSubsystem, false),
       //Ensure the climber is correct position for move up
