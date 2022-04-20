@@ -10,8 +10,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.AutoIntakeBalls;
-import frc.robot.commands.SetLights;
 
 
 /**
@@ -93,10 +91,9 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    new SetLights(_robotContainer._lights, "Alliance Colors");
+    _robotContainer._lights.setAllianceColors();
     _robotContainer._ClimberSubsystem.armMoveBackward();
     _robotContainer._DrivebaseSubsystem.setBreakMode(NeutralMode.Brake);
-    new AutoIntakeBalls(_robotContainer._IntakeSubsystem, true);
     _autonomousCommand = _robotContainer.getAutonomousCommand();
     // schedule the autonomous command (example)
     if (_autonomousCommand != null) {
@@ -119,7 +116,6 @@ public class Robot extends TimedRobot {
     }
     _robotContainer._lights.setAllianceColors();
     _robotContainer._ClimberSubsystem.armMoveBackward();
-    new AutoIntakeBalls(_robotContainer._IntakeSubsystem, true);
   }
 
   /** This function is called periodically during operator control. */
