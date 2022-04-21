@@ -232,6 +232,28 @@
               "_source0": "network_table:///SmartDashboard/shooting time",
               "_title": "/SmartDashboard/shooting time"
             }
+          },
+          "9,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/intake power",
+              "_title": "SmartDashboard/intake power"
+            }
+          },
+          "9,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/intake setpoint",
+              "_title": "SmartDashboard/intake setpoint"
+            }
           }
         }
       }
@@ -345,17 +367,6 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/setpoint",
               "_title": "setpoint"
-            }
-          },
-          "18,7": {
-            "size": [
-              2,
-              2
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/shooting time",
-              "_title": "/SmartDashboard/shooting time"
             }
           },
           "4,7": {

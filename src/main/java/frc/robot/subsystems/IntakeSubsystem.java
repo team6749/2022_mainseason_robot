@@ -37,7 +37,7 @@ public class IntakeSubsystem extends SubsystemBase {
   DigitalInput beltSwitch = new DigitalInput(Constants.beltLimitSwitch);
 
   private final Encoder intakeEncoder = new Encoder(Constants.intakeEncoder[0] , Constants.intakeEncoder[1]);
-  private final PIDController intakePID = new PIDController(0.05, 0, 0);
+  private final PIDController intakePID = new PIDController(0.1, 0, 0);
   
   private final ColorMatch _colorMatcher = new ColorMatch();
   Timer timer = new Timer();
