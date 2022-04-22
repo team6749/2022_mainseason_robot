@@ -254,6 +254,17 @@
               "_source0": "network_table:///SmartDashboard/intake setpoint",
               "_title": "SmartDashboard/intake setpoint"
             }
+          },
+          "9,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/intake speed",
+              "_title": "SmartDashboard/intake speed"
+            }
           }
         }
       }
@@ -378,6 +389,19 @@
               "_type": "ComboBox Chooser",
               "_source0": "network_table:///SmartDashboard/SendableChooser[1]",
               "_title": "Reject balls?"
+            }
+          },
+          "18,7": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/intake stalling?",
+              "_title": "SmartDashboard/intake stalling?",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
             }
           }
         }

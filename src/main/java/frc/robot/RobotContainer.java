@@ -74,6 +74,8 @@ public class RobotContainer {
   final JoystickButton intakeOn = new JoystickButton(rightJoystick, 11);
   //turn robot 180 deg
   final JoystickButton turn180 = new JoystickButton(rightJoystick, 7);
+
+  final JoystickButton autoDriveBack = new JoystickButton(rightJoystick, 6);
   // final JoystickButton l3 = new JoystickButton(leftJoystick, 3);
   SendableChooser<Command> _chooser = new SendableChooser<Command>();
   // The robot's subsystems and commands are defined here
@@ -142,6 +144,9 @@ public class RobotContainer {
 
     //turn 180 degree button
     turn180.whenPressed(new RotateByDegrees(_DrivebaseSubsystem, 180));
+
+    //drive back from fender
+    autoDriveBack.whenPressed(new DriveForwardAutonomously(_DrivebaseSubsystem, 0.6, 0.6));
   }
 
   /**
@@ -209,7 +214,6 @@ public class RobotContainer {
     new AutoIntakeBalls(_IntakeSubsystem, false),
     new RotateByDegrees(_DrivebaseSubsystem, 15), //turn
     new WaitCommand(0.5),
-    new DriveForwardAutonomously(_DrivebaseSubsystem, -0.15, -0.15),
     new WaitCommand(1.0),
     new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
     new AutoIntakeBalls(_IntakeSubsystem, true)   
