@@ -21,13 +21,15 @@ public class ShootAllBalls extends CommandBase {
   //Time for shooter to warm up to speed
   // static double warmupTime = 1.5;
   //Time for shooter to recover after shooting.
-  static double recoveryTime = 1.25;
+  static double recoveryTime = 1;
 
   boolean firstBallExited = false;
 
 
   boolean secondBallExited = false;
   boolean secondBallReady = false;
+
+  public double speed = 75;
 
 
   boolean hasLogged = false;
@@ -56,13 +58,16 @@ public class ShootAllBalls extends CommandBase {
     hasLogged2 = false;
   }
   public boolean shooterUpToSpeed(){
-    return Math.abs(82.5 - _shooterSubsystem.getShooterSpeed()) < 2.5d;
+    return Math.abs(speed - _shooterSubsystem.getShooterSpeed()) < 2.5d;
   }
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     //Always run the shooter during the duration of this command.
-    _shooterSubsystem.setShooterSpeed(82.5);
+    //speed variable in variable iitializer section
+    //switched to variable so that one value doesnt need to be
+    //changed in two spots
+    _shooterSubsystem.setShooterSpeed(speed);
     // Wait for the inital warm up time before feeding the first ball through
     if (shooterUpToSpeed()) {
       // Runs balls through by default

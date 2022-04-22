@@ -91,7 +91,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    _robotContainer._lights.setAllianceColors();
+    // _robotContainer._lights.setAllianceColors();
     _robotContainer._ClimberSubsystem.armMoveBackward();
     _robotContainer._DrivebaseSubsystem.setBreakMode(NeutralMode.Brake);
     _autonomousCommand = _robotContainer.getAutonomousCommand();
@@ -114,7 +114,7 @@ public class Robot extends TimedRobot {
     if (_autonomousCommand != null) {
       _autonomousCommand.cancel();
     }
-    _robotContainer._lights.setAllianceColors();
+    // _robotContainer._lights.setAllianceColors();
     _robotContainer._ClimberSubsystem.armMoveBackward();
   }
 

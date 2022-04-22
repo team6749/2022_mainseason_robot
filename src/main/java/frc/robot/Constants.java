@@ -19,7 +19,7 @@ public final class Constants {
     public static int frMotor = 12;
     public static int blMotor = 11;
     public static int brMotor = 13;
-    public static int shooterMotor = 01;
+    public static int shooterMotor = 1;
     public static int intakeMotor = 03;
     public static int beltMotor = 05;
     // public static Port colorSensorNumber;
