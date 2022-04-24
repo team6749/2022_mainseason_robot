@@ -12,31 +12,55 @@ import frc.robot.subsystems.DrivebaseSubsystem;
 
 public class DriveForwardAutonomously extends CommandBase {
 
-  DrivebaseSubsystem m_subsystem;
-  double m_leftDistance;
-  double m_rightDistance;
+  DrivebaseSubsystem _subsystem;
+  double _leftDistance;
+  double _rightDistance;
 
-  double m_leftStarting;
-  double m_rightStarting;
+  double _leftStarting;
+  double _rightStarting;
   boolean atTarget = false;
-
-  /** Creates a new DriveForwardAutotonomously. */
+  
+  double _speed;
+  /** Creates a new DriveForwardAutotonomously command. 
+   * @param subsystem the drivebase subsystem to drive the robot
+   * @param left the distance to drive the left side of the drive train in meters
+   * @param right the distance to drive the right side of the drive train in meters
+   * drives the robot at with positive speed in the direction of the intake
+  */
   public DriveForwardAutonomously(DrivebaseSubsystem subsystem, double left, double right) {
-    //left and right are in meters
-    m_subsystem = subsystem;
+    _subsystem = subsystem;
     addRequirements(subsystem);
-    m_leftDistance = left;
-    m_rightDistance = right;
-    // Use addRequirements() here to declare subsystem dependencies.
+    _leftDistance = left;
+    _rightDistance = right;
+    _speed = 0.575;
   }
+  /** Creates a new DriveForwardAutotonomously command. 
+   * @param subsystem the drivebase subsystem to drive the robot
+   * @param left the distance to drive the left side of the drive train in meters
+   * @param right the distance to drive the right side of the drive train in meters
+   * @param speed the speed to drive the robot, must be between 0 and 1
+   * drives the robot at with positive speed in the direction of the intake
+   * @throws Exception
+  */
+  public DriveForwardAutonomously(DrivebaseSubsystem subsystem, double left, double right, double speed) throws Exception {
+    _subsystem = subsystem;
+    addRequirements(subsystem);
+    _leftDistance = left;
+    _rightDistance = right;
+    _speed = speed;
 
+    if(_speed <= 0 || _speed > 1){
+      throw new Exception("Speed cannot be equal to or less than zero, or greater than one");
+    }
+      
+  }
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     System.out.println("Command Started");
-    m_leftStarting = m_subsystem.getLeftEncoder();
-    m_rightStarting = m_subsystem.getRightEncoder();
-    m_subsystem.setBreakMode(NeutralMode.Brake);
+    _leftStarting = _subsystem.getLeftEncoder();
+    _rightStarting = _subsystem.getRightEncoder();
+    _subsystem.setBreakMode(NeutralMode.Brake);
     atTarget = false;
   }
 
@@ -44,20 +68,20 @@ public class DriveForwardAutonomously extends CommandBase {
   @Override
   public void execute() {
     //variables for distance from where the robot started
-    double m_leftFromStart = (m_subsystem.getLeftEncoder() - m_leftStarting);
-    double m_rightFromStart = (m_subsystem.getRightEncoder() - m_rightStarting);
-    SmartDashboard.putNumber("right1", m_rightFromStart);
+    double _leftFromStart = (_subsystem.getLeftEncoder() - _leftStarting);
+    double _rightFromStart = (_subsystem.getRightEncoder() - _rightStarting);
+    // SmartDashboard.putNumber("right1", _rightFromStart);
 
 
-    double leftMotorSpeed = calculateMotorOutput(m_leftFromStart, m_leftDistance);
-    double rightMotorSpeed = calculateMotorOutput(m_rightFromStart, m_rightDistance);
-    SmartDashboard.putNumber("speed left", leftMotorSpeed);
-    SmartDashboard.putNumber("right2", rightMotorSpeed);
+    double leftMotorSpeed = calculateMotorOutput(_leftFromStart, _leftDistance);
+    double rightMotorSpeed = calculateMotorOutput(_rightFromStart, _rightDistance);
+    // SmartDashboard.putNumber("speed left", leftMotorSpeed);
+    // SmartDashboard.putNumber("right2", rightMotorSpeed);
 
 
-    m_subsystem.driveRobotRaw(leftMotorSpeed, rightMotorSpeed);
+    _subsystem.driveRobotRaw(leftMotorSpeed, rightMotorSpeed);
 
-    if(Math.abs(m_leftFromStart - m_leftDistance) < 0.02 && Math.abs(m_rightFromStart - m_rightDistance) < 0.02){
+    if(Math.abs(_leftFromStart - _leftDistance) < 0.02 && Math.abs(_rightFromStart - _rightDistance) < 0.02){
       atTarget = true;
     }
   }
@@ -66,7 +90,7 @@ public class DriveForwardAutonomously extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     System.out.println("Command finished");
-    m_subsystem.setBreakMode(NeutralMode.Coast);
+    // _subsystem.setBreakMode(NeutralMode.Coast);
   }
 
   // Returns true when the command should end.
@@ -75,15 +99,15 @@ public class DriveForwardAutonomously extends CommandBase {
     return atTarget;
   }
 
-
+  // 
   public double calculateMotorOutput(double value, double targetposition){
 
     double delta = targetposition - value;
     if(Math.abs(delta) < 0.02) return 0;
     if(delta > 0) {
-      return 0.575d;
+      return _speed;
     } else {
-      return -0.575d;
+      return -_speed;
     }
 
   }

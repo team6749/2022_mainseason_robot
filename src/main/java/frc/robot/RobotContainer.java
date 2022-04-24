@@ -146,7 +146,7 @@ public class RobotContainer {
     turn180.whenPressed(new RotateByDegrees(_DrivebaseSubsystem, 180));
 
     //drive back from fender
-    autoDriveBack.whenPressed(new DriveForwardAutonomously(_DrivebaseSubsystem, 0.6, 0.6));
+    autoDriveBack.whenPressed(new DriveForwardAutonomously(_DrivebaseSubsystem, 0.6, 0.6, 0.9));
   }
 
   /**
