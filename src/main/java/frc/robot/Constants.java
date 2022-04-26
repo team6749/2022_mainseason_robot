@@ -19,7 +19,7 @@ public final class Constants {
     public static int frMotor = 12;
     public static int blMotor = 11;
     public static int brMotor = 13;
-    public static int shooterMotor = 01;
+    public static int shooterMotor = 1;
     public static int intakeMotor = 03;
     public static int beltMotor = 05;
     // public static Port colorSensorNumber;
@@ -35,7 +35,12 @@ public final class Constants {
     public static int[] encoderLeft = {4, 3};
     public static int[] encoderRight = {6, 5}; 
     public static int[] intakeEncoder = {4, 5};
-    public static int ultrasonic = 3;
+    public static int ultrasonic = 0;
 
     public static int hangarSwitch = 8;
+
+    public static int lights1 = 1;
+    public static int lights2 = 2;
+    public static int lights3 = 3;
+
 }

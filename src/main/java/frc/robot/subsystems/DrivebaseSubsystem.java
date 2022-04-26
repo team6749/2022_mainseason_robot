@@ -72,14 +72,14 @@ public class DrivebaseSubsystem extends SubsystemBase{
     }
     
     public double atShootPosNum(){
-      double currentDistanceMeters = ((input.getAverageValue() / 200d) - 0.6);
+      double currentDistanceMeters = ((input.getAverageValue() / 200d) - 0.6) /2;
       SmartDashboard.putNumber("ultrasonic in m", currentDistanceMeters);
       // -0.3 to 0.3 is the feesible range
       return currentDistanceMeters - 0.9;
     }
 
     public boolean atShootPosBool(){
-      double currentDistanceMeters = ((input.getAverageValue() / 200d) - 0.6);
+      double currentDistanceMeters = ((input.getAverageValue() / 200d) - 0.6) /2;
       double currentDistanceCM = currentDistanceMeters * 100;
       //0.3m to 5m range
       if(currentDistanceCM <= 120 && currentDistanceCM >= 60){

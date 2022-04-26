@@ -15,6 +15,7 @@ import frc.robot.commands.DriveForwardAutonomously;
 import frc.robot.commands.MoveClimberToPosition;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.RotateByDegrees;
+import frc.robot.commands.SetLights;
 import frc.robot.commands.SetSmallArmState;
 import frc.robot.enums.ClimberDirection;
 import frc.robot.enums.SmallArmState;
@@ -24,6 +25,7 @@ import frc.robot.commands.driveWithJoystick;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivebaseSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LightsSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -72,6 +74,8 @@ public class RobotContainer {
   final JoystickButton intakeOn = new JoystickButton(rightJoystick, 11);
   //turn robot 180 deg
   final JoystickButton turn180 = new JoystickButton(rightJoystick, 7);
+
+  final JoystickButton autoDriveBack = new JoystickButton(rightJoystick, 6);
   // final JoystickButton l3 = new JoystickButton(leftJoystick, 3);
   SendableChooser<Command> _chooser = new SendableChooser<Command>();
   // The robot's subsystems and commands are defined here
@@ -79,6 +83,7 @@ public class RobotContainer {
   public final DrivebaseSubsystem _DrivebaseSubsystem = new DrivebaseSubsystem();
   public final IntakeSubsystem _IntakeSubsystem = new IntakeSubsystem();
   public final ShooterSubsystem _ShooterSubsystem = new ShooterSubsystem();
+  public final LightsSubsystem _lights = new LightsSubsystem();
   // commands - usually not put here
 
   /**
@@ -114,7 +119,11 @@ public class RobotContainer {
     climberDownButton.whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.DOWN));
     
     //shoot balls when button is pressed
-    shootBallsButton.whenPressed(new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem));
+    shootBallsButton.whenPressed(new SequentialCommandGroup(
+      new SetLights(_lights, "Magenta"),
+      new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
+      new SetLights(_lights, "Alliance Color")
+    ));
     // shootBallsButton.whenPressed(shootCommand);
 
     //move arms certain direction when button is pressed
@@ -135,6 +144,9 @@ public class RobotContainer {
 
     //turn 180 degree button
     turn180.whenPressed(new RotateByDegrees(_DrivebaseSubsystem, 180));
+
+    //drive back from fender
+    autoDriveBack.whenPressed(new DriveForwardAutonomously(_DrivebaseSubsystem, 0.6, 0.6));
   }
 
   /**
@@ -154,9 +166,13 @@ public class RobotContainer {
     
   }
 
+  public void disabled() {
+    // _lights.Green();
+  }  
   public Command getClimbOnceCommand() {
     // An ExampleCommand will run in autonomous
     return new SequentialCommandGroup(
+      new SetLights(_lights, "Green"),
       //Turn off belt and intake motors
       new AutoIntakeBalls(_IntakeSubsystem, false),
       //Ensure the climber is correct position for move up
@@ -198,7 +214,6 @@ public class RobotContainer {
     new AutoIntakeBalls(_IntakeSubsystem, false),
     new RotateByDegrees(_DrivebaseSubsystem, 15), //turn
     new WaitCommand(0.5),
-    new DriveForwardAutonomously(_DrivebaseSubsystem, -0.15, -0.15),
     new WaitCommand(1.0),
     new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
     new AutoIntakeBalls(_IntakeSubsystem, true)   

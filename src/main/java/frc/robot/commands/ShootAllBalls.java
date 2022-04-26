@@ -21,13 +21,15 @@ public class ShootAllBalls extends CommandBase {
   //Time for shooter to warm up to speed
   // static double warmupTime = 1.5;
   //Time for shooter to recover after shooting.
-  static double recoveryTime = 0.75;
+  static double recoveryTime = 1;
 
   boolean firstBallExited = false;
 
 
   boolean secondBallExited = false;
   boolean secondBallReady = false;
+
+  public double speed = 75;
 
 
   boolean hasLogged = false;
@@ -56,30 +58,33 @@ public class ShootAllBalls extends CommandBase {
     hasLogged2 = false;
   }
   public boolean shooterUpToSpeed(){
-    return Math.abs(75 - _shooterSubsystem.getShooterSpeed()) < 2.5d;
+    return Math.abs(speed - _shooterSubsystem.getShooterSpeed()) < 2.5d;
   }
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     //Always run the shooter during the duration of this command.
-    _shooterSubsystem.setShooterSpeed(75.0);
+    //speed variable in variable iitializer section
+    //switched to variable so that one value doesnt need to be
+    //changed in two spots
+    _shooterSubsystem.setShooterSpeed(speed);
     // Wait for the inital warm up time before feeding the first ball through
     if (shooterUpToSpeed()) {
       // Runs balls through by default
       _intakeSubsystem.runBeltForwardShooting();
       _intakeSubsystem.runIntakeForward();
       // Check to see if the first ball has been released from the switch.
-      if (_intakeSubsystem.ballInBelt() == false && firstBallExited == false) {
+      if (!_intakeSubsystem.ballInBelt() && !firstBallExited) {
         firstBallExited = true;
-        if(!hasLogged2){
-          System.out.println("Ball to shot at " + myTimer.get());
-          hasLogged2 = true;
+        if(!hasLogged){
+          System.out.println("Ball one shot at " + myTimer.get());
+          hasLogged = true;
         }
       }
 
       //
       if(secondBallReady) {
-        if(_intakeSubsystem.ballInBelt() == false) {
+        if(!_intakeSubsystem.ballInBelt()) {
           //The second ball has left the robot
           secondBallExited = true;
         }
@@ -92,7 +97,7 @@ public class ShootAllBalls extends CommandBase {
         // Stop the belt from moving if the second ball is loaded into the switch
         // unless the second ball warmpup timer has elapsed.
         // The second ball cannot be loaded in without the first ball having been shot.
-        if (shooterUpToSpeed() == false || secondBallWarmpupTimer.hasElapsed(recoveryTime) == false) {
+        if (!shooterUpToSpeed() || !secondBallWarmpupTimer.hasElapsed(recoveryTime)) {
           _intakeSubsystem.beltOff();
           _intakeSubsystem.intakeOff();
         } else {
@@ -118,11 +123,11 @@ public class ShootAllBalls extends CommandBase {
       return true;
     }
     if(secondBallExited) {
-      if(!hasLogged) {
-        System.out.println("Ball to shot at " + myTimer.get());
-        hasLogged = true;
+      if(!hasLogged2) {
+        System.out.println("Ball two shot at " + myTimer.get());
+        hasLogged2 = true;
       } 
     }
-    return myTimer.hasElapsed(3);
+    return myTimer.hasElapsed(3.5);
   }
 }

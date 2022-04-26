@@ -37,10 +37,11 @@ public class IntakeSubsystem extends SubsystemBase {
   DigitalInput beltSwitch = new DigitalInput(Constants.beltLimitSwitch);
 
   private final Encoder intakeEncoder = new Encoder(Constants.intakeEncoder[0] , Constants.intakeEncoder[1]);
-  private final PIDController intakePID = new PIDController(0.05, 0, 0);
+  private final PIDController intakePID = new PIDController(0.1, 0, 0);
   
   private final ColorMatch _colorMatcher = new ColorMatch();
   Timer timer = new Timer();
+  Timer stallTimer = new Timer();
   IncomingBalls lastBallColor = IncomingBalls.NONE;
   IncomingBalls topBeltBallColor = IncomingBalls.NONE;
 
@@ -149,6 +150,17 @@ public class IntakeSubsystem extends SubsystemBase {
       } else {
         beltOff();
       }
+      
+      boolean intakeStalling = false;
+      if(getIntakeSpeed() == 0 && Math.abs(power) >= 0.1){
+        stallTimer.start();
+        if(stallTimer.hasElapsed(1)){
+          intakeStalling = true;
+        }
+      } else {
+        stallTimer.reset();
+      }
+      SmartDashboard.putBoolean("intake stalling?", intakeStalling);
       // SmartDashboard.putString("TeamColor", DriverStation.getAlliance().toString());
       SmartDashboard.putBoolean("Ball In Belt", ballInBelt());
       if(ballRejOn()){
