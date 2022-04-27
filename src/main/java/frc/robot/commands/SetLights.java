@@ -25,7 +25,6 @@ public class SetLights extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(_subsystem._lightState.getSelected() == true){
       switch (_color) {
         case "Off":
           _subsystem.Off();
@@ -57,10 +56,7 @@ public class SetLights extends CommandBase {
         default:
           _subsystem.White();
           break;
-      }
-    } else {
-      _subsystem.Off();
-    }
+      }   
   }
 
   // Called once the command ends or is interrupted.

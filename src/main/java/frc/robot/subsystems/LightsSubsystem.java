@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -10,12 +11,21 @@ public class LightsSubsystem extends SubsystemBase {
 	
 	private Relay r3 = new Relay(Constants.lights3); //SPK3 +red -green
 	private Relay r2 = new Relay(Constants.lights2); //SPK2 +blue -common
-	public SendableChooser<Boolean> _lightState = new SendableChooser<Boolean>();
+	public SendableChooser<String> _lightState = new SendableChooser<String>();
+	
 
 	
 	public LightsSubsystem() {
-		_lightState.setDefaultOption("Off", false);
-		_lightState.addOption("On", true);
+		_lightState.addOption("Off", "Off");
+		_lightState.setDefaultOption("Alliance Color", "Alliance Color");
+		_lightState.addOption("White", "White");
+		_lightState.addOption("Red", "Red");
+		_lightState.addOption("Blue", "Blue");
+		_lightState.addOption("Green", "Green");
+		_lightState.addOption("Yellow", "Yellow");
+		_lightState.addOption("Cyan", "Cyan");
+		_lightState.addOption("Magenta", "Magenta");
+
 	}
 	    
     public Alliance getAlliance() {

@@ -158,6 +158,7 @@ public class RobotContainer {
     if(leftJoystick.getRawButtonPressed(7)){
       CommandScheduler.getInstance().cancel(getAutonomousCommand());
     }
+    _lights._lightState.getSelected();
   }
 
   public Command getAutonomousCommand() {
