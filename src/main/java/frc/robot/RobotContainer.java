@@ -120,9 +120,9 @@ public class RobotContainer {
     
     //shoot balls when button is pressed
     shootBallsButton.whenPressed(new SequentialCommandGroup(
-      // new SetLights(_lights, "Magenta"),
-      new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem)
-      // new SetLights(_lights, "Alliance Color")
+      new SetLights(_lights, "Magenta"),
+      new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
+      new SetLights(_lights, "Alliance Color")
     ));
     // shootBallsButton.whenPressed(shootCommand);
 
@@ -165,14 +165,11 @@ public class RobotContainer {
     return _chooser.getSelected();
     
   }
-
-  public void disabled() {
-    // _lights.Green();
-  }  
+  
   public Command getClimbOnceCommand() {
     // An ExampleCommand will run in autonomous
     return new SequentialCommandGroup(
-      // new SetLights(_lights, "Green"),
+      new SetLights(_lights, "Green"),
       //Turn off belt and intake motors
       new AutoIntakeBalls(_IntakeSubsystem, false),
       //Ensure the climber is correct position for move up

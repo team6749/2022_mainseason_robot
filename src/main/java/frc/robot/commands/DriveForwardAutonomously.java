@@ -38,21 +38,20 @@ public class DriveForwardAutonomously extends CommandBase {
    * @param subsystem the drivebase subsystem to drive the robot
    * @param left the distance to drive the left side of the drive train in meters
    * @param right the distance to drive the right side of the drive train in meters
-   * @param speed the speed to drive the robot, must be between 0 and 1
+   * @param speed the speed to drive the robot, **  must be between 0 and 1 **
    * drives the robot at with positive speed in the direction of the intake
    * @throws Exception
   */
-  public DriveForwardAutonomously(DrivebaseSubsystem subsystem, double left, double right, double speed) throws Exception {
+  public DriveForwardAutonomously(DrivebaseSubsystem subsystem, double left, double right, double speed) {
     _subsystem = subsystem;
     addRequirements(subsystem);
     _leftDistance = left;
     _rightDistance = right;
     _speed = speed;
 
-    if(_speed <= 0 || _speed > 1){
-      throw new Exception("Speed cannot be equal to or less than zero, or greater than one");
-    }
-      
+    // if(_speed <= 0 || _speed > 1){
+    //   throw new Exception("Speed cannot be equal to or less than zero, or greater than one");
+    // }
   }
   // Called when the command is initially scheduled.
   @Override
