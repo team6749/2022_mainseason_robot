@@ -265,6 +265,17 @@
               "_source0": "network_table:///SmartDashboard/intake speed",
               "_title": "SmartDashboard/intake speed"
             }
+          },
+          "7,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "ComboBox Chooser",
+              "_source0": "network_table:///SmartDashboard/SendableChooser[2]",
+              "_title": "SmartDashboard/SendableChooser[2]"
+            }
           }
         }
       }

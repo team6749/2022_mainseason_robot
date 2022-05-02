@@ -94,6 +94,7 @@ public class RobotContainer {
     UsbCamera camera2 = CameraServer.startAutomaticCapture(1);
     // Configure the button bindings
     configureButtonBindings();
+    
     // _IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_IntakeSubsystem, true));
     // _DrivebaseSubsystem.setDefaultCommand(new DriveWithController(controller,
     // _DrivebaseSubsystem));
@@ -146,7 +147,7 @@ public class RobotContainer {
     turn180.whenPressed(new RotateByDegrees(_DrivebaseSubsystem, 180));
 
     //drive back from fender
-    autoDriveBack.whenPressed(new DriveForwardAutonomously(_DrivebaseSubsystem, 0.6, 0.6, 0.9));
+    autoDriveBack.whenPressed(new DriveForwardAutonomously(_DrivebaseSubsystem, 0.6, 0.6, 0.6));
   }
 
   /**
@@ -157,16 +158,16 @@ public class RobotContainer {
   public void periodic() {
     if(leftJoystick.getRawButtonPressed(7)){
       CommandScheduler.getInstance().cancel(getAutonomousCommand());
-    }
-    _lights._lightState.getSelected();
-  }
+    } 
+}
 
+  
+  
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return _chooser.getSelected();
-    
   }
-  
+
   public Command getClimbOnceCommand() {
     // An ExampleCommand will run in autonomous
     return new SequentialCommandGroup(
