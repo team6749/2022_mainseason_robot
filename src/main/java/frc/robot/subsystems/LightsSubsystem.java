@@ -11,22 +11,10 @@ public class LightsSubsystem extends SubsystemBase {
 	
 	private Relay r3 = new Relay(Constants.lights3); //SPK3 +red -green
 	private Relay r2 = new Relay(Constants.lights2); //SPK2 +blue -common
-	public SendableChooser<String> _lightState = new SendableChooser<String>();
 	
 
 	
-	public LightsSubsystem() {
-		_lightState.addOption("Off", "Off");
-		_lightState.setDefaultOption("Alliance Color", "Alliance Color");
-		_lightState.addOption("White", "White");
-		_lightState.addOption("Red", "Red");
-		_lightState.addOption("Blue", "Blue");
-		_lightState.addOption("Green", "Green");
-		_lightState.addOption("Yellow", "Yellow");
-		_lightState.addOption("Cyan", "Cyan");
-		_lightState.addOption("Magenta", "Magenta");
-
-	}
+	public LightsSubsystem() {}
 	    
     public Alliance getAlliance() {
     	return DriverStation.getAlliance();

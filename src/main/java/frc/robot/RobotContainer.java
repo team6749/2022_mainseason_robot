@@ -20,7 +20,8 @@ import frc.robot.commands.SetSmallArmState;
 import frc.robot.enums.ClimberDirection;
 import frc.robot.enums.SmallArmState;
 import frc.robot.commands.AutoIntakeBalls;
-import frc.robot.commands.ShootAllBalls;
+import frc.robot.commands.ShootTwoBalls;
+import frc.robot.commands.ShootTwoBalls;
 import frc.robot.commands.driveWithJoystick;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivebaseSubsystem;
@@ -120,9 +121,16 @@ public class RobotContainer {
     climberDownButton.whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.DOWN));
     
     //shoot balls when button is pressed
+    // shootBallsButton.whenPressed(new SequentialCommandGroup(
+    //   new SetLights(_lights, "Magenta"),
+    //   new ShootTwoBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
+    //   new SetLights(_lights, "Alliance Color")
+    // ));
     shootBallsButton.whenPressed(new SequentialCommandGroup(
       new SetLights(_lights, "Magenta"),
-      new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
+      new ShootTwoBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
+      // new WaitCommand(1.25),
+      // new ShootOneBall(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
       new SetLights(_lights, "Alliance Color")
     ));
     // shootBallsButton.whenPressed(shootCommand);
@@ -147,7 +155,11 @@ public class RobotContainer {
     turn180.whenPressed(new RotateByDegrees(_DrivebaseSubsystem, 180));
 
     //drive back from fender
-    autoDriveBack.whenPressed(new DriveForwardAutonomously(_DrivebaseSubsystem, 0.6, 0.6, 0.6));
+    autoDriveBack.whenPressed(new SequentialCommandGroup(
+      new DriveForwardAutonomously(_DrivebaseSubsystem, 0.6, 0.6, 0.6),
+      new WaitCommand(0.2),
+      new RotateByDegrees(_DrivebaseSubsystem, -3.75)
+    ));
   }
 
   /**
@@ -201,7 +213,7 @@ public class RobotContainer {
     new DriveForwardAutonomously(_DrivebaseSubsystem, -1.85, -1.85),
     new AutoIntakeBalls(_IntakeSubsystem, false),
     new WaitCommand(1.0),
-    new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
+    new ShootTwoBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
     new AutoIntakeBalls(_IntakeSubsystem, true)
   ); 
 
@@ -214,7 +226,7 @@ public class RobotContainer {
     new RotateByDegrees(_DrivebaseSubsystem, 15), //turn
     new WaitCommand(0.5),
     new WaitCommand(1.0),
-    new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
+    new ShootTwoBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
     new AutoIntakeBalls(_IntakeSubsystem, true)   
   );
 
@@ -229,7 +241,7 @@ public class RobotContainer {
     new WaitCommand(0.75),
     new AutoIntakeBalls(_IntakeSubsystem, false),
     new WaitCommand(0.5),
-    new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
+    new ShootTwoBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
     new AutoIntakeBalls(_IntakeSubsystem, true)
   );
   //align so ultrasonic is 0
@@ -238,7 +250,7 @@ public class RobotContainer {
     new WaitCommand(2),
     new AutoIntakeBalls(_IntakeSubsystem, false),
     new WaitCommand(0.5),
-    new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
+    new ShootTwoBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
     new WaitCommand(2.5),
     new DriveForwardAutonomously(_DrivebaseSubsystem, 1.75, 1.75),
     new AutoIntakeBalls(_IntakeSubsystem, true)

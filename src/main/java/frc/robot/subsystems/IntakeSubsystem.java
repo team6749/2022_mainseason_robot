@@ -108,7 +108,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
    
   public void runBeltForwardShooting(){
-    belt.set(0.8);
+    belt.set(0.9);
    }
 
   public void runBeltReverse(){
