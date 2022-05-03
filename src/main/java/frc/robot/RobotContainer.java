@@ -84,7 +84,7 @@ public class RobotContainer {
   public final DrivebaseSubsystem _DrivebaseSubsystem = new DrivebaseSubsystem();
   public final IntakeSubsystem _IntakeSubsystem = new IntakeSubsystem();
   public final ShooterSubsystem _ShooterSubsystem = new ShooterSubsystem();
-  public final LightsSubsystem _lights = new LightsSubsystem();
+  public final LightsSubsystem _lights = new LightsSubsystem(_IntakeSubsystem);
   // commands - usually not put here
 
   /**
@@ -129,8 +129,6 @@ public class RobotContainer {
     shootBallsButton.whenPressed(new SequentialCommandGroup(
       new SetLights(_lights, "Magenta"),
       new ShootTwoBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
-      // new WaitCommand(1.25),
-      // new ShootOneBall(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
       new SetLights(_lights, "Alliance Color")
     ));
     // shootBallsButton.whenPressed(shootCommand);
@@ -156,8 +154,8 @@ public class RobotContainer {
 
     //drive back from fender
     autoDriveBack.whenPressed(new SequentialCommandGroup(
-      new DriveForwardAutonomously(_DrivebaseSubsystem, 0.6, 0.6, 0.6),
-      new WaitCommand(0.2),
+      new DriveForwardAutonomously(_DrivebaseSubsystem, 0.475, 0.475, 0.65),
+      new WaitCommand(0.1),
       new RotateByDegrees(_DrivebaseSubsystem, -3.75)
     ));
   }
@@ -171,10 +169,8 @@ public class RobotContainer {
     if(leftJoystick.getRawButtonPressed(7)){
       CommandScheduler.getInstance().cancel(getAutonomousCommand());
     } 
+    // _lights.randomLights(rightJoystick.getZ());
 }
-
-  
-  
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return _chooser.getSelected();

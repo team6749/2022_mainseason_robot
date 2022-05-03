@@ -96,24 +96,6 @@ public class ShootTwoBalls extends CommandBase {
           secondBallLogged = true;
         }
       }  
-        //if the ball is at the limit switch, the ball is ready and turn off belt+intake
-        // if(_intakeSubsystem.ballInBelt()){
-        //     _intakeSubsystem.beltOff();
-        //     _intakeSubsystem.intakeOff();
-        //     ballReady = true;
-        // // default behavior: run the intake and belt normally
-        // } else {
-        //     _intakeSubsystem.runBeltForwardShooting();
-        //     _intakeSubsystem.runIntakeForward();
-        // }
-
-        // //if the ball is ready to be shot and the warmup time has passed, shoot the ball
-        // if(ballReady && _intakeSubsystem.ballInBelt() && myTimer.hasElapsed(warmupTime)){
-        //     _intakeSubsystem.runBeltForwardShooting();
-        //     _intakeSubsystem.runIntakeForward();
-        //     //the ball has been shot
-        //     ballShot = true;
-        // }
     }
   }
 
@@ -131,6 +113,6 @@ public class ShootTwoBalls extends CommandBase {
     if(secondBallShot){
       return true;
     }
-    return myTimer.hasElapsed(3);
+    return myTimer.hasElapsed(5);
   }
 }

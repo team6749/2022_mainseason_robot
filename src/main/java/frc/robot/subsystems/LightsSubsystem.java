@@ -1,20 +1,18 @@
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class LightsSubsystem extends SubsystemBase {
 	
-	private Relay r3 = new Relay(Constants.lights3); //SPK3 +red -green
-	private Relay r2 = new Relay(Constants.lights2); //SPK2 +blue -common
-	
-
-	
-	public LightsSubsystem() {}
+	private static Relay r2 = new Relay(Constants.lights1); //SPK3 +red -green
+	private static Relay r1 = new Relay(Constants.lights2); //SPK2 +blue -common
+	private IntakeSubsystem intakeSubsystem;
+	public LightsSubsystem(IntakeSubsystem subsystem) {
+		intakeSubsystem = subsystem;
+	}
 	    
     public Alliance getAlliance() {
     	return DriverStation.getAlliance();
@@ -32,43 +30,75 @@ public class LightsSubsystem extends SubsystemBase {
     	}
     }
     
-    public void Off() {//works
-		r3.set(Relay.Value.kOn);
+    public static void Off() {//works
+		r1.set(Relay.Value.kOn);
     	r2.set(Relay.Value.kOn);
     } 
     
-    public void White() { //needs to be tested
-		r3.set(Relay.Value.kReverse);
+    public static void White() { //works
+		r1.set(Relay.Value.kReverse);
     	r2.set(Relay.Value.kOff);
     }
     
-    public void Red() {//works
-		r3.set(Relay.Value.kOn);
+    public static void Red() {//works
+		r1.set(Relay.Value.kOn);
 		r2.set(Relay.Value.kReverse);
 	}
     
-    public void Blue() {// work
-		r3.set(Relay.Value.kReverse);
+    public static void Blue() {// work
+		r1.set(Relay.Value.kReverse);
 		r2.set(Relay.Value.kOn);
 	}
     
-	public void Green() {//works
-		r3.set(Relay.Value.kOn);
+	public static void Green() {//works
+		r1.set(Relay.Value.kOn);
 		r2.set(Relay.Value.kForward);
 	}
     
-    public void Yellow() {//works
-    	r3.set(Relay.Value.kOn);
+    public static void Yellow() {//works
+    	r1.set(Relay.Value.kOn);
     	r2.set(Relay.Value.kOff);
     }
     
-    public void Cyan() {//need to re order
-    	r3.set(Relay.Value.kForward);
-    	r2.set(Relay.Value.kReverse);
+    public static void Cyan() {//works
+    	r1.set(Relay.Value.kReverse);
+    	r2.set(Relay.Value.kForward);
     }
     
-    public void Magenta() {//need to re order
-    	r3.set(Relay.Value.kReverse);
+    public static void Magenta() {//works
+    	r1.set(Relay.Value.kReverse);
     	r2.set(Relay.Value.kReverse);
     }
+	
+	public static void randomLights(double x){
+		System.out.println(x);
+		if(x <= -1.0){
+		  White();
+		} else if(x < -1.0 && x <= -0.75){
+		  Cyan();
+		} else if(x < -0.75 && x <= -0.5){
+		  Red();
+		} else if(x < -0.5 && x <= -0.25){
+		  Blue();
+		}  else if(x < -0.25 && x <= 0){
+		  Yellow();
+		}  else if(x < 0 && x <= 0.25){
+		  Magenta();
+		}  else if(x < 0.25 && x <= 0.5){
+		  Green();
+		}  else if(x < 0.5 && x <= 0.75){
+		  Yellow();
+		}  else if(x < 0.75 && x <= 1){
+		  Cyan();
+		}  
+	  }
+
+	  @Override
+	  public void periodic() {
+		if(intakeSubsystem.getBallsInBot() == 2){
+			Cyan();
+		} else {
+			setAllianceColors();
+		}
+	  }
 }
