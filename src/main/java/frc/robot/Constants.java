@@ -41,6 +41,5 @@ public final class Constants {
 
     public static int lights1 = 1;
     public static int lights2 = 2;
-    public static int lights3 = 3;
 
 }

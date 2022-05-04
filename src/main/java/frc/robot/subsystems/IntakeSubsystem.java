@@ -34,11 +34,11 @@ public class IntakeSubsystem extends SubsystemBase {
   private final WPI_TalonSRX intake = new WPI_TalonSRX(Constants.intakeMotor);
   private final WPI_TalonSRX belt = new WPI_TalonSRX(Constants.beltMotor);
   private final ColorSensorV3 colorSensor = new ColorSensorV3(Constants.colorSensorPort);
-  DigitalInput beltSwitch = new DigitalInput(Constants.beltLimitSwitch);
+  static DigitalInput beltSwitch = new DigitalInput(Constants.beltLimitSwitch);
 
   private final Encoder intakeEncoder = new Encoder(Constants.intakeEncoder[0] , Constants.intakeEncoder[1]);
   private final PIDController intakePID = new PIDController(0.1, 0, 0);
-  
+  private static int ballQuantity;
   private final ColorMatch _colorMatcher = new ColorMatch();
   Timer timer = new Timer();
   Timer stallTimer = new Timer();
@@ -108,7 +108,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
    
   public void runBeltForwardShooting(){
-    belt.set(0.8);
+    belt.set(0.9);
    }
 
   public void runBeltReverse(){
@@ -119,13 +119,15 @@ public class IntakeSubsystem extends SubsystemBase {
     belt.set(0);
   }
 
+  public int getBallsInBot() {
+    return ballQuantity;
+  }
+
   @Override
   public void periodic() {
     double power = intakePID.calculate(getIntakeSpeed(), intakeSpeed) + (intakeSpeed * 0.03);
     intake.set(power);
     // intake.set(intakeSpeed * 0.03);
-
-
     SmartDashboard.putNumber("intake power", power);
     SmartDashboard.putNumber("intake speed", getIntakeSpeed());
     SmartDashboard.putNumber("intake setpoint", intakeSpeed);
@@ -134,6 +136,16 @@ public class IntakeSubsystem extends SubsystemBase {
     beltOff();
     if(intakeEnabled){
       _ball = ballColorToEnum();
+
+      if(ballInBelt()) {
+        if(_ball == IncomingBalls.NONE) {
+          ballQuantity = 1;
+        } else {
+          ballQuantity = 2;
+        }
+      } else {
+        ballQuantity = 0;
+      }
 
       if(!ballInBelt() && _ball != IncomingBalls.NONE) {
         topBeltBallColor = _ball; //sets last ball to the ball current ball

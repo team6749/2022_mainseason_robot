@@ -25,38 +25,38 @@ public class SetLights extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    switch (_color) {
-      case "Off":
-        _subsystem.Off();
-        break;
-      case "Alliance Color":
-        _subsystem.setAllianceColors();
-        break;
-      case "White":
-        _subsystem.White();
-        break;
-      case "Red":  
-        _subsystem.Red();
-        break;
-      case "Blue":
-        _subsystem.Blue();
-        break;
-      case "Green":
-        _subsystem.Green();
-        break;
-      case "Yellow":
-        _subsystem.Yellow();
-        break;
-      case "Cyan":
-        _subsystem.Cyan();
-        break;
-      case "Magenta":
-        _subsystem.Magenta();
-        break;    
-      default:
-        _subsystem.White();
-        break;
-    }
+      switch (_color) {
+        case "Off":
+          _subsystem.Off();
+          break;
+        case "Alliance Color":
+          _subsystem.setAllianceColors();
+          break;
+        case "White":
+          _subsystem.White();
+          break;
+        case "Red":  
+          _subsystem.Red();
+          break;
+        case "Blue":
+          _subsystem.Blue();
+          break;
+        case "Green":
+          _subsystem.Green();
+          break;
+        case "Yellow":
+          _subsystem.Yellow();
+          break;
+        case "Cyan":
+          _subsystem.Cyan();
+          break;
+        case "Magenta":
+          _subsystem.Magenta();
+          break;    
+        default:
+          _subsystem.White();
+          break;
+      }   
   }
 
   // Called once the command ends or is interrupted.

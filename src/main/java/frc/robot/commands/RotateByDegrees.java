@@ -9,25 +9,29 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivebaseSubsystem;
 
 public class RotateByDegrees extends CommandBase {
-  /** Creates a new RotateByDegrees. */
   private final DrivebaseSubsystem _drivebase;
   private double _degrees;
   Command drive;
 
+  /** Creates a new RotateByDegrees. 
+   * @param drivebase the drivebase subsystem
+   * @param degrees the degrees to turn, positive turns intake right
+  */
   public RotateByDegrees(DrivebaseSubsystem drivebase, double degrees) {
     _drivebase = drivebase;
     addRequirements(drivebase);
     _degrees = degrees;
-    //converts the degrees to turn to distance for the wheels
     double distance = DegreesToDistance(_degrees);
-    //drives each set of wheels the distance in oppisite directions 
+    // uses the AutoDriveCommand to turn on a point
     drive = new DriveForwardAutonomously(_drivebase, distance, -distance);
-
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
    
-
+  /**
+   * converts degrees to a drivetrain distance
+   * @param x the degrees to turn
+   * @return the distance drive in order to reach the degrees of turn
+   */
   public double DegreesToDistance(double x){
     return (Math.PI * 0.5842d * (x / 360d));
   }

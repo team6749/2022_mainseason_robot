@@ -17,10 +17,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.RotateByDegrees;
 import frc.robot.commands.SetLights;
 import frc.robot.commands.SetSmallArmState;
+import frc.robot.commands.ShootAllBalls;
 import frc.robot.enums.ClimberDirection;
 import frc.robot.enums.SmallArmState;
 import frc.robot.commands.AutoIntakeBalls;
-import frc.robot.commands.ShootAllBalls;
 import frc.robot.commands.driveWithJoystick;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivebaseSubsystem;
@@ -83,7 +83,7 @@ public class RobotContainer {
   public final DrivebaseSubsystem _DrivebaseSubsystem = new DrivebaseSubsystem();
   public final IntakeSubsystem _IntakeSubsystem = new IntakeSubsystem();
   public final ShooterSubsystem _ShooterSubsystem = new ShooterSubsystem();
-  public final LightsSubsystem _lights = new LightsSubsystem();
+  public final LightsSubsystem _lights = new LightsSubsystem(_IntakeSubsystem);
   // commands - usually not put here
 
   /**
@@ -94,6 +94,7 @@ public class RobotContainer {
     UsbCamera camera2 = CameraServer.startAutomaticCapture(1);
     // Configure the button bindings
     configureButtonBindings();
+    
     // _IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_IntakeSubsystem, true));
     // _DrivebaseSubsystem.setDefaultCommand(new DriveWithController(controller,
     // _DrivebaseSubsystem));
@@ -119,6 +120,11 @@ public class RobotContainer {
     climberDownButton.whileHeld(new ClimberControl(_ClimberSubsystem, 0.1, ClimberDirection.DOWN));
     
     //shoot balls when button is pressed
+    // shootBallsButton.whenPressed(new SequentialCommandGroup(
+    //   new SetLights(_lights, "Magenta"),
+    //   new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
+    //   new SetLights(_lights, "Alliance Color")
+    // ));
     shootBallsButton.whenPressed(new SequentialCommandGroup(
       new SetLights(_lights, "Magenta"),
       new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
@@ -146,7 +152,11 @@ public class RobotContainer {
     turn180.whenPressed(new RotateByDegrees(_DrivebaseSubsystem, 180));
 
     //drive back from fender
-    autoDriveBack.whenPressed(new DriveForwardAutonomously(_DrivebaseSubsystem, 0.6, 0.6));
+    autoDriveBack.whenPressed(new SequentialCommandGroup(
+      new DriveForwardAutonomously(_DrivebaseSubsystem, 0.5, 0.5, 0.675),
+      new WaitCommand(0.1),
+      new RotateByDegrees(_DrivebaseSubsystem, -3.75)
+    ));
   }
 
   /**
@@ -157,18 +167,14 @@ public class RobotContainer {
   public void periodic() {
     if(leftJoystick.getRawButtonPressed(7)){
       CommandScheduler.getInstance().cancel(getAutonomousCommand());
-    }
-  }
-
+    } 
+    // _lights.randomLights(rightJoystick.getZ());
+}
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return _chooser.getSelected();
-    
   }
 
-  public void disabled() {
-    // _lights.Green();
-  }  
   public Command getClimbOnceCommand() {
     // An ExampleCommand will run in autonomous
     return new SequentialCommandGroup(
