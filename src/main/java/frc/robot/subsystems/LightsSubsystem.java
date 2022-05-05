@@ -50,7 +50,7 @@ public class LightsSubsystem extends SubsystemBase {
 		r2.set(Relay.Value.kOn);
 	}
     
-	public static void Green() {//works
+	public void Green() {//works
 		r1.set(Relay.Value.kOn);
 		r2.set(Relay.Value.kForward);
 	}
@@ -60,45 +60,39 @@ public class LightsSubsystem extends SubsystemBase {
     	r2.set(Relay.Value.kOff);
     }
     
-    public static void Cyan() {//works
+    public void Cyan() {//works
     	r1.set(Relay.Value.kReverse);
     	r2.set(Relay.Value.kForward);
     }
     
-    public static void Magenta() {//works
+    public void Magenta() {//works
     	r1.set(Relay.Value.kReverse);
     	r2.set(Relay.Value.kReverse);
     }
 	
-	public static void randomLights(double x){
-		System.out.println(x);
-		if(x <= -1.0){
-		  White();
-		} else if(x < -1.0 && x <= -0.75){
-		  Cyan();
-		} else if(x < -0.75 && x <= -0.5){
-		  Red();
-		} else if(x < -0.5 && x <= -0.25){
-		  Blue();
-		}  else if(x < -0.25 && x <= 0){
-		  Yellow();
-		}  else if(x < 0 && x <= 0.25){
-		  Magenta();
-		}  else if(x < 0.25 && x <= 0.5){
-		  Green();
-		}  else if(x < 0.5 && x <= 0.75){
-		  Yellow();
-		}  else if(x < 0.75 && x <= 1){
-		  Cyan();
-		}  
-	  }
+	// public static void randomLights(double x){
+	// 	System.out.println(x);
+	// 	if(x <= -1.0){
+	// 	  White();
+	// 	} else if(x < -1.0 && x <= -0.75){
+	// 	  Cyan();
+	// 	} else if(x < -0.75 && x <= -0.5){
+	// 	  Red();
+	// 	} else if(x < -0.5 && x <= -0.25){
+	// 	  Blue();
+	// 	}  else if(x < -0.25 && x <= 0){
+	// 	  Yellow();
+	// 	}  else if(x < 0 && x <= 0.25){
+	// 	  Magenta();
+	// 	}  else if(x < 0.25 && x <= 0.5){
+	// 	  Green();
+	// 	}  else if(x < 0.5 && x <= 0.75){
+	// 	  Yellow();
+	// 	}  else if(x < 0.75 && x <= 1){
+	// 	  Cyan();
+	// 	}  
+	//   }
 
 	  @Override
-	  public void periodic() {
-		if(intakeSubsystem.getBallsInBot() == 2){
-			Cyan();
-		} else {
-			setAllianceColors();
-		}
-	  }
+	  public void periodic() {}
 }

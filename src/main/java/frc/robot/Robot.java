@@ -112,6 +112,7 @@ public class Robot extends TimedRobot {
     if (_autonomousCommand != null) {
       _autonomousCommand.cancel();
     }
+    _robotContainer._IntakeSubsystem.intakeEnabled = true;
     _robotContainer._lights.setAllianceColors();
     _robotContainer._ClimberSubsystem.armMoveBackward();
   }
