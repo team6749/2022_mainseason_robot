@@ -58,7 +58,7 @@ public class IntakeSubsystem extends SubsystemBase {
   public static DriverStation station;
   private IncomingBalls _ball;
   public boolean intakeEnabled = false;
-  private boolean isShooting = false;
+  private boolean isShooting;
   SendableChooser<Boolean> _chooser2 = new SendableChooser<Boolean>();
 
   private double intakeSpeed = 0;

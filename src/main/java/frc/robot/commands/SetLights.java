@@ -11,7 +11,6 @@ import frc.robot.subsystems.LightsSubsystem;
 
 public class SetLights extends CommandBase {
   /** Creates a new SetLights. */
-  private String _color;
   private LightsSubsystem _lights;
   private ClimberSubsystem _climber;
   private IntakeSubsystem _intake;
@@ -21,9 +20,7 @@ public class SetLights extends CommandBase {
     _lights = subsystem;
     addRequirements(subsystem);
     _climber = climb;
-    addRequirements(climb);
     _intake = intake;
-    addRequirements(intake);
   }
   // Called when the command is initially scheduled.
   @Override
@@ -50,6 +47,6 @@ public class SetLights extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ClimberControl;
 import frc.robot.commands.DriveForwardAutonomously;
 import frc.robot.commands.IsClimbingBool;
-import frc.robot.commands.IsShootingBool;
 import frc.robot.commands.MoveClimberToPosition;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.RotateByDegrees;
@@ -105,8 +104,8 @@ public class RobotContainer {
     _chooser.addOption("Complex two ball", complexTwoBallAuto);
     _chooser.addOption("right two ball", rightTwoBallAuto);
     SmartDashboard.putData(_chooser);
-    _DrivebaseSubsystem.setDefaultCommand(new driveWithJoystick(rightJoystick, leftJoystick, _DrivebaseSubsystem));
     _lights.setDefaultCommand(new SetLights(_lights, _ClimberSubsystem, _IntakeSubsystem));
+    _DrivebaseSubsystem.setDefaultCommand(new driveWithJoystick(rightJoystick, leftJoystick, _DrivebaseSubsystem));
     // _lights.setDefaultCommand(new SetLights(_lights, "Alliance Color"));
   }
 
@@ -129,10 +128,7 @@ public class RobotContainer {
     //   new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
     //   new SetLights(_lights, "Alliance Color")
     // ));
-    shootBallsButton.whenPressed(new SequentialCommandGroup(
-      new IsShootingBool(_IntakeSubsystem,true),
-      new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem)
-    ));
+    shootBallsButton.whenPressed(new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem));
     // shootBallsButton.whenPressed(shootCommand);
 
     //move arms certain direction when button is pressed
@@ -201,7 +197,7 @@ public class RobotContainer {
       new WaitCommand(0.2),
       new MoveClimberToPosition(_ClimberSubsystem, 0.2),
       new SetSmallArmState(_ClimberSubsystem, SmallArmState.BACKWARD),
-      new IsClimbingBool(_ClimberSubsystem, true)
+      new IsClimbingBool(_ClimberSubsystem, false)
     );
   }
   //New Autos - 
