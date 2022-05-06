@@ -75,7 +75,7 @@ public class RobotContainer {
   //turn robot 180 deg
   final JoystickButton turn180 = new JoystickButton(rightJoystick, 7);
 
-  final JoystickButton autoDriveBack = new JoystickButton(rightJoystick, 6);
+  // final JoystickButton autoDriveBack = new JoystickButton(rightJoystick, 6);
   // final JoystickButton l3 = new JoystickButton(leftJoystick, 3);
   SendableChooser<Command> _chooser = new SendableChooser<Command>();
   // The robot's subsystems and commands are defined here
@@ -98,12 +98,13 @@ public class RobotContainer {
     // _IntakeSubsystem.setDefaultCommand(new AutoIntakeBalls(_IntakeSubsystem, true));
     // _DrivebaseSubsystem.setDefaultCommand(new DriveWithController(controller,
     // _DrivebaseSubsystem));
-    _chooser.addOption("simple one ball", simpleAuto);
+    _chooser.setDefaultOption("simple one ball", simpleAuto);
     _chooser.addOption("left two ball", leftTwoBallAuto);
     _chooser.addOption("Complex two ball", complexTwoBallAuto);
-    _chooser.setDefaultOption("right two ball", rightTwoBallAuto);
+    _chooser.addOption("right two ball", rightTwoBallAuto);
     SmartDashboard.putData(_chooser);
     _DrivebaseSubsystem.setDefaultCommand(new driveWithJoystick(rightJoystick, leftJoystick, _DrivebaseSubsystem));
+    // _lights.setDefaultCommand(new SetLights(_lights, "Alliance Color"));
   }
 
   /**
@@ -126,6 +127,7 @@ public class RobotContainer {
     //   new SetLights(_lights, "Alliance Color")
     // ));
     shootBallsButton.whenPressed(new SequentialCommandGroup(
+      new SetLights(_lights, "Off"),
       new SetLights(_lights, "Magenta"),
       new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
       new SetLights(_lights, "Alliance Color")
@@ -152,11 +154,11 @@ public class RobotContainer {
     turn180.whenPressed(new RotateByDegrees(_DrivebaseSubsystem, 180));
 
     //drive back from fender
-    autoDriveBack.whenPressed(new SequentialCommandGroup(
-      new DriveForwardAutonomously(_DrivebaseSubsystem, 0.5, 0.5, 0.675),
-      new WaitCommand(0.1),
-      new RotateByDegrees(_DrivebaseSubsystem, -3.75)
-    ));
+    // autoDriveBack.whenPressed(new SequentialCommandGroup(
+    //   new DriveForwardAutonomously(_DrivebaseSubsystem, 0.5, 0.5, 0.675),
+    //   new WaitCommand(0.1),
+    //   new RotateByDegrees(_DrivebaseSubsystem, -3.75)
+    // ));
   }
 
   /**
@@ -167,7 +169,16 @@ public class RobotContainer {
   public void periodic() {
     if(leftJoystick.getRawButtonPressed(7)){
       CommandScheduler.getInstance().cancel(getAutonomousCommand());
-    } 
+    }
+    if(_IntakeSubsystem.getBallsInBot() >= 1){
+      _lights.Cyan();
+    } else if(_ShooterSubsystem.getShooterSpeed() >= 60d){
+      _lights.Magenta();
+    } else if(!_IntakeSubsystem.intakeEnabled){
+      _lights.Green();
+    } else {
+      _lights.setAllianceColors();
+    }
     // _lights.randomLights(rightJoystick.getZ());
 }
   public Command getAutonomousCommand() {
@@ -200,56 +211,117 @@ public class RobotContainer {
       new SetSmallArmState(_ClimberSubsystem, SmallArmState.BACKWARD)
     );
   }
-  //DO NOT CHANGE
-  Command leftTwoBallAuto = new SequentialCommandGroup(
+  //New Autos - 
+  Command rightTwoBallAuto = new SequentialCommandGroup(
     new AutoIntakeBalls(_IntakeSubsystem, true),
-    new DriveForwardAutonomously(_DrivebaseSubsystem, 1.3, 1.3),
-    new WaitCommand(0.5),
-    new DriveForwardAutonomously(_DrivebaseSubsystem, -1.85, -1.85),
-    new AutoIntakeBalls(_IntakeSubsystem, false),
-    new WaitCommand(1.0),
+    new WaitCommand(0.2),
+    new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
+    // new DriveForwardAutonomously(_DrivebaseSubsystem, 0.3, 0.3, 0.6),
+    // new RotateByDegrees(_DrivebaseSubsystem, -10),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, 0.315, 0.315, 0.6),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, 0, 0.175, 0.6),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, 2, 2),
+    new WaitCommand(0.4),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, -2, -2),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, 0, -0.12, 0.6),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, -0.315, -0.315, 0.7),
+    new WaitCommand(0.3),
     new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
     new AutoIntakeBalls(_IntakeSubsystem, true)
-  ); 
+  );
 
-  Command rightTwoBallAuto = new SequentialCommandGroup(    
+  Command leftTwoBallAuto = new SequentialCommandGroup(
     new AutoIntakeBalls(_IntakeSubsystem, true),
-    new DriveForwardAutonomously(_DrivebaseSubsystem, 1.3, 1.3),
-    new WaitCommand(0.5),
-    new DriveForwardAutonomously(_DrivebaseSubsystem, -1.9, -1.9),
-    new AutoIntakeBalls(_IntakeSubsystem, false),
-    new RotateByDegrees(_DrivebaseSubsystem, 15), //turn
-    new WaitCommand(0.5),
-    new WaitCommand(1.0),
+    new WaitCommand(0.2),
     new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
-    new AutoIntakeBalls(_IntakeSubsystem, true)   
+    new WaitCommand(0.2),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, 0.3, 0.3, 0.6),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, 0.26, 0),
+    new WaitCommand(0.1), //first turn
+    new DriveForwardAutonomously(_DrivebaseSubsystem, 2.2 , 2.2  , 0.7),
+    new WaitCommand(0.4),
+    //ball picked up
+    new DriveForwardAutonomously(_DrivebaseSubsystem, -1.6, -1.6, 0.6),
+    new RotateByDegrees(_DrivebaseSubsystem, -27),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, -0.96, -0.96, 0.7),
+    new WaitCommand(0.2),
+    new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
+    new AutoIntakeBalls(_IntakeSubsystem, true)
+  );
+
+  Command simpleAuto = new SequentialCommandGroup(
+    new AutoIntakeBalls(_IntakeSubsystem, true),
+    new WaitCommand(0.2),
+    new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
+    new WaitCommand(8),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, 2.15, 2.15, 0.7),
+    new AutoIntakeBalls(_IntakeSubsystem, true)
   );
 
   Command complexTwoBallAuto = new SequentialCommandGroup(
     new AutoIntakeBalls(_IntakeSubsystem, true),
-    new DriveForwardAutonomously(_DrivebaseSubsystem, 1.7, 1.7),
-    new RotateByDegrees(_DrivebaseSubsystem, 8),
+    new WaitCommand(0.2),
+    new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
+    new WaitCommand(0.2),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, 0.505, 0, 0.7),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, 2.4, 2.4, 0.7),
     new WaitCommand(0.5),
-    new DriveForwardAutonomously(_DrivebaseSubsystem, -2.25, -2.25),
-    new WaitCommand(0.5),
-    new RotateByDegrees(_DrivebaseSubsystem, -45),
-    new WaitCommand(0.75),
-    new AutoIntakeBalls(_IntakeSubsystem, false),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, -2.4, -2.4, 0.7),
+    new DriveForwardAutonomously(_DrivebaseSubsystem, -0.49, 0, 0.7),
     new WaitCommand(0.5),
     new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
     new AutoIntakeBalls(_IntakeSubsystem, true)
   );
+  //DO NOT CHANGE - Old Autos
+  // Command leftTwoBallAuto = new SequentialCommandGroup(
+  //   new AutoIntakeBalls(_IntakeSubsystem, true),
+  //   new DriveForwardAutonomously(_DrivebaseSubsystem, 1.3, 1.3),
+  //   new WaitCommand(0.5),
+  //   new DriveForwardAutonomously(_DrivebaseSubsystem, -1.85, -1.85),
+  //   new AutoIntakeBalls(_IntakeSubsystem, false),
+  //   new WaitCommand(1.0),
+  //   new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
+  //   new AutoIntakeBalls(_IntakeSubsystem, true)
+  // ); 
+     
+  // Command rightTwoBallAuto = new SequentialCommandGroup(    
+  //   new AutoIntakeBalls(_IntakeSubsystem, true),
+  //   new DriveForwardAutonomously(_DrivebaseSubsystem, 1.3, 1.3),
+  //   new WaitCommand(0.5),
+  //   new DriveForwardAutonomously(_DrivebaseSubsystem, -1.9, -1.9),
+  //   new AutoIntakeBalls(_IntakeSubsystem, false),
+  //   new RotateByDegrees(_DrivebaseSubsystem, 15), //turn
+  //   new WaitCommand(0.5),
+  //   new WaitCommand(1.0),
+  //   new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
+  //   new AutoIntakeBalls(_IntakeSubsystem, true)   
+  // );
+
+  // Command complexTwoBallAuto = new SequentialCommandGroup(
+  //   new AutoIntakeBalls(_IntakeSubsystem, true),
+  //   new DriveForwardAutonomously(_DrivebaseSubsystem, 1.7, 1.7),
+  //   new RotateByDegrees(_DrivebaseSubsystem, 8),
+  //   new WaitCommand(0.5),
+  //   new DriveForwardAutonomously(_DrivebaseSubsystem, -2.25, -2.25),
+  //   new WaitCommand(0.5),
+  //   new RotateByDegrees(_DrivebaseSubsystem, -45),
+  //   new WaitCommand(0.75),
+  //   new AutoIntakeBalls(_IntakeSubsystem, false),
+  //   new WaitCommand(0.5),
+  //   new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
+  //   new AutoIntakeBalls(_IntakeSubsystem, true)
+  // );
   //align so ultrasonic is 0
-  Command simpleAuto = new SequentialCommandGroup(
-    new AutoIntakeBalls(_IntakeSubsystem, true),
-    new WaitCommand(2),
-    new AutoIntakeBalls(_IntakeSubsystem, false),
-    new WaitCommand(0.5),
-    new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
-    new WaitCommand(2.5),
-    new DriveForwardAutonomously(_DrivebaseSubsystem, 1.75, 1.75),
-    new AutoIntakeBalls(_IntakeSubsystem, true)
-  );
+  // Command simpleAuto = new SequentialCommandGroup(
+  //   new AutoIntakeBalls(_IntakeSubsystem, true),
+  //   new WaitCommand(2),
+  //   new AutoIntakeBalls(_IntakeSubsystem, false),
+  //   new WaitCommand(0.5),
+  //   new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
+  //   new WaitCommand(2.5),
+  //   new DriveForwardAutonomously(_DrivebaseSubsystem, 1.75, 1.75),
+  //   new AutoIntakeBalls(_IntakeSubsystem, true)
+  // );
 
   // public Command shootCommand = new SequentialCommandGroup(
   //   new ShooterSpeed(_ShooterSubsystem, 75),
