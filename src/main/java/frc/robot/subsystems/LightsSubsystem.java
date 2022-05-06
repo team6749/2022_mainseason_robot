@@ -9,10 +9,7 @@ public class LightsSubsystem extends SubsystemBase {
 	
 	private static Relay r2 = new Relay(Constants.lights1); //SPK3 +red -green
 	private static Relay r1 = new Relay(Constants.lights2); //SPK2 +blue -common
-	private IntakeSubsystem intakeSubsystem;
-	public LightsSubsystem(IntakeSubsystem subsystem) {
-		intakeSubsystem = subsystem;
-	}
+	public LightsSubsystem() {}
 	    
     public Alliance getAlliance() {
     	return DriverStation.getAlliance();

@@ -58,6 +58,7 @@ public class IntakeSubsystem extends SubsystemBase {
   public static DriverStation station;
   private IncomingBalls _ball;
   public boolean intakeEnabled = false;
+  private boolean isShooting;
   SendableChooser<Boolean> _chooser2 = new SendableChooser<Boolean>();
 
   private double intakeSpeed = 0;
@@ -66,7 +67,7 @@ public class IntakeSubsystem extends SubsystemBase {
     belt.setInverted(false);
     timer.start();
     intake.setInverted(true);
-    
+    isShooting = false;
     // color stuff
     _colorMatcher.addColorMatch(redColor);
     _colorMatcher.addColorMatch(blueColor);
@@ -101,7 +102,12 @@ public class IntakeSubsystem extends SubsystemBase {
   public boolean ballInBelt(){
     return beltSwitch.get();
   }
-
+  public boolean getIsShooting(){
+    return isShooting;
+  }
+  public void setIsShooting(boolean x){
+    isShooting = x;
+  }
   public void runBeltForward(){
     belt.set(0.4);
    }

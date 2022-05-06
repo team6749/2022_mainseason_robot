@@ -26,7 +26,7 @@ public class ClimberSubsystem extends SubsystemBase  {
 
   PIDController pid = new PIDController(40, 0, 0);
   double climberSetpoint = -10;
-
+  private boolean isClimbing;
 public ClimberSubsystem() {
   climber.setInverted(true);
   climber.setNeutralMode(NeutralMode.Brake);
@@ -34,6 +34,7 @@ public ClimberSubsystem() {
   pcmCompressor1.enableDigital();
   armMoveBackward();
   shortArmsDown = false;
+  isClimbing = false;
 }
 
 @Override
@@ -102,6 +103,13 @@ public boolean getShortArms() {
   return shortArmsDown;
 }
 
+public boolean getIsClimbing() {
+  return isClimbing;
+}
+
+public void setIsClimbing(boolean x){
+  isClimbing = x;
+}
 // public void armOff(){
 //   shortArms.set(Value.kOff);
 // }

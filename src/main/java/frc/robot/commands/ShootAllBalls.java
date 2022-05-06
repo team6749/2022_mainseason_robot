@@ -52,6 +52,7 @@ public class ShootAllBalls extends CommandBase {
     secondBallReady = false;
     hasLogged = false;
     hasLogged2 = false;
+    _intakeSubsystem.setIsShooting(true);
   }
   public boolean shooterUpToSpeed(){
     return Math.abs(speed - _shooterSubsystem.getShooterSpeed()) < 2.5d;
@@ -111,6 +112,7 @@ public class ShootAllBalls extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    _intakeSubsystem.setIsShooting(false);
     System.out.println("Ball two shot at " + myTimer.get());
   }
 

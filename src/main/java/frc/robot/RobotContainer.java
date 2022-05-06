@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ClimberControl;
 import frc.robot.commands.DriveForwardAutonomously;
+import frc.robot.commands.IsClimbingBool;
 import frc.robot.commands.MoveClimberToPosition;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.RotateByDegrees;
@@ -83,7 +84,7 @@ public class RobotContainer {
   public final DrivebaseSubsystem _DrivebaseSubsystem = new DrivebaseSubsystem();
   public final IntakeSubsystem _IntakeSubsystem = new IntakeSubsystem();
   public final ShooterSubsystem _ShooterSubsystem = new ShooterSubsystem();
-  public final LightsSubsystem _lights = new LightsSubsystem(_IntakeSubsystem);
+  public final LightsSubsystem _lights = new LightsSubsystem();
   // commands - usually not put here
 
   /**
@@ -103,6 +104,7 @@ public class RobotContainer {
     _chooser.addOption("Complex two ball", complexTwoBallAuto);
     _chooser.addOption("right two ball", rightTwoBallAuto);
     SmartDashboard.putData(_chooser);
+    _lights.setDefaultCommand(new SetLights(_lights, _ClimberSubsystem, _IntakeSubsystem));
     _DrivebaseSubsystem.setDefaultCommand(new driveWithJoystick(rightJoystick, leftJoystick, _DrivebaseSubsystem));
     // _lights.setDefaultCommand(new SetLights(_lights, "Alliance Color"));
   }
@@ -126,12 +128,7 @@ public class RobotContainer {
     //   new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
     //   new SetLights(_lights, "Alliance Color")
     // ));
-    shootBallsButton.whenPressed(new SequentialCommandGroup(
-      new SetLights(_lights, "Off"),
-      new SetLights(_lights, "Magenta"),
-      new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem),
-      new SetLights(_lights, "Alliance Color")
-    ));
+    shootBallsButton.whenPressed(new ShootAllBalls(_ShooterSubsystem, _IntakeSubsystem, _ClimberSubsystem));
     // shootBallsButton.whenPressed(shootCommand);
 
     //move arms certain direction when button is pressed
@@ -170,15 +167,6 @@ public class RobotContainer {
     if(leftJoystick.getRawButtonPressed(7)){
       CommandScheduler.getInstance().cancel(getAutonomousCommand());
     }
-    if(_IntakeSubsystem.getBallsInBot() >= 1){
-      _lights.Cyan();
-    } else if(_ShooterSubsystem.getShooterSpeed() >= 60d){
-      _lights.Magenta();
-    } else if(!_IntakeSubsystem.intakeEnabled){
-      _lights.Green();
-    } else {
-      _lights.setAllianceColors();
-    }
     // _lights.randomLights(rightJoystick.getZ());
 }
   public Command getAutonomousCommand() {
@@ -189,7 +177,7 @@ public class RobotContainer {
   public Command getClimbOnceCommand() {
     // An ExampleCommand will run in autonomous
     return new SequentialCommandGroup(
-      new SetLights(_lights, "Green"),
+      new IsClimbingBool(_ClimberSubsystem, true),
       //Turn off belt and intake motors
       new AutoIntakeBalls(_IntakeSubsystem, false),
       //Ensure the climber is correct position for move up
@@ -208,7 +196,8 @@ public class RobotContainer {
       //pneumatic arms should be off bar and ready to move forward
       new WaitCommand(0.2),
       new MoveClimberToPosition(_ClimberSubsystem, 0.2),
-      new SetSmallArmState(_ClimberSubsystem, SmallArmState.BACKWARD)
+      new SetSmallArmState(_ClimberSubsystem, SmallArmState.BACKWARD),
+      new IsClimbingBool(_ClimberSubsystem, false)
     );
   }
   //New Autos - 
