@@ -29,7 +29,7 @@ public class ShootAllBalls extends CommandBase {
   boolean hasLogged = false;
   boolean hasLogged2 = false;
 
-  public double speed = 82;
+  public double speed = 79;
   public ShootAllBalls(ShooterSubsystem shooter, IntakeSubsystem intake, ClimberSubsystem climber) {
     // Use addRequirements() here to declare subsystem dependencies.
     _shooterSubsystem = shooter;

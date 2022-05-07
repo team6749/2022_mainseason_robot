@@ -27,22 +27,22 @@ public class LightsSubsystem extends SubsystemBase {
     	}
     }
     
-    public static void Off() {//works
+    public void Off() {//works
 		r1.set(Relay.Value.kOn);
     	r2.set(Relay.Value.kOn);
     } 
     
-    public static void White() { //works
+    public void White() { //works
 		r1.set(Relay.Value.kReverse);
     	r2.set(Relay.Value.kOff);
     }
     
-    public static void Red() {//works
+    public void Red() {//works
 		r1.set(Relay.Value.kOn);
 		r2.set(Relay.Value.kReverse);
 	}
     
-    public static void Blue() {// work
+    public void Blue() {// work
 		r1.set(Relay.Value.kReverse);
 		r2.set(Relay.Value.kOn);
 	}
@@ -52,7 +52,7 @@ public class LightsSubsystem extends SubsystemBase {
 		r2.set(Relay.Value.kForward);
 	}
     
-    public static void Yellow() {//works
+    public void Yellow() {//works
     	r1.set(Relay.Value.kOn);
     	r2.set(Relay.Value.kOff);
     }

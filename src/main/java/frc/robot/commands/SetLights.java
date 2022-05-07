@@ -31,8 +31,10 @@ public class SetLights extends CommandBase {
   public void execute() {
       if(_climber.getIsClimbing()){
         _lights.Green();
-      } else if(_intake.getBallsInBot() >= 1){
-        _lights.Cyan();
+      } else if(_intake.getBallsInBot() == 1){
+        _lights.Yellow();
+      } else if(_intake.getBallsInBot() == 2){
+        _lights.Cyan();  
       }  else if(_intake.getIsShooting()){
         _lights.Magenta();
       } else {
